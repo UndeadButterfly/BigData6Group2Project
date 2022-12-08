@@ -1,0 +1,74 @@
+.card-title, .card-text{
+    /* border: 1px solid #000; */
+    font-size: 0.7em;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: #343434;
+    cursor: pointer;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+.a-card-text{
+    display: block;
+    text-align: right;
+}
+
+.card{
+    margin: 0;
+    padding: 0;
+}
+
+.foldableBoxRight{
+    width:300px;
+    height:100%;
+    opacity:0;
+    /* transform: scale(0); */
+    transition: 1s;
+    
+}
+.containerBox{
+    /* border: 1px solid #000; */
+    position: relative;
+    overflow: hidden;
+    width: 1290px;
+    height: 100vh;
+}
+#flying{
+    width: 100%;
+}
+#workspace{
+    /* border: 1px solid #000; */
+    float: left;
+}
+#map{
+    width: 100vw;
+    float: left;
+    z-index: -100;
+}
+#map img{
+    width: 100%;
+    /* display: none; */
+    
+}
+#recommend{
+    /* border: 2px solid red; */
+}
+#recommend p button{
+    float: right;
+}
+
+
+/* button:active .foldableBoxRight{
+    width:300px;
+    height: 100%;
+} */
+/* @keyframes hidden {
+    from{width: 0; right:0px; top:0px;}
+    to{width:300px}
+    
+} */

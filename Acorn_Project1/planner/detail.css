@@ -1,0 +1,107 @@
+body{
+    font-size: 16px;
+    color: #343434;
+    display: flex;
+    flex-direction: column;
+
+    
+}
+h1{
+    /* border: 1px solid #000; */
+    text-align: center;
+    margin: 20px;
+}
+nav a, header span a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+form{
+    /* border: 1px solid #343434; */
+    width: 1000px;
+    /* background-color:	#f2bbad; */
+    margin: 10px auto;
+
+    
+}
+form>div{
+    /* border: 1px solid blue; */
+    margin: 20px;
+    padding: 5px;
+}
+form #cardList{
+    border: 1px solid #343434;
+    /* background-color:	#dbdcff; */
+    
+}
+#cardList>div{
+    /* border: 1px solid #000; */
+    
+    /* background-color: #feffa3; */
+    margin: 20px;
+}
+#storedList #storedListCard, #transportList #transportListCard{
+    height: 250px;
+    background-color: #eeeeee;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+    line-height: 150px;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+#transportList #transportListCard>div{
+    width: 150px;
+    height: 150px;
+    background-color: orange;
+    margin: 5px;
+}
+#storedList #storedListCard>div{
+    width: 150px;
+    height: 150px;
+    background-color: orange;
+    margin: 5px;
+}
+#storedList #storedListCard div span{
+    font-size: 50px;
+}
+
+.icon {
+    font-size: 100px;
+}
+
+#allignCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#allignCard>div{
+    padding: 5px;
+    height: 250px;
+    background-color: #eeeeee;
+    margin: 20px;
+}
+
+form>div:not(#cardList){
+    /* background-color:	#afdfdb; */
+}
+form{
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+   
+}
+button{
+    width: 100px;
+    height: 25px;
+    float: right;
+    margin: 0 10px;
+    /* background-color: 	#b6d7a8; */
+    border-style: none;
+    font-weight: bold;
+    cursor: pointer;
+}
