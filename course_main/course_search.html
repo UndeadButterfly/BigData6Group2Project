@@ -5,24 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <script src="./bootstrap/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="base.css">
     <link rel="stylesheet" href="nav_header.css">
     <link rel="stylesheet" href="card.css">
     <link rel="stylesheet" href="search-bar.css">
-    <!-- <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"> -->
+    <style>
+        .search-results{
+            display: flex;
+            justify-content: center;
+            column-gap: 30px;
+            row-gap: 40px;
+            flex-wrap: wrap;
+        }
+    </style>
 </head>
 <body>
     <header>
         <span id="headTitle"><a href="">alonetrip</a></span>
-        <style>
-            .search-results{
-                display: flex;
-                justify-content: center;
-                column-gap: 30px;
-                row-gap: 40px;
-                flex-wrap: wrap;
-            }
-        </style>
     </header>
     <nav>
         <a href="./course_main.html"><p>여행 코스</p></a>
@@ -54,7 +55,7 @@
         <input type="text" name="search-course-text" id="search-course-text" placeholder="검색...">
         <button type="submit">검색</button>
     </form>
-    <main>
+    <main class="container">
         <div class="search-results">
 
         </div>
@@ -67,8 +68,8 @@
                 <div class="card-left">
                     <img src="./img/winter.jpg" alt="">
                     <div class="custom-card-text">
-                        <div class="card-title">
-                            <h4>코스 제목</h4>
+                        <div class="card-top">
+                            <h4 class="card-title">코스 제목</h4>
                             <label>
                                 <input type="checkbox" value="1">
                                 <span></span>

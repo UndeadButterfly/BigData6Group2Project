@@ -3,6 +3,7 @@ header {
     text-align: center;
     padding: 20px;
     width: 100%;
+    box-sizing: border-box;
     background-color: #fff;
 }
 header>#headTitle {

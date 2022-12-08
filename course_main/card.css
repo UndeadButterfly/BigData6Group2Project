@@ -1,8 +1,9 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css');
-main {
-    width: 90%;
+main{
+    width: 80%;
     margin: auto;
 }
+
 .course-list {
     margin: 50px 0;
 }
@@ -85,8 +86,10 @@ main {
     padding: 5px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 150px;
+}
+.card-title {
+    font-size: 14px;
 }
 .custom-card-text>p {
     font-size: 12px;
@@ -104,7 +107,7 @@ main {
     z-index: 10;
 }
 
-.card-title {
+.card-top {
     display: flex;
     justify-content: space-between;
 }
