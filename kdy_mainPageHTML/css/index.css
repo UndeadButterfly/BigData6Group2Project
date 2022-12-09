@@ -1,0 +1,140 @@
+/* 전체 css 적용 부분 */
+* {
+    box-sizing: border-box;
+}
+body {
+    padding-top: 170px;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* 사이트 이름 그라데이션 코드 */
+.subject {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    font-weight:  500;
+    display: block;
+    padding-top: 29px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg, #4ff326, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: name 10s infinite linear;
+}
+@keyframes name {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(-360deg);
+    }
+}
+
+
+/* 슬라이드 이미지 */
+#slider {
+    margin: 50px 100px 0 100px;
+    overflow:hidden;
+    position:relative;
+    height:500px;
+    box-shadow: 0 0 20px gray;
+}
+.image-box {
+    width:100%;
+    height: 100%;
+    display:flex;
+    flex-wrap:nowrap;
+    animation: bannermove 10s linear infinite;
+}
+#slider>.image-box img {height: 300px;}
+@keyframes bannermove {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-50%, 0);
+    }
+}
+
+
+
+/* 내브바 포함 헤더 */
+.banner>h1 {
+    text-align: center;
+    font-size: 60px;
+}
+header {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1;
+}
+
+
+
+/* 맨위 헤더 */
+.inline {display: flex;}
+.inline .inline-col-group {height: 100px;}
+.inline .inline-col-group .right-menu {display: flex;}
+.inline .inline-col-group .right-menu>a {display: block;}
+.inline .inline-col-group .login {
+    padding-right: 20px;
+    padding-top: 36px;
+}
+.inline .inline-col-group .mypage {
+    padding-right: 20px;
+    padding-top: 36px;
+}
+.inline .inline-col-group .service-center {padding-top: 36px;}
+
+
+
+/* 내브바 */
+.nav {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.nav>div {
+    padding: 16px 20px;
+    transition: background-color .5s ;
+}
+.nav>div>a {
+    font-weight:lighter;
+    display: block;
+}
+.nav>div:hover {background-color: #ddd;}
+
+
+
+/* 푸터 */
+footer {
+    height: 300px;
+    width: 100%;
+    background-color: antiquewhite;
+}
+.match {
+    margin-top: 200px;
+    width: 100%;
+    height: 500px;
+    background-color: #ddd;
+}
+.plan {
+    width: 100%;
+    height: 500px;
+    background-color: rgb(245, 195, 195);
+}
+.wiki {
+    width: 100%;
+    height: 500px;
+    background-color: rgb(172, 170, 249);
+}
