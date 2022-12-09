@@ -63,11 +63,6 @@ header>nav>ul>li>a:hover{
 }
 
 
-
-.container{
-    margin: 0 500px;
-}
-
 .container>.rows{
     display: flex;
     justify-content:space-around;
