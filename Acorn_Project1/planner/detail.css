@@ -75,7 +75,6 @@ form #planDayList #allignCard{
 }
 form #planDayList #allignCard>div{
     padding: 5px;
-    height: 250px;
     background-color: #eeeeee;
     margin: 20px;
 }
@@ -91,5 +90,5 @@ form #planDayList #allignCard>div{
 }
 .dragbox{
     width: 50%;
-    height: 50%;
+    min-height: 100px;
 }
