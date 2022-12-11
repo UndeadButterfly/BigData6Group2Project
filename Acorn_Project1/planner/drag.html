@@ -70,17 +70,10 @@
         const item = document.querySelector(".item");
 
        
-        function console(e) {
-            if (document.querySelectorAll('p').length === 10) {
-                document.querySelectorAll('p').forEach(e => e.remove())
-            }
-            const p = document.createElement('p');
-            p.textContent = e;
-            document.body.append(p);
-        }
+       
         item.addEventListener("dragstart", (e) => {
-            console(e);
-            console("drag");
+          
+            console.log("drag");
         });
 
     </script>

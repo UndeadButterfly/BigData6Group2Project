@@ -3,11 +3,14 @@ body{
     color: #343434;
     display: flex;
     flex-direction: column;
+    margin: 0;
 
     
 }
+span{
+    display: inline-block;
+}
 h1{
-    /* border: 1px solid #000; */
     text-align: center;
     margin: 20px;
 }
@@ -16,92 +19,77 @@ nav a, header span a{
     color: black;
     cursor: pointer;
 }
-form{
-    /* border: 1px solid #343434; */
-    width: 1000px;
-    /* background-color:	#f2bbad; */
-    margin: 10px auto;
+/*사이드 바 설정 */
 
-    
+#locList, #transportList{
+    display: inline-block;
+    width: 20%;
+    top: 30%;
+}
+#transportList{
+    right: 0;
+}
+
+.card-title, .card-text{
+    font-size: 0.7em;
+    margin: 0;
+}
+.a-card-text{
+    display: block;
+    text-align: right;
+}
+.transport-card-title{
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    line-height: 2em;
+}
+
+/* form 설정 */
+form{
+    width: 70%;
+    margin: 10px auto;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+
 }
 form>div{
-    /* border: 1px solid blue; */
     margin: 20px;
     padding: 5px;
 }
-form #cardList{
+/* form 안에 div들 설정 */
+form #planDayList{
     border: 1px solid #343434;
-    /* background-color:	#dbdcff; */
+   
     
 }
-#cardList>div{
-    /* border: 1px solid #000; */
-    
-    /* background-color: #feffa3; */
+form #planDayList>div{
     margin: 20px;
 }
-#storedList #storedListCard, #transportList #transportListCard{
-    height: 250px;
-    background-color: #eeeeee;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    text-align: center;
-    line-height: 150px;
-    font-size: 50px;
-    font-weight: bold;
-}
 
-#transportList #transportListCard>div{
-    width: 150px;
-    height: 150px;
-    background-color: orange;
-    margin: 5px;
-}
-#storedList #storedListCard>div{
-    width: 150px;
-    height: 150px;
-    background-color: orange;
-    margin: 5px;
-}
-#storedList #storedListCard div span{
-    font-size: 50px;
-}
-
-.icon {
-    font-size: 100px;
-}
-
-#allignCard{
+form #planDayList #allignCard{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
-#allignCard>div{
+form #planDayList #allignCard>div{
     padding: 5px;
     height: 250px;
     background-color: #eeeeee;
     margin: 20px;
 }
-
-form>div:not(#cardList){
-    /* background-color:	#afdfdb; */
-}
-form{
-    position: relative;
-    overflow: hidden;
-    padding: 10px;
-   
-}
-button{
+/* 버튼 설정 */
+.btnBox button{
     width: 100px;
-    height: 25px;
     float: right;
     margin: 0 10px;
     /* background-color: 	#b6d7a8; */
     border-style: none;
     font-weight: bold;
     cursor: pointer;
+}
+.dragbox{
+    width: 50%;
+    height: 50%;
 }

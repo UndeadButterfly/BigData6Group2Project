@@ -3,23 +3,3 @@
 body {margin: 0; font-size: 16px; font-family: 'Montserrat', sans-serif;}
 a {text-decoration: none; color: #000;}
 h1,h2,h3,h4,h5,h6,p {margin: 0;}
-
-/* width */
-::-webkit-scrollbar {
-    /* height: 10px; */
-    display: none;
-}
-/* Track */
-/* ::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: rgb(203, 203, 203); 
-} */
-/* Handle */
-/* ::-webkit-scrollbar-thumb {
-    background: rgb(169, 169, 169); 
-    border-radius: 10px;
-} */
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-    background: rgb(119, 119, 119); 
-} */
