@@ -1,0 +1,98 @@
+header {
+    text-align: center;
+    border-bottom: 1px solid #aaa;
+}
+header>.mainLogo{
+    margin: 30px;
+    font-size: 2em;
+    font-weight: 800;
+}
+header>.mainLogo>a{
+    text-decoration: none;
+    color: #000;
+}
+header>nav>ul{
+    padding-top: 10px;
+    padding-left: 0;
+    border-top: 1px solid #aaa;
+}
+header>nav>ul>li{
+    list-style: none;
+    display: inline-block;
+}
+header>nav>ul>li>a{
+    text-decoration: none;
+    color: #000;
+    padding: 15px;
+}
+header>nav>ul>li>a:hover{
+    border-bottom: 3px solid #000;
+}
+
+.searchCon{
+    margin: 30px;
+    text-align: center;
+}
+.searchBox{
+    display: inline-block;
+    border: 1px solid #aaa;
+    /* width: 50%; */
+}
+.searchBox>span{
+    /* border: 1px solid #000; */
+    padding: 0 10px;
+}
+.searchBox>input{
+    display: inline-block;
+    /* padding: 5px 0; */
+    padding-bottom: 5px;
+    border-style: none;
+    font-size: 1.5em;
+}
+.searchBox>input:focus{
+    outline-style: none;
+}
+.searchBox>button{
+    border-style: none;
+    background-color: #aaa;
+    padding: 10px;
+    /* margin: 5px 0; */
+}
+.searchBox>button:hover{
+    background-color: #888;
+}
+
+
+.container>.rows{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+}
+.container>.rows>a{
+    position:relative;
+    /* border: 1px solid #000; */
+    margin: 20px;
+    max-width: 400px;
+    max-height: 550px;
+    text-decoration: none;
+    color: #000;
+}
+.container>.rows>a>.article>.second{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+.container>.rows>a:hover>.article>.second{
+    opacity: 1;
+}
+.container>.rows>a:hover>.article>.content{
+    text-decoration:underline;
+}
+.container>.rows>a>.article>.content{
+    /* border: 1px solid #000; */
+    padding: 0 10px;
+}
+.article>.content>.text{
+    text-indent: 10px;
+}
