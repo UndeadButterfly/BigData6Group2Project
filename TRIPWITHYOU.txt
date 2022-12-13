@@ -28,12 +28,12 @@ course_no INT(8) NOT NULL,
 user_id VARCHAR(50) NOT NULL,
 ctitle VARCHAR(30) NOT NULL,
 cdestination VARCHAR(30) NOT NULL,
-cstart DATE NOT NULL,
-cend DATE NOT NULL,
-cduration INT(3) NOT NULL,
-ctransport INT(1),
-cmember INT(2) NOT NULL,
-cbudget INT(255),
+start_date DATE NOT NULL,
+end_date DATE NOT NULL,
+duration INT(3) NOT NULL,
+transport INT(1),
+members INT(2) NOT NULL,
+budget INT(255),
 PRIMARY KEY(course_no),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
@@ -65,10 +65,10 @@ ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE RELATION (
-subject_id VARCHAR(50),
-relation INT(1),
+target_id VARCHAR(50),
+r_type INT(1),
 user_id VARCHAR(50),
-rel_memo VARCHAR(255),
+memo VARCHAR(255),
 relation_no VARCHAR(50),
 PRIMARY KEY(subject_id),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
@@ -90,10 +90,10 @@ upload_no int(8),
 user_id varchar(50),
 trip_no int(8),
 arrival varchar(50),
-tstart date,
-tend date,
-tduration int(3),
-tmember int(2),
+start_date date,
+end_date date,
+duration int(3),
+members int(2),
 primary key (tmember),
 foreign key(user_id) references user(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
@@ -112,14 +112,18 @@ CREATE TABLE REPLY (
 reply_no int(8),
 upload_no int(8),
 user_id varchar(50),
-rcontent mediumtext NOT NULL,
-rdate DATETIME DEFAULT NOW(),
+contents mediumtext NOT NULL,
+post_time DATETIME DEFAULT NOW(),
+fk_reply_no int,
 CONSTRAINT  PK_reply PRIMARY KEY (reply_no),
 CONSTRAINT FK_replyuploads FOREIGN KEY (upload_no)
 REFERENCES upload (upload_no)
 ON UPDATE CASCADE ON DELETE CASCADE,
 CONSTRAINT FK_replyuser FOREIGN KEY (user_id)
 REFERENCES user(user_id)
+ON UPDATE CASCADE ON DELETE  CASCADE,
+CONSTRAINT FK_rereply FOREIGN KEY (fk_reply_no)
+REFERENCES reply(reply_no)
 ON UPDATE CASCADE ON DELETE  CASCADE
 );
 
