@@ -1,152 +1,135 @@
 DROP DATABASE TRIPWITHYOU;
-
 CREATE DATABASE TRIPWITHYOU
 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 
 USE TRIPWITHYOU;
 
 CREATE TABLE user(
-    user_id VARCHAR(50),
-    user_pw VARCHAR(50) NOT NULL,
-    uname VARCHAR(10) NOT NULL,
-    ubirth DATE,
-    uphone VARCHAR(12),
-    ugender INT(1) NOT NULL,
-    uemail VARCHAR(30),
-    usignup TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ulogin DATETIME,
-    uloc VARCHAR(30) DEFAULT 0,
-    uhobby INT(1) DEFAULT 1,
-    umbti VARCHAR(6) DEFAULT 'ISTJ',
-    ublood VARCHAR(3) DEFAULT 'AB+',
-    utype INT(1),
-    CONSTRAINT PK_user PRIMARY KEY(user_id),
-    CONSTRAINT UK_user UNIQUE KEY (uphone,uemail)
+user_id VARCHAR(50) NOT NULL,
+pw VARCHAR(50) NOT NULL,
+name VARCHAR(10) NOT NULL,
+birth DATE,
+phone VARCHAR(12),
+gender INT(1) NOT NULL,
+email VARCHAR(30),
+signup DATETIME DEFAULT NOW(),
+login DATETIME,
+loc VARCHAR(30) DEFAULT 0,
+hobby INT(1) DEFAULT 1,
+u_type INT(1),
+reports INT,
+login_state INT(1),
+PRIMARY KEY(user_id),
+UNIQUE KEY (phone, email)
 );
 
-CREATE TABLE course (
-	course_no INT(8) NOT NULL,
-	user_id VARCHAR(50) NOT NULL,
-	ctitle VARCHAR(30) NOT NULL,
-	cstart DATE NOT NULL,
-	cend DATE NOT NULL,
-	cduration INT(3) NOT NULL,
-	ctransport INT(1),
-	cmember INT(2) NOT NULL,
-	cbudget INT(255),
-	CONSTRAINT PK_course PRIMARY KEY(course_no),
-	CONSTRAINT FK_courseUser FOREIGN KEY(user_id) 
-        REFERENCES USER(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE COURSE (
+course_no INT(8) NOT NULL,
+user_id VARCHAR(50) NOT NULL,
+ctitle VARCHAR(30) NOT NULL,
+cdestination VARCHAR(30) NOT NULL,
+cstart DATE NOT NULL,
+cend DATE NOT NULL,
+cduration INT(3) NOT NULL,
+ctransport INT(1),
+cmember INT(2) NOT NULL,
+cbudget INT(255),
+PRIMARY KEY(course_no),
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE upload (
-    upload_no INT(8),
-    upkind INT(2),
-    user_id VARCHAR(50),
-    uptitle VARCHAR(40) NOT NULL,
-    upcontents LONGTEXT,
-    upviews INT(8) NOT NULL DEFAULT 0,
-    uplikes INT(8) NOT NULL DEFAULT 0,
-    updislikes INT(8) NOT NULL DEFAULT 0,
-    upreports INT(2) NOT NULL DEFAULT 0,
-    upstate INT(1),
-    CONSTRAINT PK_upload PRIMARY KEY(upload_no) ,
-    CONSTRAINT FK_uploadUser FOREIGN KEY (user_id) 
-        REFERENCES user(user_id) 
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE UPLOAD (
+upload_no int(8),
+uptype int(2),
+user_id varchar(50),
+title varchar(40) NOT NULL,
+contents longtext,
+views int(8) NOT NULL DEFAULT 0,
+likes int(8) NOT NULL DEFAULT 0,
+hates int(8) NOT NULL DEFAULT 0,
+reports int(2) NOT NULL DEFAULT 0,
+upstate int(1),
+CONSTRAINT PK_upload PRIMARY KEY(upload_no) ,
+CONSTRAINT FK_uploadUser FOREIGN KEY (user_id) REFERENCES user(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE emp (
-    empno INT(8),
-    user_id VARCHAR(50) NOT NULL,
-    estate INT(1),
-    ehiredate DATE,
-    CONSTRAINT PK_emp PRIMARY KEY(empno),
-    CONSTRAINT FK_empUser FOREIGN KEY(user_id) 
-        REFERENCES USER(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE EMP (
+empno INT(8),
+user_id VARCHAR(50) NOT NULL,
+hiredate DATE,
+PRIMARY KEY(empno),
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE relation (
-    subject_id VARCHAR(50),
-    relation INT(1),
-    login_state INT(1),
-    user_id VARCHAR(50),
-    rel_memo VARCHAR(255),
-    target_id VARCHAR(50),
-    CONSTRAINT PK_relation PRIMARY KEY(subject_id),
-    CONSTRAINT FK_relationUser FOREIGN KEY(user_id) 
-        REFERENCES USER(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_relationTarget FOREIGN KEY(target_id) 
-        REFERENCES USER(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE RELATION (
+subject_id VARCHAR(50),
+relation INT(1),
+user_id VARCHAR(50),
+rel_memo VARCHAR(255),
+relation_no VARCHAR(50),
+PRIMARY KEY(subject_id),
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE board (
-    upload_no INT(8),
-    board_no INT(8),
-    battatch BLOB NULL,
-    CONSTRAINT PK_board PRIMARY KEY(board_no),
-    CONSTRAINT FK_boardUpload FOREIGN KEY(upload_no) 
-        REFERENCES upload(upload_no) 
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE upload_img (
+upload_img_no INT(8),
+upload_no INT(8),
+img_path VARCHAR(255),
+CONSTRAINT PK_board PRIMARY KEY(upload_img_no),
+CONSTRAINT FK_boardUpload FOREIGN KEY(upload_no)
+REFERENCES upload(upload_no)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE matching (
-    upload_no INT(8),
-    trip_no INT(8),
-    tdestination VARCHAR(50),
-    tstart DATE,
-    tend DATE,
-    tmember INT(2),
-    CONSTRAINT PK_trip PRIMARY KEY(trip_no),
-    CONSTRAINT FK_tripUpload FOREIGN KEY(upload_no) 
-        REFERENCES upload(upload_no)
-        ON UPDATE CASCADE ON DELETE CASCADE
+create table matching(
+upload_no int(8),
+user_id varchar(50),
+trip_no int(8),
+arrival varchar(50),
+tstart date,
+tend date,
+tduration int(3),
+tmember int(2),
+primary key (tmember),
+foreign key(user_id) references user(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE favorite (
-    favorite_no INT(8),
-    user_id VARCHAR(50),
-    course_no INT(8),
-    CONSTRAINT PK_favorite PRIMARY KEY(favorite_no),
-    CONSTRAINT FK_favoriteUser FOREIGN KEY(user_id) 
-        REFERENCES user(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_favoriteCourse FOREIGN KEY(course_no) 
-        REFERENCES course(course_no)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE FAVORITE (
+favorite_no INT(8),
+user_id VARCHAR(50),
+course_no INT(8),
+PRIMARY KEY(favorite_no),
+FOREIGN KEY(user_id) REFERENCES USER(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE reply (
-    reply_no INT(8),
-    upload_no INT(8),
-    user_id VARCHAR(50),
-    fk_reply_no INT,
-    rcontent MEDIUMTEXT NOT NULL,
-    rdate DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT  PK_reply PRIMARY KEY (reply_no),
-    CONSTRAINT FK_replyUploads FOREIGN KEY (upload_no) 
-        REFERENCES upload(upload_no)
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_replyUser FOREIGN KEY (user_id)
-        REFERENCES user(user_id) 
-        ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT FK_replySelf FOREIGN KEY (fk_reply_no)
-        REFERENCES reply(reply_no) 
-        ON UPDATE CASCADE ON DELETE SET NULL
+CREATE TABLE REPLY (
+reply_no int(8),
+upload_no int(8),
+user_id varchar(50),
+rcontent mediumtext NOT NULL,
+rdate DATETIME DEFAULT NOW(),
+CONSTRAINT  PK_reply PRIMARY KEY (reply_no),
+CONSTRAINT FK_replyuploads FOREIGN KEY (upload_no)
+REFERENCES upload (upload_no)
+ON UPDATE CASCADE ON DELETE CASCADE,
+CONSTRAINT FK_replyuser FOREIGN KEY (user_id)
+REFERENCES user(user_id)
+ON UPDATE CASCADE ON DELETE  CASCADE
 );
 
-CREATE TABLE place(
-    place_no VARCHAR(50),
-    course_no INT(8),
-    tour_id VARCHAR(12),
-    pday INT(2), 
-    porder INT(2),
-    CONSTRAINT PK_place PRIMARY KEY (place_no),
-    CONSTRAINT FK_palceCourse FOREIGN KEY (course_no)
-        REFERENCES course(course_no)
-        ON UPDATE CASCADE ON DELETE CASCADE
+CREATE TABLE PLACE(
+place_no VARCHAR(50),
+course_no INT(8),
+place_pday INT(2),
+place_porder INT(2),
+primary key(place_no),
+CONSTRAINT FK_palceCourse FOREIGN KEY (course_no)
+REFERENCES course(course_no)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
