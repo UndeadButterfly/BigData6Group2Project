@@ -1,0 +1,49 @@
+insert into user values('user0001','q1w2e3r4','twy','2000-03-11','010-2323-1111',1,'triptrip@naver.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('user0002','q1w2e3r4','Tom','1999-03-11','010-2121-1181',1,'trddrip@naver.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('user0003','dsdsd3r4','Jane','1997-08-13','010-9131-1281',1,'tffrrip@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('empl0001','g344d113','Quick','1985-10-18','010-4646-1334',1,'appleT@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('sell0001','f829fd1q','Drown','1996-07-06','010-7733-7655',1,'margin2@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('gum00001','fef88983','Gummy','1999-05-12','010-7463-9945',1,'gummy2@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('empl0002','43435557','James','1988-09-21','010-7112-0087',1,'gr33js@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('user0004','sdf8892d','Smith','1995-10-09','010-1975-4437',1,'travelTo@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('user0005','gs75r7s3','SlowMan','1977-05-05','010-4498-3859',1,'niniee7@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('user0006','1616ssss','SkyDown','1989-09-03','010-3377-8050',1,'gtt787@gmail.com',current_timestamp,null,0,1,1,0,1);
+insert into user values('empl0003','ffddssss','김과장','1990-04-16','010-4499-3540',1,'4646aa@gmail.com',current_timestamp,null,0,1,1,0,1);
+
+insert into course values(1,'user0001','제주도로','제주도','2022-12-14','2022-12-20',7,1,3,70000);
+insert into course values(2,'user0001','새로움','독도','2022-12-14','2022-12-18',5,3,4,500000);
+insert into course values(3,'user0002','나만홀로','전주','2022-12-14','2022-12-15',2,1,1,60000);
+insert into course values(4,'user0002','구도윤꺼','집','2022-12-14','2022-12-14',1,1,1,3000);
+insert into course values(5,'user0003','김현섭꺼','학원','2022-12-14','2022-12-14',1,1,1,5000);
+insert into course values(6,'gum00001','이번역은 함정','함정','2022-12-14','2022-12-16',3,4,1,77777);
+insert into course values(7,'user0001','이대에서놀기','이화여대','2022-12-16','2022-12-16',1,2,5,100000);
+insert into course values(8,'user0006','김민환꺼','혜화','2022-12-17','2022-12-17',1,1,1,6000);
+insert into course values(9,'user0005','TomKim의 세계여행','미국','2023-02-12','2023-02-20',9,5,1,600000);
+
+
+insert into emp values('1','empl0001','2020-10-08');
+insert into emp values('2','empl0002','2021-03-12');
+insert into emp values('3','empl0003','2021-01-05');
+
+insert into favorite values(1,'user0001',2);
+insert into favorite values(2,'user0003',1);
+insert into favorite values(3,'user0001',5);
+insert into favorite values(4,'user0004',1);
+
+insert into place values('p1',1,1,1);
+insert into place values('p2',1,2,1);
+
+insert into upload values(1,1,'user0001','제주도 여행 후기','제곧내',0,0,0,0,1);
+insert into upload values(2,1,'user0003','학원 수업 후기','재밌었습니다',0,0,0,0,1);
+insert into upload values(3,2,'user0005','자전거 여행 후기','이사람 조심하세요',0,0,0,0,1);
+insert into upload values(4,9,'user0003','미국 여행 후기','이사람 이상해요',0,0,0,0,1);
+insert into upload values(5,9,'user0003','미국 여행 후기','이사람 이상해요',0,0,0,0,1);
+
+insert into reply values(1,1,'user0002','대단해요',current_timestamp,null);
+insert into reply values(2,1,'user0004','뭐가 대단하냐',current_timestamp,1);
+insert into reply values(3,1,'empl0003','분쟁은 정지사유입니다.',current_timestamp,1);
+insert into reply values(4,4,'user0002','동의합니다',current_timestamp,null);
+
+insert into upload_img values(1,1,'대충 제주도 백록담 사진 경로');
+insert into upload_img values(2,1,'제주도 하르방 사진');
+insert into upload_img values(3,1,'제주도 올레길');
