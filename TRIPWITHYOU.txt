@@ -3,37 +3,40 @@ DROP DATABASE TRIPWITHYOU;
 CREATE DATABASE TRIPWITHYOU
 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 
+CREATE USER 'twy_mgr'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql';
+GRANT ALL PRIVILEGES ON TRIPWITHYOU.* TO twy_mgr@'localhost';
+FLUSH PRIVILEGES;
+
 USE TRIPWITHYOU;
 
 CREATE TABLE user(
     user_id VARCHAR(50),
-    user_pw VARCHAR(50) NOT NULL,
-    uname VARCHAR(10) NOT NULL,
-    ubirth DATE,
-    uphone VARCHAR(12),
-    ugender INT(1) NOT NULL,
-    uemail VARCHAR(30),
-    usignup TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    ulogin DATETIME,
-    uloc VARCHAR(30) DEFAULT 0,
-    uhobby INT(1) DEFAULT 1,
-    umbti VARCHAR(6) DEFAULT 'ISTJ',
-    ublood VARCHAR(3) DEFAULT 'AB+',
-    utype INT(1),
+    pw VARCHAR(50) NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    uimg VARCHAR(255),
+    birth DATE NOT NULL,
+    phone VARCHAR(12),
+    gender INT(1) NOT NULL,
+    email VARCHAR(30) NOT NULL,
+    signup TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    latest_login DATETIME NOT NULL,
+    location VARCHAR(30) DEFAULT 0,
+    hobby VARCHAR(255) DEFAULT 1,
+    user_type INT(1) NOT NULL DEFAULT 1,
+    login_state INT(1) NOT NULL DEFAULT 0,
     CONSTRAINT PK_user PRIMARY KEY(user_id),
-    CONSTRAINT UK_user UNIQUE KEY (uphone,uemail)
+    CONSTRAINT UK_user UNIQUE KEY (phone,email)
 );
 
 CREATE TABLE course (
-	course_no INT(8) NOT NULL,
+	course_no INT(8) AUTO_INCREMENT,
 	user_id VARCHAR(50) NOT NULL,
 	ctitle VARCHAR(30) NOT NULL,
 	cstart DATE NOT NULL,
 	cend DATE NOT NULL,
 	cduration INT(3) NOT NULL,
-	ctransport INT(1),
 	cmember INT(2) NOT NULL,
-	cbudget INT(255),
+    ctag MEDIUMTEXT NOT NULL,
 	CONSTRAINT PK_course PRIMARY KEY(course_no),
 	CONSTRAINT FK_courseUser FOREIGN KEY(user_id) 
         REFERENCES USER(user_id)
@@ -41,41 +44,41 @@ CREATE TABLE course (
 );
 
 CREATE TABLE upload (
-    upload_no INT(8),
-    upkind INT(2),
-    user_id VARCHAR(50),
-    uptitle VARCHAR(40) NOT NULL,
-    upcontents LONGTEXT,
-    upviews INT(8) NOT NULL DEFAULT 0,
-    uplikes INT(8) NOT NULL DEFAULT 0,
-    updislikes INT(8) NOT NULL DEFAULT 0,
-    upreports INT(2) NOT NULL DEFAULT 0,
-    upstate INT(1),
-    CONSTRAINT PK_upload PRIMARY KEY(upload_no) ,
+    upload_no INT(8) AUTO_INCREMENT,
+    uptype INT(2) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
+    title VARCHAR(40) NOT NULL,
+    contents LONGTEXT NOT NULL,
+    views INT(8) NOT NULL DEFAULT 0,
+    likes INT(8) NOT NULL DEFAULT 0,
+    dislikes INT(8) NOT NULL DEFAULT 0,
+    reports INT(2) NOT NULL DEFAULT 0,
+    upstate INT(1) NOT NULL DEFAULT 0,
+    CONSTRAINT PK_upload PRIMARY KEY(upload_no),
     CONSTRAINT FK_uploadUser FOREIGN KEY (user_id) 
         REFERENCES user(user_id) 
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE emp (
-    empno INT(8),
+    empno INT(8) AUTO_INCREMENT,
     user_id VARCHAR(50) NOT NULL,
-    estate INT(1),
-    ehiredate DATE,
+    state INT(1) NOT NULL,
+    hiredate DATE NOT NULL,
     CONSTRAINT PK_emp PRIMARY KEY(empno),
     CONSTRAINT FK_empUser FOREIGN KEY(user_id) 
         REFERENCES USER(user_id)
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT UK_emp UNIQUE KEY(user_id)
 );
 
 CREATE TABLE relation (
-    subject_id VARCHAR(50),
-    relation INT(1),
-    login_state INT(1),
-    user_id VARCHAR(50),
+    relation_no INT AUTO_INCREMENT,
+    relation INT(1) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
     rel_memo VARCHAR(255),
-    target_id VARCHAR(50),
-    CONSTRAINT PK_relation PRIMARY KEY(subject_id),
+    target_id VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_relation PRIMARY KEY(relation_no),
     CONSTRAINT FK_relationUser FOREIGN KEY(user_id) 
         REFERENCES USER(user_id)
         ON UPDATE CASCADE ON DELETE CASCADE,
@@ -84,33 +87,35 @@ CREATE TABLE relation (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE board (
-    upload_no INT(8),
-    board_no INT(8),
-    battatch BLOB NULL,
-    CONSTRAINT PK_board PRIMARY KEY(board_no),
+CREATE TABLE upload_img (
+    upload_img_no INT AUTO_INCREMENT,
+    upload_no INT NOT NULL,
+    img_path BLOB NOT NULL,
+    CONSTRAINT PK_board PRIMARY KEY(upload_img_no),
     CONSTRAINT FK_boardUpload FOREIGN KEY(upload_no) 
         REFERENCES upload(upload_no) 
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT UK_upload_img UNIQUE KEY(img_path)
 );
 
 CREATE TABLE matching (
-    upload_no INT(8),
-    trip_no INT(8),
-    tdestination VARCHAR(50),
-    tstart DATE,
-    tend DATE,
-    tmember INT(2),
-    CONSTRAINT PK_trip PRIMARY KEY(trip_no),
+    upload_no INT(8) NOT NULL,
+    matching_no INT(8) AUTO_INCREMENT,
+    tdestination VARCHAR(50) NOT NULL,
+    tstart DATE NOT NULL,
+    tend DATE NOT NULL,
+    tmember INT(2) NOT NULL DEFAULT 1,
+    CONSTRAINT PK_trip PRIMARY KEY(matching_no),
     CONSTRAINT FK_tripUpload FOREIGN KEY(upload_no) 
         REFERENCES upload(upload_no)
-        ON UPDATE CASCADE ON DELETE CASCADE
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT UK_matching UNIQUE KEY(upload_no)
 );
 
 CREATE TABLE favorite (
-    favorite_no INT(8),
-    user_id VARCHAR(50),
-    course_no INT(8),
+    favorite_no INT(8) AUTO_INCREMENT,
+    user_id VARCHAR(50) NOT NULL,
+    course_no INT(8) NOT NULL,
     CONSTRAINT PK_favorite PRIMARY KEY(favorite_no),
     CONSTRAINT FK_favoriteUser FOREIGN KEY(user_id) 
         REFERENCES user(user_id)
@@ -121,12 +126,12 @@ CREATE TABLE favorite (
 );
 
 CREATE TABLE reply (
-    reply_no INT(8),
-    upload_no INT(8),
-    user_id VARCHAR(50),
-    fk_reply_no INT,
+    reply_no INT(8) AUTO_INCREMENT,
+    upload_no INT(8) NOT NULL,
+    user_id VARCHAR(50) NOT NULL,
+    fk_reply_no INT DEFAULT NULL,
     rcontent MEDIUMTEXT NOT NULL,
-    rdate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    rdate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT  PK_reply PRIMARY KEY (reply_no),
     CONSTRAINT FK_replyUploads FOREIGN KEY (upload_no) 
         REFERENCES upload(upload_no)
@@ -140,13 +145,13 @@ CREATE TABLE reply (
 );
 
 CREATE TABLE place(
-    place_no VARCHAR(50),
-    course_no INT(8),
-    tour_id VARCHAR(12),
-    pday INT(2), 
-    porder INT(2),
-    CONSTRAINT PK_place PRIMARY KEY (place_no),
-    CONSTRAINT FK_palceCourse FOREIGN KEY (course_no)
+    place_no INT AUTO_INCREMENT,
+    course_no INT(8) NOT NULL,
+    tour_id VARCHAR(12) NOT NULL,
+    pday INT(2) NOT NULL, 
+    porder INT(2) NOT NULL,
+    CONSTRAINT PK_place PRIMARY KEY(place_no),
+    CONSTRAINT FK_palceCourse FOREIGN KEY(course_no)
         REFERENCES course(course_no)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
