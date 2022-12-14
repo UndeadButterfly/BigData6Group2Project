@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>여행 장소선택</title>
+  <link rel="stylesheet" href="locb.css">
+
+  <link rel="stylesheet" href="../nav_header.css">
+  <!-- <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="../base.css">
+  <script src="./locb.js" defer></script>
+  <script async defter
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4pSdMw_RNfVqiYSSBKYZVB6tbFe8s_jQ&libraries=places&callback=initMap">
+  </script>
+  <script src="./map.js" defer></script>
+</head>
+
+<body>
+
+  <header>
+    <span id="headTitle"><a href="">alonetrip</a></span>
+  </header>
+  <nav>
+    <a href="">
+      <p>여행 코스</p>
+    </a>
+    <a href="">
+      <p>일지</p>
+    </a>
+    <a href="">
+      <p>동행 찾기</p>
+    </a>
+    <a href="">
+      <p>커뮤니티</p>
+    </a>
+  </nav>
+
+
+  <main class="position-relative">
+    <div class="d-flex justify-content-between">
+      <!--==============사용자 장소 선택=======================-->
+      <div id="workspace">
+        <p>
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthLeft"
+            aria-expanded="false" aria-controls="collapseWidthLeft">
+            My places
+          </button>
+        </p>
+        <div style="height: 100%;" class="foldableBox position-absolute">
+          <div class="collapse collapse-horizontal" id="collapseWidthLeft">
+            <div class="card card-body" style="width: 300px;">
+              <!-- 여행 날짜 박스 -->
+              <div id="tripDAte">
+                <p class="my-1">여행 날짜</p>
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="startDate" placeholder="2022-12-25">
+                  <label for="startDate">시작일자</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="date" class="form-control" id="endDate" placeholder="2022-12-30">
+                  <label for="endDate">마지막일자</label>
+                </div>
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="tripDays" placeholder="몇박 몇일">
+                  <label for="tripDays">여행 기간</label>
+                </div>
+              </div>
+              <!-- 유저 장소 지정 박스 -->
+              <div id="myLocPlan">
+                <p class="my-1">장소 지정</p>
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                        aria-controls="panelsStayOpen-collapseOne">
+                        내가 선택한 관광 및 먹거리 장소
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                      aria-labelledby="panelsStayOpen-headingOne">
+                      <div class="accordion-body p-0">
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
+                                alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">한라산</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
+                                alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">한라산</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
+                                alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">한라산</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                      <button class="accordion-button collapsed float-end" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                        aria-controls="panelsStayOpen-collapseTwo">
+                        내가 선택한 숙박 장소
+                      </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                      aria-labelledby="panelsStayOpen-headingTwo">
+                      <div class="accordion-body">
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">호텔</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">호텔</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card p-0" style="width:100%;">
+                          <div class="row g-0">
+                            <div class="col-sm-4">
+                              <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                            </div>
+                            <div class="col-md-8">
+                              <div class="card-body p-1">
+                                <h5 class="card-title">호텔</h5>
+                                <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                                <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                                      class="text-muted">더보기</small></a></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="planGoBtnBox">
+                    <a class="btn btn-outline-primary">플랜짜러 가기</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <!--============= 추천 장소 및 숙박 ================-->
+      <div id="recommend">
+        <p class="d-flex justify-content-end">
+          <button class="btn btn-primary " type="button" id="recommendBtn" onclick="recommendToggle()">
+            추천 장소
+          </button>
+        </p>
+        <div class="foldableBoxRight d-none position-absolute end-0" id="hiddenBox">
+          <div id="collapseWidthRight">
+            <div class="card card-body" style="width: 300px">
+              <!--메뉴 tab button -->
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <button class="nav-link active" id="tourBtn">관광</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" id="foodBtn">먹거리</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" id="sleepBtn">숙박</button>
+                </li>
+              </ul>
+  
+              <!-- 유저 관광장소 지정 박스 -->
+              <div id="recLocCardList">
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">한라산</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hallasan.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- 유저 먹거리장소 지정 박스 -->
+               <div class="d-none" id="recFoodCardList">
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/jejufood.png" class="img-fluid rounded-start" style="height:100%" alt="제주맛집">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">제주맛집</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/jejufood.png" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/jejufood.png" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- 유저 숙박장소 지정 박스 -->
+               <div class="d-none" id="recSleepCardList">
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card p-0" style="width:100%;">
+                  <div class="row g-0">
+                    <div class="col-sm-4">
+                      <img src="/img/hotel.jpg" class="img-fluid rounded-start" style="height:100%" alt="한라산">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body p-1">
+                        <h5 class="card-title">호텔</h5>
+                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
+                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
+                              class="text-muted">더보기</small></a></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 지도 API -->
+    <section id="map" class=""></section>
+  </main>
+
+</body>
+
+</html>
