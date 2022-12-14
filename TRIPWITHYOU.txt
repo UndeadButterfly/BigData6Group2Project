@@ -9,7 +9,7 @@ user_id VARCHAR(50) NOT NULL,
 pw VARCHAR(50) NOT NULL,
 name VARCHAR(10) NOT NULL,
 birth DATE,
-phone VARCHAR(12),
+phone VARCHAR(15),
 gender INT(1) NOT NULL,
 email VARCHAR(30),
 signup DATETIME DEFAULT NOW(),
@@ -51,7 +51,7 @@ hates int(8) NOT NULL DEFAULT 0,
 reports int(2) NOT NULL DEFAULT 0,
 upstate int(1),
 CONSTRAINT PK_upload PRIMARY KEY(upload_no) ,
-CONSTRAINT FK_uploadUser FOREIGN KEY (user_id) REFERENCES user(user_id)
+CONSTRAINT FK_uploadUser FOREIGN KEY (user_id) REFERENCES user(user_id) 
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -70,7 +70,7 @@ r_type INT(1),
 user_id VARCHAR(50),
 memo VARCHAR(255),
 relation_no VARCHAR(50),
-PRIMARY KEY(subject_id),
+PRIMARY KEY(target_id),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -80,8 +80,8 @@ upload_img_no INT(8),
 upload_no INT(8),
 img_path VARCHAR(255),
 CONSTRAINT PK_board PRIMARY KEY(upload_img_no),
-CONSTRAINT FK_boardUpload FOREIGN KEY(upload_no)
-REFERENCES upload(upload_no)
+CONSTRAINT FK_boardUpload FOREIGN KEY(upload_no) 
+REFERENCES upload(upload_no) 
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -94,17 +94,19 @@ start_date date,
 end_date date,
 duration int(3),
 members int(2),
-primary key (tmember),
+primary key (upload_no),
 foreign key(user_id) references user(user_id)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE FAVORITE (
 favorite_no INT(8),
-user_id VARCHAR(50),
+user_id VARCHAR(50),       
 course_no INT(8),
 PRIMARY KEY(favorite_no),
 FOREIGN KEY(user_id) REFERENCES USER(user_id)
+ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(course_no) REFERENCES COURSE(course_no)
 ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -116,21 +118,21 @@ contents mediumtext NOT NULL,
 post_time DATETIME DEFAULT NOW(),
 fk_reply_no int,
 CONSTRAINT  PK_reply PRIMARY KEY (reply_no),
-CONSTRAINT FK_replyuploads FOREIGN KEY (upload_no)
+CONSTRAINT FK_replyuploads FOREIGN KEY (upload_no) 
 REFERENCES upload (upload_no)
 ON UPDATE CASCADE ON DELETE CASCADE,
 CONSTRAINT FK_replyuser FOREIGN KEY (user_id)
-REFERENCES user(user_id)
+REFERENCES user(user_id) 
 ON UPDATE CASCADE ON DELETE  CASCADE,
 CONSTRAINT FK_rereply FOREIGN KEY (fk_reply_no)
-REFERENCES reply(reply_no)
+REFERENCES reply(reply_no) 
 ON UPDATE CASCADE ON DELETE  CASCADE
 );
 
 CREATE TABLE PLACE(
 place_no VARCHAR(50),
 course_no INT(8),
-place_pday INT(2),
+place_pday INT(2), 
 place_porder INT(2),
 primary key(place_no),
 CONSTRAINT FK_palceCourse FOREIGN KEY (course_no)
