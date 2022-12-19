@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/board/list.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        th, td {
+            border: 1px solid #e7e7e7;
+        }
+
+        table {
+            background-color: #99a693;
+        }
+
+        #dfdf {
+            background-color: #8c9db0;
+        }
+    </style>
+</head>
+<body>
+<th:block th:include="headerNav"></th:block>
+<h1>업로드 메인입니다.</h1>
+<p>김오정</p>
+<div style="width: 100%;">
+    <div style="width: 100%;text-align: center;height: 150px;background-color: cornsilk;">
+        <div class="searchCon">
+            <form action="" class="searchBox ps-3">
+                <select class="form-select" name="searchType" id="searchType">
+                    <option value="title">제목</option>
+                    <option value="userId&name">작성자</option>
+                    <option value="contents">내용</option>
+                </select>
+                <span></span>
+                <input type="text" placeholder="search...">
+                <button type="submit">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </button>
+            </form>
+        </div>
+    상단메뉴 입니다.
+    </div>
+    <div style="display:flex;margin: 10px;">
+        <div id="filter" style="width: 200px;">
+            <ul class="list-group sort">
+                정렬순
+                <a href="#" class="list-group-item list-group-item-action">인기순</a>
+                <a href="#" class="list-group-item list-group-item-action">최신순</a>
+            </ul>
+            <ul class="list-group">
+                지역별
+                <a href="#" class="list-group-item list-group-item-action">강원도</a>
+                <a href="#" class="list-group-item list-group-item-action">경기도</a>
+                <a href="#" class="list-group-item list-group-item-action">경상남도</a>
+                <a href="#" class="list-group-item list-group-item-action">경상북도</a>
+                <a href="#" class="list-group-item list-group-item-action">광주광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">대구광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">대전광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">부산광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">서울특별시</a>
+                <a href="#" class="list-group-item list-group-item-action">세종특별자치시</a>
+                <a href="#" class="list-group-item list-group-item-action">울산광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">인천광역시</a>
+                <a href="#" class="list-group-item list-group-item-action">전라남도</a>
+                <a href="#" class="list-group-item list-group-item-action">전라북도</a>
+                <a href="#" class="list-group-item list-group-item-action">제주특별자치도</a>
+                <a href="#" class="list-group-item list-group-item-action">충청남도</a>
+                <a href="#" class="list-group-item list-group-item-action">충청북도</a>
+            </ul>
+
+            <ul class="list-group">
+                여가별
+                <a href="#" class="list-group-item list-group-item-action">관광정보</a>
+                <a href="#" class="list-group-item list-group-item-action">레저/스포츠</a>
+                <a href="#" class="list-group-item list-group-item-action">음식점/맛집</a>
+            </ul>
+            <ul class="list-group">
+                계절별
+                <a href="#" class="list-group-item  list-group-item-action">봄</a>
+                <a href="#" class="list-group-item  list-group-item-action">여름</a>
+                <a href="#" class="list-group-item  list-group-item-action">가을</a>
+                <a href="#" class="list-group-item list-group-item-action">겨울</a>
+            </ul>
+        </div>
+<!--        <th:block th:text="${uploadList}"></th:block>-->
+        <main>
+            <div class="text-end">
+                <a href="/register.do" class="btn btn-outline-secondary">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    글쓰기
+                </a>
+            </div>
+            <div class="contents">
+                <!-- for문으로 .article div 안에 upload 테이블을 가져와서(UploadDao(extends CRUD)의 findAll()를 이용해
+                찾아온 값들(이미지,프로필사진,아이디,이름,좋아요수,댓글수을 이용.) -->
+                <div class="article" th:each="upload : ${uploadList}">
+                    <!-- 사진 클릭 시 이동. detail.do?uploadNo=1 -->
+                    <a th:href="@{detail.do(uploadNo=${upload.upload_no})}">
+                        <!-- upload(board).getImgList[0] 으로 맨 처음 사진을 썸네일로 사용 -->
+                        <th:block th:if="${upload.uploadImgList!=null}">
+                            <img th:src="${upload.uploadImgList[0]}" alt="" class="first">
+                        </th:block>
+                        <th:block th:unless="${upload.uploadImgList!=null}">
+                            <img src="https://via.placeholder.com/300" alt="" class="first">
+                        </th:block>
+                        <!-- 두 번째 이미지 가져오거나/투명도를 낮춘 검은 화면을 호버 시 나타나게 하여 글 제목, 조회수 등 나타나게 하면 좋을 것 같음 -->
+                        <img src="https://via.placeholder.com/300/FFAA55/FFFFFF" alt="" class="second">
+                    </a>
+                    <div class="articleInfo">
+                        <a href="#" class="profileImg">
+                            <!-- 유저의 프로필 사진을 생각하고 넣어두기는 했는데, 프로필 사진이 테이블에 없어서 삭제될 것 같음 -->
+                            <img src="https://via.placeholder.com/50" alt="">
+                        </a>
+                        <div class="user">
+                            <!-- getName,getUserId -->
+                            <a href="#" class="id name" th:text="${upload.user_id}">
+                            </a>
+                            <div class="likes">
+                                <!--  getUplike,getDislike 하트 말고 엄지손가락 업,다운으로 -->
+                                <i class="fa fa-heart-o" aria-hidden="true" th:text="${upload.likes}"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <div>
+        하단 부분입니다.
+    </div>
+</div>
+<footer>
+
+</footer>
+</body>
+</html>

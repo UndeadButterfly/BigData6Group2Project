@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 등록 폼</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <script src="/js/register.js"></script>
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+<th:block th:include="/headerNav"></th:block>
+<div layout:fragment="contents">
+    <form action="/register.do" method="post">
+        <div class="form signup">
+            <div class="form-header">
+                <div class="show-signup">Sign Up</div>
+                <div class="show-reset">Reset</div>
+            </div>
+            <div class="arrow"></div>
+            <div class="form-elements">
+                <div class="form-element">
+                    <input placeholder="아이디" type="text" id="userId" name="userId">
+                </div>
+                <div class="form-element">
+                    <input placeholder="이름" type="text" id="name" name="name">
+                </div>
+                <div class="form-element">
+                    <input placeholder="비밀번호" type="password" name="pw">
+                </div>
+                <div class="form-element">
+                    <input placeholder="비밀번호 확인" type="password" name="pwCheck">
+                </div>
+                <div class="form-element">
+                    <input placeholder="전화번호" type="tel">
+                </div>
+                <div class="form-element">
+                    <button id="submit-btn">회원 가입</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

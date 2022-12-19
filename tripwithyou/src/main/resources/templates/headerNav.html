@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<div class="header">
+    <nav>
+        <div class="inline">
+            <div class="inline-col-group inline-col-group-left" data-col-group="left" style="width: 341px;"></div>
+            <div class="inline-col-group inline-col-group-center" data-col-group="center" style="width: 100%;">
+                <a class="subject" href="/">TRIP WITH YOU</a>
+            </div>
+            <div class="inline-col-group inline-col-group-right" data-col-group="right" style="width:341px;">
+                <div class="right-menu">
+                    <div th:if="${session.loginUser==null}">
+                        <a class="login" href="/user/login.do">로그인</a>
+                    </div>
+                    <!--<div th:if="${session.loginUser!=null}">
+                        <span th:text="${session.loginUser.uname}(${session.loginUser.userId})"></span>
+                        <a class="login" href="/user/logout.do">로그아웃</a>
+                        <a class="mypage" href="/">마이페이지</a>
+                    </div>-->
+                    <a class="service-center" href="/">고객센터</a>
+                </div>
+            </div>
+        </div>
+        <!-- 헤더 안의 내브바 -->
+        <div class="nav">
+            <div><a href="/course/courseMain">문현희천하영천하민</a></div>
+            <div><a href="/matching/matchingMain">구도윤김통정효빈</a></div>
+            <div><a href="/wiki">여행위키</a></div>
+            <div><a href="/upload/uploadMain">김현섭정승연오성훈</a></div>
+        </div>
+    </nav>
+</div>
+</html>
