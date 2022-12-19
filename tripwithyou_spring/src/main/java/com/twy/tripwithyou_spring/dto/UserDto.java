@@ -1,9 +1,10 @@
 package com.twy.tripwithyou_spring.dto;
 
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-
+@Data
 public class UserDto {
     private String userId; //pk user_id
     private String pw;

@@ -1,7 +1,9 @@
 package com.twy.tripwithyou_spring.dto;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class MatchingDto extends UploadDto{
     private int tripNo;
     private int uploadNo;
