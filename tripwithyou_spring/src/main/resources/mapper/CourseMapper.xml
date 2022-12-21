@@ -4,5 +4,48 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
 <mapper namespace="com.twy.tripwithyou_spring.mapper.CourseMapper">
+    <resultMap id="courseMap" type="courseDto" autoMapping="true">
+        <id column="course_no" property="courseNo"/>
+        <result column="upload_no" property="uploadNo"/>
+    </resultMap>
 
+    <select id="findAll" resultMap="courseMap">
+        SELECT * FROM course
+    </select>
+<!--    List<CourseDto> findPaging(PagingDto paging) throws Exception;-->
+    <select id="findPaging" resultMap="courseMap">
+        SELECT * FROM course
+                 ORDER BY ${orderField} ${direct}
+                 LIMIT #{startRow}, #{rows}
+    </select>
+<!--    int count(PagingDto paging);-->
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM course
+    </select>
+<!--    CourseDto findById(String id) throws Exception;-->
+    <select id="findById" resultMap="courseMap">
+        SELECT * FROM course WHERE course_no=#{id}
+    </select>
+    <select id="findByUploadNo" resultType="CourseDto">
+        SELECT * FROM course WHERE upload_no=#{uploadNo}
+    </select>
+    <!--    int deleteById(String id) throws Exception;-->
+    <delete id="deleteById">
+        DELETE FROM course WHERE course_no=#{id}
+    </delete>
+<!--    int updateById(CourseDto dto) throws Exception;-->
+    <update id="updateById">
+        UPDATE course SET
+                          startdate=#{startdate},
+                          enddate=#{enddate},
+                          duration=#{duration},
+                          image=#{image},
+                          budget=#{budget}
+        WHERE course_no=#{courseNo}
+    </update>
+<!--    int insert(CourseDto dto) throws Exception;-->
+    <insert id="insert">
+        INSERT INTO course (startdate, enddate, duration, image, budget, upload_no)
+        VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, ${uploadNo})
+    </insert>
 </mapper>
