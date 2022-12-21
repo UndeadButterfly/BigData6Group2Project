@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <script src="./bootstrap/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="nav_header.css">
+    <link rel="stylesheet" href="card.css">
+    <link rel="stylesheet" href="search-bar.css">
+    <style>
+        .search-results{
+            display: flex;
+            justify-content: center;
+            column-gap: 30px;
+            row-gap: 40px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span id="headTitle"><a href="">alonetrip</a></span>
+    </header>
+    <nav>
+        <a href="./course_main.html"><p>여행 코스</p></a>
+        <a href=""><p>일지</p></a>
+        <a href=""><p>동행 찾기</p></a>
+        <a href=""><p>커뮤니티</p></a>
+    </nav>
+    <form action="./course_search.html" name="search-course" id="search-course">
+        <select name="search-region" id="search-region">
+            <option value="">지역</option>
+            <option value="1">경기도</option>
+            <option value="2">강원도</option>
+            <option value="3">충청북도</option>
+            <option value="4">충청남도</option>
+            <option value="5">경상북도</option>
+            <option value="6">경상남도</option>
+            <option value="7">전라북도</option>
+            <option value="8">전라남도</option>
+        </select>
+        <select name="search-vehicle" id="search-transporation">
+            <option value="">이동 수단</option>
+            <option value="1">자차</option>
+            <option value="2">버스</option>
+            <option value="3">지하철</option>
+            <option value="4">기차</option>
+            <option value="5">비행기</option>
+            <option value="6">배</option>
+        </select>
+        <input type="text" name="search-course-text" id="search-course-text" placeholder="검색...">
+        <button type="submit">검색</button>
+    </form>
+    <main class="container">
+        <div class="search-results">
+
+        </div>
+    </main>
+    <script>
+        let html="";
+        for(let i=0; i<20; i++) {
+            html+=`
+            <button class="custom-card">
+                <div class="card-left">
+                    <img src="./img/winter.jpg" alt="">
+                    <div class="custom-card-text">
+                        <div class="card-top">
+                            <h4 class="card-title">코스 제목</h4>
+                            <label>
+                                <input type="checkbox" value="1">
+                                <span></span>
+                            </label> 
+                        </div>   
+                        <p>여기서부터 저기까지 가는 코스</p>
+                        <a href="./course_detail.html">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
+                    </p>
+                </div>
+            </button>
+            `;
+        }
+        document.querySelector(".search-results").innerHTML=html;
+        const cards = document.querySelectorAll(".custom-card");
+        cards.forEach(card=>{
+            card.addEventListener("click", e=>{
+                card.classList.toggle("course");
+            })
+            card.addEventListener("blur", e=>{
+                card.classList.remove("course");
+            })
+        })
+    </script>
+</body>
+</html>
