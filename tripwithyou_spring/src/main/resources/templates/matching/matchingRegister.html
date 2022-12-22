@@ -8,6 +8,7 @@
 <body>
 <!-- 헤더 -->
 <header class="header">
+
   <div class="inline">
     <div data-col-group="left" class="inline-col-group inline-col-group-left" style="width: 341px;"></div>
     <div data-col-group="center" class="inline-col-group inline-col-group-center" style="width: 100%;">
@@ -55,12 +56,18 @@
 
 <!-- 등록 폼 -->
 <form class="imgChoice" action="" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="userId" value="user1">
   <div>
     <label for="imgChoice"></label>
     <input type="file" id="imgChoice">
   </div>
   <div>
     <input type="text" name="title" placeholder="타이틀">
+  </div>
+  <div>
+    <input type="text" name="tDestination" placeholder="D">
+  </div><div>
+    <input type="text" name="localNo" placeholder="L">
   </div>
   <div>
     <textarea name="contents" id="contents" cols="30" rows="10" placeholder="내용 입력.."></textarea>

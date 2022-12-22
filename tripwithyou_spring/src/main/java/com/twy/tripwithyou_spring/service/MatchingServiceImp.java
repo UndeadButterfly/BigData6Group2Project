@@ -21,10 +21,9 @@ public class MatchingServiceImp implements MatchingService {
         return matchingMapper.findPaging(paging);
     }
 
-
     @Override
     public int register(MatchingDto Match) {
-        return 0;
+        return matchingMapper.insert(Match);
     }
 
     @Override

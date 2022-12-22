@@ -12,8 +12,8 @@
         <result column="user_id" property="userId"/>
     </resultMap>
     <insert id="insert" parameterType="MatchingDto">
-        INSERT INTO matching (tdestination, tmember, title, local_no, user_id)
-            VALUE (#{tDestination},#{tMember}, #{title}, #{localNo}, #{userId})
+        INSERT INTO matching (tdestination, tstart, tend, tmember, title, local_no, user_id)
+            VALUE (#{tDestination}, #{tStart}, #{tEnd}, #{tMember}, #{title}, #{localNo}, #{userId})
     </insert>
     <select id="findByStartAndEnd" resultType="com.twy.tripwithyou_spring.dto.MatchingDto">
         SELECT * FROM matching WHERE tstart= #{tStart} and tend= #{tEnd}
