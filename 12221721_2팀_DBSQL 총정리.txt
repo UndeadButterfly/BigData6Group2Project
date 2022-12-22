@@ -247,6 +247,26 @@ create table zzim
             on update cascade on delete cascade
 );
 
+CREATE TABLE upload_hash(
+	hash_no INT AUTO_INCREMENT,
+	upload_no INT NOT NULL,
+	uptype INT NOT NULL,
+	hash_word VARCHAR(255)	NOT NULL,
+	CONSTRAINT PK_course_hash PRIMARY KEY (hash_no),
+	CONSTRAINT FK_hashUploadNo FOREIGN KEY (upload_no)
+		REFERENCES upload(upload_no)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+CREATE TABLE template_hash(
+	hash_no INT AUTO_INCREMENT,
+	template_no INT NOT NULL,
+	hash_word VARCHAR(255)	NOT NULL,
+	CONSTRAINT PK_template_hash PRIMARY KEY (hash_no),
+	CONSTRAINT FK_hashTemplateNo FOREIGN KEY (template_no)
+		REFERENCES template(tp_no)
+		ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 INSERT INTO USER(user_id,pw,name,uimg,birth,phone,gender,email,latest_login,location,hobby) VALUES
 ('user1','1234','김민수1',null,'1997-10-12','010-0001-0001',0,'minsu1gmail.com','2022-12-25','홍대1','그림'),
 ('user2','1234','김민수2',null,'1997-10-12','010-0002-0002',0,'minsu2gmail.com','2022-12-25','홍대2','그림'),

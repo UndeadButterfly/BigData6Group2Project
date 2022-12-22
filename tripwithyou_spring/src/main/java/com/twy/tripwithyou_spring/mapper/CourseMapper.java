@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface CourseMapper extends CRUD<CourseDto,String> {
+public interface CourseMapper extends CRUD<CourseDto,Integer> {
     List<CourseDto> findAll();
     List<CourseDto> findPaging(PagingDto paging);
     int count(PagingDto paging);
-    CourseDto findById(String id);
-    int deleteById(String id);
+    CourseDto findById(Integer id);
+    int deleteById(Integer id);
     int updateById(CourseDto dto);
     int insert(CourseDto dto);
     CourseDto findByUploadNo(int uploadNo);

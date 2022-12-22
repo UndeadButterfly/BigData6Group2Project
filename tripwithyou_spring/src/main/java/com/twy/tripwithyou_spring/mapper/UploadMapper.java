@@ -7,13 +7,13 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface UploadMapper extends CRUD<UploadDto,String> {
+public interface UploadMapper extends CRUD<UploadDto,Integer> {
     List<UploadDto> findAll();
     List<UploadDto> findPaging(PagingDto paging);
     int count(PagingDto paging);
-    UploadDto findById(String id);
+    UploadDto findById(Integer id);
     List<UploadDto> findByType(int type, PagingDto paging); //추가한것
-    int deleteById(String id);
+    int deleteById(Integer id);
     int updateById(UploadDto dto);
     int insert(UploadDto dto);
 }

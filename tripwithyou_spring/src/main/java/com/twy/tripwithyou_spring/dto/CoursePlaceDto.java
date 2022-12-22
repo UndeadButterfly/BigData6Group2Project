@@ -9,9 +9,9 @@ public class CoursePlaceDto {
     private String address;//address NN
     private String imgPath;//img_path
     private String tel;//tel
-    private String open_hour;//open_hour
+    private String openHour;//open_hour //변경됨
     private Float rate;//rate
-    private int type;//type NN
+    private String type;//type NN
     private int courseNo;//course.course_no fk 1(course):N(CoursePlace) NN
     private int pDay;//pday NN
     private int pOrder;//porder NN

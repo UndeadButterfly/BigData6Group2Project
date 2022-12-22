@@ -36,12 +36,16 @@ public class CourseServiceImp implements CourseService{
             List<CourseDto> courseList = new ArrayList<>();
             for(UploadDto upload : uploadList) {
                 CourseDto course = courseMapper.findByUploadNo(upload.getUploadNo());
-                course.setUploadDto(upload);
                 courseList.add(course);
             }
             courseListsList.add(courseList);
         }
 
         return courseListsList;
+    }
+
+    @Override
+    public CourseDto detail(int courseNo) {
+        return courseMapper.findById(courseNo);
     }
 }

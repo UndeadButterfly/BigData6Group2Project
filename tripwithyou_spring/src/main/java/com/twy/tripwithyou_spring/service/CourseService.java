@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface CourseService {
     List<List<CourseDto>> mainList();
+    CourseDto detail(int courseNo);
 }
