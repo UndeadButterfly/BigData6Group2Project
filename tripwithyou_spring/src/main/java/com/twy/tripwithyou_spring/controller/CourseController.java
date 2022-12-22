@@ -28,22 +28,16 @@ public class CourseController {
         return "/course/courseMain";
     }
 
-    @GetMapping("/course_search")
-    public void search() {}
+    @PostMapping("/courseMain")
+    public void search(){} //검색 실행
+    @GetMapping("/course_search") //검색 결과
+    public void searchResult() {}
     @GetMapping("/course_detail")
     public void detail() {}
-
     @GetMapping("/1pg")
     public void template(){}
-
     @GetMapping("/detailb")
     public void detailForm() {}
-
     @GetMapping("/locb")
     public void placeCollector() {}
-
-    @PostMapping("/locb")
-    public String placeCollectorPost() {
-        return "redirect:/course/course-detail";
-    }
 }
