@@ -3,7 +3,7 @@
 <mapper namespace="com.twy.tripwithyou_spring.mapper.UserMapper">
     <insert id="insert">
         INSERT INTO tripwithyou.user (user_id,tripwithyou.user.name,pw,phone,gender,email,birth) VALUES
-            (#{userId},#{name},#{pw},#{phone}, #{gender},#{email},#{birth})
+            (#{userId},#{name},#{pw},#{phone},#{gender},#{email},#{birth})
     </insert>
     <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.UserDto">
         SELECT * FROM tripwithyou.user where user_id=#{id} and pw=#{pw}

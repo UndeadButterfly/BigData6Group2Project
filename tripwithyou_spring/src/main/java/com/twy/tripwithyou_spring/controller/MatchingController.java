@@ -17,4 +17,10 @@ public class MatchingController {
     public String main(){
         return "/matching/matchingMain";
     }
+    @GetMapping("/matchingRegister.do")
+    public String register(){
+        return "/matching/matchingRegister";
+    }
+    @GetMapping("/matchingDetail.do")
+    public String detail() { return "/matching/matchingDetail";}
 }

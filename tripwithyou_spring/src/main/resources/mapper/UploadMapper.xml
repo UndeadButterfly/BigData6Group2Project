@@ -3,7 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twy.tripwithyou_spring.mapper.UploadMapper">
-
+    <resultMap id="uploadMap" type="uploadDto" autoMapping="true">
+        <id column="upload_no" property="uploadNo"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
     <!--  CRUD.List<T> findAll();  -->
     <select id="findAll" resultType="UploadDto">
         SELECT * FROM upload
@@ -33,13 +36,18 @@
         UPDATE UPLOAD SET
         title=#{title},
         contents=#{contents},
+        postdate=#{postdate},
         upstate=#{upstate}
-        WHERE user_id=#{user_id}
+        WHERE upload_no=#{uploadNo}
     </update>
     <!--    int insert(T dto);-->
     <insert id="insert" parameterType="UploadDto">
         INSERT INTO Upload (upType,user_id,title,contents,upstate)
         VALUES (#{upType},#{user_id},#{title},#{contents},#{upstate})
     </insert>
+    <select id="findByType" resultMap="uploadMap">
+        SELECT * FROM upload WHERE uptype=#{type} ORDER BY ${paging.orderField} ${paging.direct}
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
 
 </mapper>

@@ -9,10 +9,11 @@ public class UserDto {
     private String userId; //pk user_id
     private String pw;
     private String name;
+    private String uimg;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     private String phone; //uk
-    private int gender; //1 남성 2 여자
+    private int gender; //0 남성 1 여자
     private String email; //uk
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date signup; //default CURRENT_TIME_STAMP()
