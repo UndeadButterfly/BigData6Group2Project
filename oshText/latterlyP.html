@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html leng="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="latterly.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.19/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.19/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.19/dist/js/uikit-icons.min.js"></script>
+    <title>TRIP WITH YOU</title>
+</head>
+<bady>
+    <header class="header">
+        <div class="inline">
+            <div data-col-group="left" class="inline-col-group inline-col-group-left" style="width: 341px;"></div>
+            <div data-col-group="center" class="inline-col-group inline-col-group-center" style="width: 100%;">
+                <a class="subject" href="index.html">TRIP WITH YOU</a>
+            </div>
+            <div data-col-group="right" class="inline-col-group inline-col-group-right" style="width:341px;">
+                <div class="right-menu">
+                    <a class="login" href="#">로그인</a>
+                    <a class="mypage" href="#">마이페이지</a>
+                    <a class="service-center" href="#">고객센터</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 헤더 안의 내브바 -->
+        <div class="nav">
+            <div><a href="#">플래너</a></div>
+            <div><a href="#">동행찾기</a></div>
+            <div><a href="#">커뮤니티</a></div>
+            <div><a href="#">여행후기</a></div>
+        </div>
+    </header>
+    <div>
+    <head>
+        <meta charset="UTF-8">
+        <title>게시글 상세</title>
+    </head>
+    <div layout:fragment="contents">
+        <h1>
+            <span th:text="${boardNo}"></span>. 게시글 상세 페이지
+        </h1>
+        <p class="uk-text-right">
+            조회수 : <span class="uk-badge" th:text="${board.views}"></span>
+        </p>
+        <p class="uk-text-right">
+            <a class="uk-button uk-button-small uk-button-primary"
+               th:href="@{'/board/{boardNo}/modify.do'(boardNo=${board.boardNo})}">수정 폼</a>
+        </p>
+    </div>
+    <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+
+        <ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m">
+            <li>
+                <img src="images/travel/architecture-white-building-palace-travel-landmark-911888-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>1</h1></div>
+            </li>
+            <li>
+                <img src="images/eat/coffee-coffee-bean-roast-aroma-bean-food-297-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>2</h1></div>
+            </li>
+            <li>
+                <img src="images/hobby/beach-landscape-sea-coast-nature-ocean-1007888-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>3</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/beach-landscape-sea-tree-water-nature-628743-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>4</h1></div>
+            </li>
+            <li>
+                <img src="images/eat/dish-meal-food-produce-vegetable-ceramic-1165031-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>5</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/beach-landscape-sea-tree-water-nature-628743-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>6</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/architecture-white-building-palace-travel-landmark-911888-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>7</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/beach-landscape-sea-tree-water-nature-628743-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>8</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/architecture-white-building-palace-travel-landmark-911888-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>9</h1></div>
+            </li>
+            <li>
+                <img src="images/travel/beach-landscape-sea-tree-water-nature-628743-pxhere.com.jpg" width="400" height="600" alt="">
+                <div class="uk-position-center uk-panel"><h1>10</h1></div>
+            </li>
+        </ul>
+
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+    </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="userBoardNo">번호 : </label>
+            <div class="uk-inline uk-form-width-large">
+                <input class="uk-input uk-form-blank" type="text" readonly id="userBoardNo"
+                       th:value="${board.boardNo}" name="boardNo">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="boardTitle">제목 : </label>
+            <div class="uk-inline uk-form-width-large">
+                <input class="uk-input uk-form-blank" type="text" readonly id="boardTitle"
+                       th:value="${board.title}" name="title">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="boardUserId">글쓴이(id) : </label>
+            <div class="uk-inline uk-form-width-large">
+                <input class="uk-input uk-form-blank" type="text" readonly id="boardUserId"
+                       th:value="${board.userId}" name="userId">
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="boardUserId">글쓴이(이름,이메일) : </label>
+            <div class="uk-inline uk-padding-small uk-form-width-large">
+                <span th:text="${board.user.name}"></span>
+                , <span th:text="${board.user.email}"></span>
+            </div>
+        </div>
+        <div class="uk-margin">
+            <label class="uk-form-label" for="boardPostTime">게시일 : </label>
+            <div class="uk-inline uk-form-width-large">
+                <input class="uk-input uk-form-blank" type="text" readonly id="boardPostTime"
+                       th:value="${#calendars.format(board.postTime,'yyyy년 MM월 dd일 HH:mm:ss')}" name="postTime">
+            </div>
+
+        <div class="uk-margin">
+            <label class="uk-form-label" for="boardContents">내용 : </label>
+            <div class="uk-inline uk-form-width-large">
+            <textarea class="uk-textarea uk-form-blank" rows="5" readonly id="boardContents"
+                      th:text="${board.contents}" name="contents"></textarea>
+            </div>
+        </div>
+        </div>
+</bady>
+</html>
