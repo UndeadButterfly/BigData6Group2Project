@@ -11,6 +11,6 @@ public class TempPlaceDto {
     private String tel;//tel
     private String openHour;//open_hour
     private Float rate;//rate
-    private int type;//type NN
+    private String type;//type NN
     private int tpNo;//template.tp_no fk 1(template):N(tempPlace)
 }
