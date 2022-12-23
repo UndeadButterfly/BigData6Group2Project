@@ -41,52 +41,38 @@
     ">새로 만들기</a>
 <main class="container">
     <a href="/template/list" class="course-create-btn">코스 만들기</a>
+    <th:block th:each="courseList:${courseListsList}">
+        <div class="course-list">
+            <p class="course-list-title">겨울에 가기 좋은 코스</p>
+            <div class="cards-container">
+                <ul class="cards-list">
+                    <button th:each="course:${courseList}" class="custom-card">
+                        <div class="card-left">
+                            <img src="/img/course/winter.jpg" alt="">
+                            <div class="custom-card-text">
+                                <div class="card-top">
+                                    <h4 class="card-title" th:text="${course.getUploadDto().title}"></h4>
+                                    <label>
+                                        <input type="checkbox" value="1"><span></span>
+                                    </label>
+                                </div>
+                                <p th:text="${course.getUploadDto().userId}"></p>
+                                <!--          <a href="/course/{courseNo}/detail">자세히 보기</a> 로 바꾸기              -->
+                                <a th:href="@{'/course/{courseNo}/detail'(courseNo=${course.courseNo})}">자세히 보기</a>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
+                            </p>
+                        </div>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </th:block>
 </main>
 <script>
-    let html="";
-    for(let i=0; i<5; i++) {
-        html+=`
-            <div class="course-list">
-                <p class="course-list-title">겨울에 가기 좋은 코스</p>
-                <div class="cards-container">
-                    <ul class="cards-list">
-                    </ul>
-                </div>
-            </div>
-            `;
-    }
-    document.querySelector(".container").innerHTML=html;
-    html="";
-    for(let i=0; i<10; i++) {
-        html+=`
-            <button class="custom-card">
-                <div class="card-left">
-                    <img src="https://place-hold.it/300x500/${i}${i+1}${i}${i+1}${i}${i+1}" alt="">
-                    <div class="custom-card-text">
-                        <div class="card-top">
-                            <h4 class="card-title">코스 제목</h4>
-                            <label>
-                                <input type="checkbox" value="1">
-                                <span></span>
-                            </label>
-                        </div>
-                        <p>여기서부터 저기까지 가는 코스</p>
-<!--          <a href="/course/{courseNo}/detail">자세히 보기</a> 로 바꾸기              -->
-                        <a href="/course/1/detail">자세히 보기</a>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
-                    </p>
-                </div>
-            </button>
-            `;
-    }
-    const cardLists=document.querySelectorAll(".cards-list");
-    cardLists.forEach(cardList=>{
-        cardList.innerHTML=html;
-    })
     const cards = document.querySelectorAll(".custom-card");
     cards.forEach(card=>{
         card.addEventListener("click", e=>{

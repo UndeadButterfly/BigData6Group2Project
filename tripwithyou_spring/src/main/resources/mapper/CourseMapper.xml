@@ -31,7 +31,7 @@
     <select id="findById" resultMap="courseMap">
         SELECT * FROM course WHERE course_no=#{id}
     </select>
-    <select id="findByUploadNo" resultType="CourseDto">
+    <select id="findByUploadNo" resultMap="courseMap">
         SELECT * FROM course WHERE upload_no=#{uploadNo}
     </select>
     <!--    int deleteById(String id) throws Exception;-->

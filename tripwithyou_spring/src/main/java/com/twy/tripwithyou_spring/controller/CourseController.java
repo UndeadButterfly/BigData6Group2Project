@@ -31,9 +31,6 @@ public class CourseController {
     @GetMapping("/courseMain")
     public String main(Model model) {
         List<List<CourseDto>> courseListsList = courseService.mainList();
-        for (List<CourseDto> list : courseListsList) {
-            System.out.println(list);
-        }
         model.addAttribute("courseListsList", courseListsList);
         return "/course/courseMain";
     }
