@@ -9,7 +9,7 @@
         (#{userId},#{name},#{pw},#{phone}, #{gender},#{email},#{birth})
     </insert>
     <!--    id: 해당 타입의 method 전달-->
-    <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.UserDto">
+    <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.User">
         SELECT * FROM USER WHERE user_id = #{id} AND pw =#{pw}
     </select>
 </mapper>
