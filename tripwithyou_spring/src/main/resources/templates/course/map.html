@@ -33,7 +33,7 @@
                 <div class="collapse collapse-horizontal" id="collapseWidthLeft">
                     <div class="card card-body" style="width: 300px;">
                         <!-- 여행 날짜 박스 -->
-                        <div id="tripDAte">
+                        <form name="search" action="" method="POST" id="tripDAte">
                             <p class="my-1">여행 날짜</p>
                             <div class="form-floating mb-3">
                                 <input type="date" class="form-control" id="startDate" placeholder="2022-12-25">
@@ -47,7 +47,12 @@
                                 <input type="text" class="form-control" id="tripDays" placeholder="몇박 몇일">
                                 <label for="tripDays">여행 기간</label>
                             </div>
-                        </div>
+                            <div>
+                                <input type="text">
+                                <label for="">장소 검색:</label>
+                                <button type="submit"></button>
+                            </div>
+                        </form>
                         <!-- 유저 장소 지정 박스 -->
                         <div id="myLocPlan">
                             <p class="my-1">장소 지정</p>
