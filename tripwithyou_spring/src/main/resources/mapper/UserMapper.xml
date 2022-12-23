@@ -5,7 +5,7 @@
         <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
 <mapper namespace="com.twy.tripwithyou_spring.mapper.UserMapper">
     <!--    id: 해당 타입의 method 전달-->
-    <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.UserDto">
+    <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.User">
         SELECT * FROM USER WHERE user_id = #{id} AND pw =#{pw}
     </select>
 </mapper>
