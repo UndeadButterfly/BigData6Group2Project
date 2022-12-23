@@ -97,6 +97,7 @@ create table matching
     title        varchar(255)  not null,
     local_no     int           not null,
     user_id      varchar(50)   not null,
+    contents     varchar(255)  null,
     constraint matching_local_no_local_no_fk
         foreign key (local_no) references local_no (local_no)
             on update cascade on delete cascade,
@@ -104,6 +105,8 @@ create table matching
         foreign key (user_id) references user (user_id)
             on update cascade on delete cascade
 );
+
+
 
 create table matching_img
 (
