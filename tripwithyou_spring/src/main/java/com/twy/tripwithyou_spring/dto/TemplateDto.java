@@ -11,4 +11,6 @@ public class TemplateDto {
     private String content;//content LongText
     private Date postdate;//postdate NN default NOW()
     private Date tpUpdate;//tp_update NN default NOW()
+    private int uploadNo; //FK UK NN upload_no
+    private UploadDto uploadDto;
 }
