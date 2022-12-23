@@ -20,7 +20,7 @@
 </head>
 <body>
     <th:block th:include="headerNav"></th:block>
-    <form action="/course/course_search" name="search-course" id="search-course">
+    <form action="/course/searchResult" name="search-course" id="search-course">
         <select name="search-region" id="search-region">
             <option value="">지역</option>
             <option value="1">경기도</option>
@@ -65,7 +65,8 @@
                             </label> 
                         </div>   
                         <p>여기서부터 저기까지 가는 코스</p>
-                        <a href="/course/course_detail">자세히 보기</a>
+                        <!--/course/{courseNo}/detail로 바꾸기-->
+                        <a href="/course/1/detail">자세히 보기</a>
                     </div>
                 </div>
                 <div class="card-right">

@@ -13,7 +13,7 @@
 </head>
 <body>
 <th:block th:include="headerNav"></th:block>
-<form action="/course/course_search" name="search-course" id="search-course">
+<form action="/course/searchResult" name="search-course" id="search-course">
     <select name="search-region" id="search-region">
         <option value="">지역</option>
         <option value="1">경기도</option>
@@ -33,14 +33,14 @@
     <input type="text" name="search-course-text" id="search-course-text" placeholder="검색...">
     <button type="submit">검색</button>
 </form>
-<a href="/course/1pg" style="
+<a href="/template/list" style="
     padding: 5px 15px;
     background-color: rgb(255, 166, 166);
     color: #fff;
     font-weight: bold;
     ">새로 만들기</a>
 <main class="container">
-    <a href="/course/1pg" class="course-create-btn">코스 만들기</a>
+    <a href="/template/list" class="course-create-btn">코스 만들기</a>
 </main>
 <script>
     let html="";
@@ -71,7 +71,8 @@
                             </label>
                         </div>
                         <p>여기서부터 저기까지 가는 코스</p>
-                        <a href="/course/course_detail">자세히 보기</a>
+<!--          <a href="/course/{courseNo}/detail">자세히 보기</a> 로 바꾸기              -->
+                        <a href="/course/1/detail">자세히 보기</a>
                     </div>
                 </div>
                 <div class="card-right">

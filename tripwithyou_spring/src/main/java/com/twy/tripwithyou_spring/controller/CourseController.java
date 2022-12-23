@@ -44,6 +44,17 @@ public class CourseController {
     @PostMapping("/searchBar")
     public void search(List<String> searchWords) {}
 
+//    ------------------------TEMPORARY----------------------
+    @PostMapping("/courseMain")
+    public String tempSearch(){
+        return "redirect:/course/searchResult";
+    }
+    @PostMapping("/searchResult")
+    public String temp2Search(){
+        return "redirect:/course/searchResult";
+    }
+//    ------------------------TEMPORARY----------------------
+
     @GetMapping("/searchResult") //검색 결과
     public void searchResult() {
     }
@@ -87,13 +98,17 @@ public class CourseController {
     public void register(Model model) {}
 
     @PostMapping("/register")
-    public void register(CourseDto course,
-                         List<CoursePlaceDto> coursePlaceList,
-                         List<VehicleDto> vehicleList) {
+//    public String register(CourseDto course,
+//                         List<CoursePlaceDto> coursePlaceList,
+//                         List<VehicleDto> vehicleList) {
+    public String register() {
+        return "redirect:/course/1/detail";
     }
 
     @GetMapping("/map")
     public void map() {}
     @PostMapping("/map")
-    public void map(List<String> placeIdList) {}
+    public String map(List<String> placeIdList) {
+        return "redirect:/course/register";
+    }
 }
