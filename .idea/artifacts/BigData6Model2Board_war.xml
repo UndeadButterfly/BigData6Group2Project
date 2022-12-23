@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="BigData6Model2Board:war">
+    <output-path>$PROJECT_DIR$/../BigData6Model2Board/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>BigData6Model2Board</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="BigData6Model2Board-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="BigData6Model2Board:war exploded" />
+    </root>
+  </artifact>
+</component>
