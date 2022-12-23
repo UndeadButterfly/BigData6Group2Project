@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/course/base.css">
+    <link rel="stylesheet" href="/css/course/card.css">
+    <link rel="stylesheet" href="/css/course/search-bar.css">
+</head>
+<body>
+<th:block th:include="headerNav"></th:block>
+<form action="/course/course_search" name="search-course" id="search-course">
+    <select name="search-region" id="search-region">
+        <option value="">지역</option>
+        <option value="1">경기도</option>
+        <option value="2">강원도</option>
+        <option value="3">충청북도</option>
+        <option value="4">충청남도</option>
+        <option value="5">경상북도</option>
+        <option value="6">경상남도</option>
+        <option value="7">전라북도</option>
+        <option value="8">전라남도</option>
+    </select>
+    <select name="search-vehicle" id="search-transporation">
+        <option value="">정렬 방법</option>
+        <option value="LIKE">인기순</option>
+        <option value="POST_DATE">최신순</option>
+    </select>
+    <input type="text" name="search-course-text" id="search-course-text" placeholder="검색...">
+    <button type="submit">검색</button>
+</form>
+<a href="/course/1pg" style="
+    padding: 5px 15px;
+    background-color: rgb(255, 166, 166);
+    color: #fff;
+    font-weight: bold;
+    ">새로 만들기</a>
+<main class="container">
+    <a href="/course/1pg" class="course-create-btn">코스 만들기</a>
+</main>
+<script>
+    let html="";
+    for(let i=0; i<5; i++) {
+        html+=`
+            <div class="course-list">
+                <p class="course-list-title">겨울에 가기 좋은 코스</p>
+                <div class="cards-container">
+                    <ul class="cards-list">
+                    </ul>
+                </div>
+            </div>
+            `;
+    }
+    document.querySelector(".container").innerHTML=html;
+    html="";
+    for(let i=0; i<10; i++) {
+        html+=`
+            <button class="custom-card">
+                <div class="card-left">
+                    <img src="https://place-hold.it/300x500/${i}${i+1}${i}${i+1}${i}${i+1}" alt="">
+                    <div class="custom-card-text">
+                        <div class="card-top">
+                            <h4 class="card-title">코스 제목</h4>
+                            <label>
+                                <input type="checkbox" value="1">
+                                <span></span>
+                            </label>
+                        </div>
+                        <p>여기서부터 저기까지 가는 코스</p>
+                        <a href="/course/course_detail">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
+                    </p>
+                </div>
+            </button>
+            `;
+    }
+    const cardLists=document.querySelectorAll(".cards-list");
+    cardLists.forEach(cardList=>{
+        cardList.innerHTML=html;
+    })
+    const cards = document.querySelectorAll(".custom-card");
+    cards.forEach(card=>{
+        card.addEventListener("click", e=>{
+            card.classList.toggle("course");
+        })
+        card.addEventListener("blur", e=>{
+            card.classList.remove("course");
+        })
+    })
+</script>
+</body>
+</html>
