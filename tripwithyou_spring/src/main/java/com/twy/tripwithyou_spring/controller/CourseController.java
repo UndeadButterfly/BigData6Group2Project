@@ -7,10 +7,12 @@ import com.twy.tripwithyou_spring.service.CoursePlaceService;
 import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
 import com.twy.tripwithyou_spring.service.CourseService;
 import com.twy.tripwithyou_spring.service.VehicleService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -92,7 +94,9 @@ public class CourseController {
     public void modify(){}
 
     @GetMapping("/register")
-    public void register(Model model) {}
+    public String register(Model model) {
+        return "/course/register";
+    }
 
     @PostMapping("/register")
 //    public String register(CourseDto course,
@@ -105,7 +109,10 @@ public class CourseController {
     @GetMapping("/map")
     public void map() {}
     @PostMapping("/map")
-    public String map(List<String> placeIdList) {
+    public String map(HttpSession session,
+                      @RequestParam(name = "placeId") List<String> placeIdList) {
+        System.out.println(placeIdList);
+        session.setAttribute("placeIdList", placeIdList);
         return "redirect:/course/register";
     }
 }

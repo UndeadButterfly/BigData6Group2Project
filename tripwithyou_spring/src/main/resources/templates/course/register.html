@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>여행 계획 상세페이지</title>
@@ -18,134 +17,21 @@
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="/js/course/detailDrag.js" defer></script>
-
+    <script src="/js/course/place_id_find.js" defer></script>
 </head>
 
 <body>
 <th:block th:include="headerNav"></th:block>
+<!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
 <!-- 장소선택 사이드 바 -->
+<th:block th:each="placeId:${session.placeIdList}">
+    <input type="text" th:value="${placeId}" class="placeIdDiv" style="display:none" readonly></input>
+</th:block>
+<div id="map" style="display:none"></div>
 <div class="position-fixed mx-3 p-3" id="locList">
     <span class="my-2">선택한 장소(drag & paste)</span>
     <div class="overflow-auto dragBox" id="locListCard" style="height: 50vh;">
         <!-- #1 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">1 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #2 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">2 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #3 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">3 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #4 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">4 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #5 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">6 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #6 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">6 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- #7 card -->
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;">
-            <div class="row g-0">
-                <div class="col-sm-4">
-                    <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start" style="height:100%"
-                         alt="한라산">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body p-1">
-                        <h5 class="card-title">7 한라산</h5>
-                        <p class="card-text p-0 m-0 ">제주특별자치도 제주시 오등동 1100로 2070-61</p>
-                        <div class="moreInfo text-end"><a class="card-text p-0 m-0" href="#"><small
-                                class="text-muted">더보기</small></a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- 대중교통 선택 사이드 바 -->

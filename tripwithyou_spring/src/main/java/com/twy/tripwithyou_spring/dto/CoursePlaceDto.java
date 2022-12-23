@@ -16,4 +16,11 @@ public class CoursePlaceDto {
     private int pDay;//pday NN
     private int pOrder;//porder NN
     private String memo;//memo mediumtext
+
+    public CoursePlaceDto(){}
+    public CoursePlaceDto(String name, String address, Float rate) {
+        this.name = name;
+        this.address = address;
+        this.rate = rate;
+    }
 }
