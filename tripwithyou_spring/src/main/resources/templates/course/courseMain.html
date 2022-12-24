@@ -13,7 +13,7 @@
 </head>
 <body>
 <th:block th:include="headerNav"></th:block>
-<form action="/course/course_search" name="search-course" id="search-course">
+<form action="/course/searchResult" name="search-course" id="search-course">
     <select name="search-region" id="search-region">
         <option value="">지역</option>
         <option value="1">경기도</option>
@@ -33,59 +33,46 @@
     <input type="text" name="search-course-text" id="search-course-text" placeholder="검색...">
     <button type="submit">검색</button>
 </form>
-<a href="/course/1pg" style="
+<a href="/template/list" style="
     padding: 5px 15px;
     background-color: rgb(255, 166, 166);
     color: #fff;
     font-weight: bold;
     ">새로 만들기</a>
 <main class="container">
-    <a href="/course/1pg" class="course-create-btn">코스 만들기</a>
+    <a href="/template/list" class="course-create-btn">코스 만들기</a>
+    <th:block th:each="courseList:${courseListsList}">
+        <div class="course-list">
+            <p class="course-list-title">겨울에 가기 좋은 코스</p>
+            <div class="cards-container">
+                <ul class="cards-list">
+                    <button th:each="course:${courseList}" class="custom-card">
+                        <div class="card-left">
+                            <img src="/img/course/winter.jpg" alt="">
+                            <div class="custom-card-text">
+                                <div class="card-top">
+                                    <h4 class="card-title" th:text="${course.getUploadDto().title}"></h4>
+                                    <label>
+                                        <input type="checkbox" value="1"><span></span>
+                                    </label>
+                                </div>
+                                <p th:text="${course.getUploadDto().userId}"></p>
+                                <!--          <a href="/course/{courseNo}/detail">자세히 보기</a> 로 바꾸기              -->
+                                <a th:href="@{'/course/{courseNo}/detail'(courseNo=${course.courseNo})}">자세히 보기</a>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
+                            </p>
+                        </div>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </th:block>
 </main>
 <script>
-    let html="";
-    for(let i=0; i<5; i++) {
-        html+=`
-            <div class="course-list">
-                <p class="course-list-title">겨울에 가기 좋은 코스</p>
-                <div class="cards-container">
-                    <ul class="cards-list">
-                    </ul>
-                </div>
-            </div>
-            `;
-    }
-    document.querySelector(".container").innerHTML=html;
-    html="";
-    for(let i=0; i<10; i++) {
-        html+=`
-            <button class="custom-card">
-                <div class="card-left">
-                    <img src="https://place-hold.it/300x500/${i}${i+1}${i}${i+1}${i}${i+1}" alt="">
-                    <div class="custom-card-text">
-                        <div class="card-top">
-                            <h4 class="card-title">코스 제목</h4>
-                            <label>
-                                <input type="checkbox" value="1">
-                                <span></span>
-                            </label>
-                        </div>
-                        <p>여기서부터 저기까지 가는 코스</p>
-                        <a href="/course/course_detail">자세히 보기</a>
-                    </div>
-                </div>
-                <div class="card-right">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum doloremque ex veniam dolorem nesciunt pariatur.
-                    </p>
-                </div>
-            </button>
-            `;
-    }
-    const cardLists=document.querySelectorAll(".cards-list");
-    cardLists.forEach(cardList=>{
-        cardList.innerHTML=html;
-    })
     const cards = document.querySelectorAll(".custom-card");
     cards.forEach(card=>{
         card.addEventListener("click", e=>{

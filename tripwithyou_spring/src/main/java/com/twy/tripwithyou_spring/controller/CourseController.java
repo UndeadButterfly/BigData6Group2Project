@@ -7,10 +7,12 @@ import com.twy.tripwithyou_spring.service.CoursePlaceService;
 import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
 import com.twy.tripwithyou_spring.service.CourseService;
 import com.twy.tripwithyou_spring.service.VehicleService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,9 +33,6 @@ public class CourseController {
     @GetMapping("/courseMain")
     public String main(Model model) {
         List<List<CourseDto>> courseListsList = courseService.mainList();
-        for (List<CourseDto> list : courseListsList) {
-            System.out.println(list);
-        }
         model.addAttribute("courseListsList", courseListsList);
         return "/course/courseMain";
     }
@@ -43,6 +42,17 @@ public class CourseController {
 
     @PostMapping("/searchBar")
     public void search(List<String> searchWords) {}
+
+//    ------------------------TEMPORARY----------------------
+    @PostMapping("/courseMain")
+    public String tempSearch(){
+        return "redirect:/course/searchResult";
+    }
+    @PostMapping("/searchResult")
+    public String temp2Search(){
+        return "redirect:/course/searchResult";
+    }
+//    ------------------------TEMPORARY----------------------
 
     @GetMapping("/searchResult") //검색 결과
     public void searchResult() {
@@ -84,16 +94,25 @@ public class CourseController {
     public void modify(){}
 
     @GetMapping("/register")
-    public void register(Model model) {}
+    public String register(Model model) {
+        return "/course/register";
+    }
 
     @PostMapping("/register")
-    public void register(CourseDto course,
-                         List<CoursePlaceDto> coursePlaceList,
-                         List<VehicleDto> vehicleList) {
+//    public String register(CourseDto course,
+//                         List<CoursePlaceDto> coursePlaceList,
+//                         List<VehicleDto> vehicleList) {
+    public String register() {
+        return "redirect:/course/1/detail";
     }
 
     @GetMapping("/map")
     public void map() {}
     @PostMapping("/map")
-    public void map(List<String> placeIdList) {}
+    public String map(HttpSession session,
+                      @RequestParam(name = "placeId") List<String> placeIdList) {
+        System.out.println(placeIdList);
+        session.setAttribute("placeIdList", placeIdList);
+        return "redirect:/course/register";
+    }
 }
