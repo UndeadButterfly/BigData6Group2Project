@@ -31,12 +31,11 @@ function initMap() {
 // position : 마커를 놓을 자리
 // map : 마커가 표시될 지도
 // 지도에 주어진 좌표에 마커를 찍는다
-function placeMarker(position, map, placeId) {
+function placeMarker(position, map) {
     if(marker)marker.setMap(null);
     marker = new google.maps.Marker({
         position: position,
-        map: map,
-        placeId: placeId
+        map: map
     });
     map.panTo(position);
 }
@@ -46,7 +45,7 @@ function searchPlace(queryString) {
     //요청 쿼리와 받고 싶은 필드들 (정보들)
     let request = {
         query: queryString,
-        fields: ['name', 'type', 'geometry', 'formatted_address', 'place_id', 'rating', 'user_ratings_total'],
+        fields: ['name', 'geometry', 'formatted_address', 'rating'],
     };
 
     let service = new google.maps.places.PlacesService(map);
@@ -58,24 +57,21 @@ function searchPlace(queryString) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             for (let i = 0; i < results.length; i++) {
                 let json= {
-                    name : (results[i].name)?results[i].name:null,
-                    address : (results[i].formatted_address)?`${results[i].formatted_address}`:null,
-                    rate : (results[i].rating)?results[i].rating:null
+                    name : results[i].name,
+                    address : results[i].formatted_address,
+                    rate : results[i].rating
                 }
                 searchResults.innerHTML += `
                             <div class="place" 
                                 data-lat="${results[i].geometry.location.lat()}"
                                 data-lng="${results[i].geometry.location.lng()}"
                                 data-name="${results[i].name}"
-                                data-address="${results[i].formatted_address}"
-                                data-place_id="${results[i].place_id}">
+                                data-address="${results[i].formatted_address}">
                                     <p>${results[i].name}</p>
                                     <p>${results[i].formatted_address}</p>
                                     <p>${results[i].rating}</p>
-                                    <p>${results[i].user_ratings_total}</p>
-                                    <p>${results[i].type}</p>
                                     <!--전송할 값-->   
-                                    <input type="checkbox" name="placeId" value="${results[i].place_id}" checked>            
+                                    <textarea name="json" id="" cols="30" rows="10" style="display: none;">${JSON.stringify(json)}</textarea>           
                                     <button type="button" class="find">찾아가기</button>
                                     <button type="button" class="delete">삭제하기</button>
                                     <span class="addBtnContainer">
@@ -98,7 +94,7 @@ function buttonFunctions() {
         const addBtn = place.querySelector(".add");
         findBtn.addEventListener("click", e => {
             let position = new google.maps.LatLng(place.dataset.lat, place.dataset.lng);
-            placeMarker(position, map, place.dataset.placeId);
+            placeMarker(position, map);
         });
         deleteBtn.addEventListener("click", e => {
             place.remove();

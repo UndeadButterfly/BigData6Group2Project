@@ -24,8 +24,8 @@
 <th:block th:include="headerNav"></th:block>
 <!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
 <!-- 장소선택 사이드 바 -->
-<th:block th:each="placeId:${session.placeIdList}">
-    <input type="text" th:value="${placeId}" class="placeIdDiv" style="display:none" readonly></input>
+<th:block th:each="json:${session.jsonList}">
+    <input type="text" th:value="${json}" class="placeIdDiv" style="display:none" readonly></input>
 </th:block>
 <div id="map" style="display:none"></div>
 <div class="position-fixed mx-3 p-3" id="locList">

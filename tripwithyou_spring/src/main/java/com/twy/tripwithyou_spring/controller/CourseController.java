@@ -110,9 +110,9 @@ public class CourseController {
     public void map() {}
     @PostMapping("/map")
     public String map(HttpSession session,
-                      @RequestParam(name = "placeId") List<String> placeIdList) {
-        System.out.println(placeIdList);
-        session.setAttribute("placeIdList", placeIdList);
+                      @RequestParam(name = "json") List<String> jsonList) {
+        System.out.println(jsonList);
+        session.setAttribute("jsonList", jsonList);
         return "redirect:/course/register";
     }
 }
