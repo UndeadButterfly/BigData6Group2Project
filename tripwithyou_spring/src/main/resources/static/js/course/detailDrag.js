@@ -4,9 +4,11 @@ const containers = document.querySelectorAll(".dragBox");
 draggables.forEach(draggable => {
   draggable.addEventListener("dragstart", () => {
     draggable.classList.add("dragging");
+    dragging.innerHTML='<input type="text" value="memo내용입니다."></input>'
     console.log("dragStart")
   });
- 
+
+
   draggable.addEventListener("dragend", () => {
     draggable.classList.remove("dragging");
     console.log("dragEnd");

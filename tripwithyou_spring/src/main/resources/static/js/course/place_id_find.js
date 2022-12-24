@@ -21,20 +21,20 @@ function initMap() {
             .then(({ results }) => {
                 if (results[0]) {
                     locListCard.innerHTML+=`
-                            <div className="card p-0 draggable item" draggable="true" style="width:100%;">
-                                <div className="row g-0">
-                                    <div className="col-sm-4">
-                                        <img src="/img/course/hallasan.jpg" className="img-fluid rounded-start"
+                            <div class="card p-0 draggable item" draggable="true" style="width:100%;">
+                                <div class="row g-0">
+                                    <div class="col-sm-4">
+                                        <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start"
                                              style="height:100%"
                                              alt="한라산">
                                     </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body p-1">
-                                            <h5 className="card-title">${results[0].name}</h5>
-                                            <p className="card-text p-0 m-0 ">${results[0].formatted_address}</p>
-                                            <div className="moreInfo text-end">
-                                                <a className="card-text p-0 m-0" href="#"><small
-                                                    className="text-muted">더보기</small></a>
+                                    <div class="col-md-8">
+                                        <div class="card-body p-1">
+                                            <h5 class="card-title">${results[0].name}</h5>
+                                            <p class="card-text p-0 m-0 ">${results[0].formatted_address}</p>
+                                            <div class="moreInfo text-end">
+                                                <a class="card-text p-0 m-0" href="#"><small
+                                                    class="text-muted">더보기</small></a>
                                             </div>
                                         </div>
                                     </div>

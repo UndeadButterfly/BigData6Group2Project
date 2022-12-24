@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="/js/course/detailDrag.js" defer></script>
     <script src="/js/course/place_id_find.js" defer></script>
+    <script src="/js/course/register.js" defer></script>
 </head>
 
 <body>
@@ -113,33 +114,33 @@
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form action="/course/1/detail" id="plannerDetail">
+    <form action="/course/register" id="plannerRegister" name="plannerRegister">
         <!-- 여행 제목 -->
         <div class="mb-3">
             <label for="planTitle" class="form-label">여행 제목</label>
-            <input name="" value="" type="text" class="form-control" id="planTitle">
+            <input name="title" value="" type="text" class="form-control" id="planTitle" required>
             <div id="titleHelp" class="form-text">이번 여행의 이름을 정해보세요!</div>
         </div>
         <!-- 작성자, 작성날짜 -->
         <div class="mb-3 d-flex justify-content-between">
             <div class="col-5">
                 <label for="planUser" class="form-label">작성자</label>
-                <input name="" value="" type="text" class="form-control" id="planUser">
+                <input name="userId" value="" type="text" class="form-control" id="planUser" required>
             </div>
             <div class="col-6">
-                <label for="planDate" class="form-label">작성날짜(NOW)</label>
-                <input name="" value="" type="Date" class="form-control" readonly id="planDate">
+                <label for="planDate" class="form-label" >작성날짜(NOW)</label>
+                <input name="postdate" value="" type="Date" class="form-control" required readonly id="planDate">
             </div>
         </div>
         <!-- 여행 목적 -->
         <div class="mb-3">
             <label for="planPurpose" class="form-label">여행 목적</label>
-            <input name="" value="" type="text" class="form-control" id="planPurpose">
+            <input name="contents" value="" type="text" class="form-control" id="planPurpose" required>
         </div>
         <!-- 썸네일 사진 -->
         <div class="mb-3 input-group">
             <label for="thumbnailImg" class="input-group-text">코스 대표 사진</label>
-            <input name="" value="" type="file" class="form-control" id="thumbnailImg">
+            <input name="image" value="" type="file" class="form-control" id="thumbnailImg">
         </div>
         <!-- 여행 일정 -->
         <div class="mb-3">
@@ -147,22 +148,22 @@
                 <div class="col-5">
                     여행 일정
                     <label for="planStartDate" class="form-label">시작날</label>
-                    <input name="" value="" type="date" class="form-control" id="planStartDate" placeholder="시작날">
+                    <input name="startdate" value="" type="date" class="form-control" id="planStartDate" placeholder="시작날" required>
                 </div>
                 <div class="col-5">
                     <label for="planEndDate" class="form-label">마지막날</label>
-                    <input name="" value="" type="date" class="form-control" id="planEndDate" placeholder="마지막날">
+                    <input name="enddate" value="" type="date" class="form-control" id="planEndDate" placeholder="마지막날" required>
                 </div>
             </div>
             <div>
-                <label for="planDays" class="form-label"></label>
-                <input name="" value="" type="text" class="form-control" id="planDays" placeholder="몇박 몇일">
+                <label for="planDays" class="form-label">몇박몇일?</label>
+                <input name="duration" value="" type="text" class="form-control" id="planDays" placeholder="몇박 몇일" readonly required>
             </div>
         </div>
         <!-- 여행 예산 -->
         <div class="mb-3">
             <label for="planBudget" class="form-label">여행 예산</label>
-            <input type="text" class="form-control" id="planBudget">
+            <input name="budget" type="text" class="form-control" id="planBudget" placeholder="200,000">원
         </div>
         <!--선택 장소, 대중교통 옮길 박스 -->
         <div class="mb-3" id="planDayList">
@@ -174,9 +175,7 @@
                 </div>
                 <div id="day2" class="dragBox">
                     <span>day2</span>
-                    <div>
 
-                    </div>
                 </div>
             </div>
         </div>
