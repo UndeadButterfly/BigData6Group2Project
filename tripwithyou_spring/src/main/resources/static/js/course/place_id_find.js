@@ -27,3 +27,4 @@ placeList.forEach((json_str)=>{
             </div>
         </div>`;
 });
+
