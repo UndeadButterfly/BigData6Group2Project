@@ -1,20 +1,18 @@
 const draggables = document.querySelectorAll(".draggable");
 const containers = document.querySelectorAll(".dragBox");
- 
+
 draggables.forEach(draggable => {
   draggable.addEventListener("dragstart", () => {
     draggable.classList.add("dragging");
-    dragging.innerHTML='<input type="text" value="memo내용입니다."></input>'
     console.log("dragStart")
   });
-
 
   draggable.addEventListener("dragend", () => {
     draggable.classList.remove("dragging");
     console.log("dragEnd");
   });
 });
- 
+
 containers.forEach(dragBox => {
   dragBox.addEventListener("dragover", e => {
     e.preventDefault();
@@ -28,13 +26,13 @@ containers.forEach(dragBox => {
     }
   });
 });
- 
+
 function getDragAfterElement(container, x) {
     console.log("dragElement is called")
   const draggableElements = [
     ...container.querySelectorAll(".draggable:not(.dragging)"),
   ];
- 
+
   return draggableElements.reduce(
     (closest, child) => {
       const box = child.getBoundingClientRect();

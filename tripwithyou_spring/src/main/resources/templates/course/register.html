@@ -16,17 +16,17 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="/js/course/detailDrag.js" defer></script>
     <script src="/js/course/place_id_find.js" defer></script>
     <script src="/js/course/register.js" defer></script>
+    <script src="/js/course/detailDrag.js" defer></script>
 </head>
 
 <body>
 <th:block th:include="headerNav"></th:block>
 <!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
 <!-- 장소선택 사이드 바 -->
-<th:block th:each="placeId:${session.placeIdList}">
-    <input type="text" th:value="${placeId}" class="placeIdDiv" style="display:none" readonly></input>
+<th:block th:each="json:${session.jsonList}">
+    <input type="text" th:value="${json}" class="placeIdDiv" style="display:none" readonly></input>
 </th:block>
 <div id="map" style="display:none"></div>
 <div class="position-fixed mx-3 p-3" id="locList">
