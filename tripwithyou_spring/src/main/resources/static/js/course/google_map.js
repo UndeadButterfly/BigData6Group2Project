@@ -57,21 +57,31 @@ function searchPlace(queryString) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             for (let i = 0; i < results.length; i++) {
                 let json= {
+                    cplaceNo : null,
                     name : results[i].name,
                     address : results[i].formatted_address,
-                    rate : results[i].rating
+                    imgPath : null,
+                    tel : null,
+                    openHour : null,
+                    rate : results[i].rating,
+                    type : null,
+                    courseNo : null,
+                    pday : null,
+                    porder : null,
+                    memo : null
                 }
                 searchResults.innerHTML += `
                             <div class="place" 
                                 data-lat="${results[i].geometry.location.lat()}"
                                 data-lng="${results[i].geometry.location.lng()}"
                                 data-name="${results[i].name}"
-                                data-address="${results[i].formatted_address}">
+                                data-address="${results[i].formatted_address}"
+                                data-json="${json}">
                                     <p>${results[i].name}</p>
                                     <p>${results[i].formatted_address}</p>
                                     <p>${results[i].rating}</p>
                                     <!--전송할 값-->   
-                                    <textarea name="json" id="" cols="30" rows="10" style="display: none;">${JSON.stringify(json)}</textarea>           
+                                    <textarea name="json" id="" cols="30" rows="10">${JSON.stringify(json)}</textarea>
                                     <button type="button" class="find">찾아가기</button>
                                     <button type="button" class="delete">삭제하기</button>
                                     <span class="addBtnContainer">
