@@ -1,0 +1,121 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    padding-top: 170px;
+    margin: 0;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* 사이트 이름 그라데이션 코드 */
+.subject {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    font-weight:  500;
+    display: block;
+    padding-top: 29px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg, #4ff326, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: name 10s infinite linear;
+}
+@keyframes name {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+    to {
+        -webkit-filter: hue-rotate(-360deg);
+    }
+}
+/* 내브바 포함 헤더 */
+.banner>h1 {
+    text-align: center;
+    font-size: 60px;
+}
+header {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1;
+}
+
+
+
+/* 맨위 헤더 */
+.inline {display: flex;}
+.inline .inline-col-group {height: 100px;}
+.inline .inline-col-group .right-menu {display: flex;}
+.inline .inline-col-group a {
+    padding-top: 36px;
+    padding-right: 20px;
+    display: block;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.nav>div {
+    padding: 16px 20px;
+    transition: background-color .5s ;
+}
+.nav>div>a {font-weight:lighter;}
+.nav>div:hover {background-color: #ddd;}
+
+.box1 {
+    margin: 0 auto;
+    border: 1px solid #000;
+    width: 1000px;
+}
+.box2 {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.menubar {
+    height: 100%;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+.menubar>div {flex: 1;}
+.seoul {
+    height: 408px;
+    width: 100%;
+}
+.seoul>img {
+    width: 100%;
+    height: 100%;
+}
+.box3 {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.box3>input {
+    height: 40px;
+}
+
+
+.imgChoice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.imgChoice>div {
+    margin: 15px 0;
+}

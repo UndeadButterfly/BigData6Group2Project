@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="/uikit/css/uikit.css">
+    <script src="/uikit/js/uikit-icons.js"></script>
+    <script src="/uikit/js/uikit.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/board/registerNmodify.css">
+    <style>
+        .header a,
+        .inline a{
+            text-decoration: none;
+            color: black;
+        }
+
+
+        .label {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            cursor: pointer;
+
+        }
+
+        .inner {
+            width: 100%;
+            height: 128px;
+            margin: 64px auto;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 128px;
+            border: 3px dashed #aaa;
+        }
+
+        @media (any-hover: hover){
+            .inner:hover{
+                background-color: #aaa;
+            }
+        }
+
+        .label:hover{
+            background-color: #0e6dcd;
+        }
+
+        .preview-title{
+            /*font-size: 32px;*/
+            margin-bottom: 8px;
+        }
+
+        .preview {
+            /*display: grid;*/
+            /*grid-template-columns: repeat(3, 1fr);*/
+            /*gap: 16px;*/
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            align-items: center;
+            border: 3px dashed #aaa;
+        }
+
+        .embed-img{
+            width: 100%;
+            /*height: 400px;*/
+            object-position: center;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+<th:block th:include="headerNav"></th:block>
+<th:block th:include="headerNavMenu"></th:block>
+<main class="uk-container uk-container-expand">
+    <form action="#" method="post" enctype="multipart/form-data" class="uk-margin-top">
+        <fieldset class="uk-fieldset">
+
+            <legend class="uk-legend uk-margin">게시글 작성</legend>
+            <label>
+                제목 :
+                <div class="uk-margin">
+                    <input name="title" class="uk-input" type="text" placeholder="제목을 입력하세요">
+                </div>
+            </label>
+
+            <div class="uk-margin uk-child-width-1-3 uk-flex">
+                <div class="uk-margin uk-margin-remove-top">
+                    <select name="loc" class="uk-select" aria-label="Select">
+                        <option>지역 선택</option>
+                        <option value="1">서울</option>
+                        <option value="2">부산</option>
+                    </select>
+                </div>
+                <div class="uk-margin uk-margin-remove-top">
+                    <select name="loc" class="uk-select" aria-label="Select">
+                        <option>분야 선택</option>
+                        <option value="1">음식점/맛집</option>
+                        <option value="2">스포츠/레저</option>
+                    </select>
+                </div>
+                <div class="uk-margin uk-margin-remove-top">
+                    <select name="upstate" class="uk-select" aria-label="Select">
+                        <option>공개여부</option>
+                        <option value="1">공개</option>
+                        <option value="2">비공개</option>
+                    </select>
+                </div>
+                <div class="uk-margin uk-margin-remove-top">
+                    <label class="uk-form-label">
+                        <input class="uk-input" value="유저 이름(아이디)" readonly>
+                    </label>
+                </div>
+            </div>
+            <label class="label" id="label" for="input">
+                <div class="inner uk-text-center" id="inner">
+                    드래그하거나 클릭해서 업로드
+                </div>
+            </label>
+            <input name="img" id="input" class="input" accept="image/*" type="file" required="true" multiple="true" hidden="true">
+            <p class="preview-title">업로드 사진 미리보기</p>
+            <small>(옆으로 밀어 확인하세요. 클릭 시 사진이 삭제됩니다.)</small>
+            <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow>
+                <ul class="preview uk-slideshow-items" id="preview"></ul>
+                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+            </div>
+
+            <div class="uk-margin">
+                후기 내용 작성:
+                <textarea name="contents" class="uk-textarea uk-height-medium" rows="5" placeholder="후기 내용을 작성하세요." aria-label="Textarea"></textarea>
+            </div>
+
+        </fieldset>
+        <button type="submit" class="uk-button uk-button-secondary uk-margin-bottom">등록</button>
+    </form>
+</main>
+
+    <script>
+        let input = document.getElementById("input");
+        let initLabel = document.getElementById("label");
+
+        input.addEventListener("change", (event) => {
+            const files = changeEvent(event);
+            handleUpdate(files);
+        });
+
+        initLabel.addEventListener("mouseover", (event) => {
+            event.preventDefault();
+            const label = document.getElementById("label");
+            label?.classList.add("label--hover");
+        });
+
+        initLabel.addEventListener("mouseout", (event) => {
+            event.preventDefault();
+            const label = document.getElementById("label");
+            label?.classList.remove("label--hover");
+        });
+
+        document.addEventListener("dragenter", (event) => {
+            event.preventDefault();
+            console.log("dragenter");
+            if (event.target.className === "inner") {
+                event.target.style.background = "#616161";
+            }
+        });
+
+        document.addEventListener("dragover", (event) => {
+            console.log("dragover");
+            event.preventDefault();
+        });
+
+        document.addEventListener("dragleave", (event) => {
+            event.preventDefault();
+            console.log("dragleave");
+            if (event.target.className === "inner") {
+                event.target.style.background = "#3a3a3a";
+            }
+        });
+
+        document.addEventListener("drop", (event) => {
+            event.preventDefault();
+            console.log("drop");
+            if (event.target.className === "inner") {
+                const files = event.dataTransfer?.files;
+                event.target.style.background = "#3a3a3a";
+                handleUpdate([...files]);
+            }
+        });
+
+        function changeEvent(event){
+            const { target } = event;
+            return [...target.files];
+        };
+
+        function handleUpdate(fileList,cnt){
+            const preview = document.getElementById("preview");
+
+            fileList.forEach((file) => {
+                const reader = new FileReader();
+                reader.addEventListener("load", (event) => {
+                    const img = el("img", {
+                        className: "embed-img",
+                        src: event.target?.result,
+                    });
+                    const imgContainer = el("li", { className: "container-img",onclick:removeImg }, img);
+                    preview.append(imgContainer);
+                });
+                reader.readAsDataURL(file);
+                console.log(reader);
+            });
+        };
+        function removeImg(){
+            let imgContainerList=document.querySelectorAll(".container-img");
+            imgContainerList.forEach((imgContainer)=>{
+                imgContainer.onclick=(e)=>{
+                    console.log("li test");
+                    console.log(imgContainer);
+                    //imgContainer.remove();
+                }
+            })
+        }
+
+        function el(nodeName, attributes, ...children) {
+            const node =
+                nodeName === "fragment"
+                    ? document.createDocumentFragment()
+                    : document.createElement(nodeName);
+
+            Object.entries(attributes).forEach(([key, value]) => {
+                if (key === "events") {
+                    Object.entries(value).forEach(([type, listener]) => {
+                        node.addEventListener(type, listener);
+                    });
+                } else if (key in node) {
+                    try {
+                        node[key] = value;
+                    } catch (err) {
+                        node.setAttribute(key, value);
+                    }
+                } else {
+                    node.setAttribute(key, value);
+                }
+            });
+
+            children.forEach((childNode) => {
+                if (typeof childNode === "string") {
+                    node.appendChild(document.createTextNode(childNode));
+                } else {
+                    node.appendChild(childNode);
+                }
+            });
+
+            return node;
+        }
+
+    </script>
+</body>
+</html>

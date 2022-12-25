@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="/uikit/css/uikit.css">
+    <script src="/uikit/js/uikit.js"></script>
+    <script src="/uikit/js/uikit-icons.js"></script>
+    <style>
+        .header a,
+        .inline a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<th:block th:include="headerNav"></th:block>
+<th:block th:include="headerNavMenu"></th:block>
+<div>
+    <a class="uk-button-danger uk-position-fixed uk-padding-small uk-border-rounded" style="top:88%;left:88%;z-index: 5" href="/upload/register.do">
+        <span uk-icon="pencil"></span>
+        <span>글쓰기</span>
+    </a>
+</div>
+<main class="uk-container uk-container-expand">
+    <form action="#" method="post" class="uk-margin uk-flex uk-flex-center uk-margin-medium-top">
+        <!-- SELECT * FROM upload WHERE utype=1 AND ${condition} like '%${search}%' 구현해야함. -->
+        <div uk-form-custom="target: > * > span:first-child">
+            <select name="condition" aria-label="Custom controls">
+                <option value="0">모두</option>
+                <option value="1">제목</option>
+                <option value="2">내용</option>
+                <option value="3">제목+내용</option>
+                <option value="4">작성자</option>
+            </select>
+            <button class="uk-button uk-button-default" type="button" tabindex="-1">
+                <span></span>
+                <span uk-icon="icon: chevron-down"></span>
+            </button>
+        </div>
+        <div class="uk-search uk-search-default">
+            <button type="submit" class="uk-search-icon-flip" uk-search-icon></button>
+            <input class="uk-search-input" name="search" type="search" placeholder="Search" aria-label="Search">
+        </div>
+    </form>
+
+    <div class="uk-slider-container-offset" uk-slider>
+        <h3>인기 TOP 10</h3>
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+
+            <ul class="uk-slider-items uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-child-width-1-6@xl uk-grid">
+                <li class="uk-card-hover uk-padding-remove-left uk-margin-medium-left" th:each="upload : ${uploadList}">
+                    <div class="uk-card uk-card-default">
+                        <div class="uk-card-media-top">
+                            <a th:href="@{'/upload/detail.do'(uploadNo=${upload.uploadNo})}">
+                                <!--썸네일 가져와야 함-->
+                                <img src="http://via.placeholder.com/400" width="600" height="600" alt="">
+                            </a>
+                        </div>
+                        <div class="uk-card-header">
+                            <p class="uk-text-bold" th:text="${upload.title}"></p>
+                            <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                <div class="uk-width-auto">
+                                    <img class="uk-border-circle" width="40" height="40" src="http://via.placeholder.com/40" alt="Avatar">
+                                </div>
+                                <div class="uk-width-expand">
+                                    <!-- 이름(id) mapper 에서 resultMap 으로 유저 전체 정보를 받아와 이름도 같이 출력할 것 -->
+                                    <div class="uk-flex uk-flex-between">
+                                        <p class="uk-margin-remove-bottom" th:text="${upload.userId}"></p>
+                                        <div class="uk-flex prefer">
+                                            <div>
+                                                <span uk-icon="heart"></span>
+                                                <span th:text="${upload.likes}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 등록일 - 아직 테이블에 추가되지 않음 -->
+                                    <p class="uk-text-small uk-margin-remove-top" th:text="${ upload.postdate}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+
+
+            </ul>
+
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+
+        </div>
+
+        <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+        <!-- SELECT * FROM upload WHERE utype=1 ORDER BY views DESC LIMIT 1,10 -->
+        <a href="#" class="uk-align-right" >인기글 더 보러가기 <span class="uk-icon" uk-icon="icon: chevron-right"></span></a>
+    </div>
+    <div class="uk-margin-medium-top">
+        <div class="uk-flex">
+            <h3>전체글</h3>
+            <span class="uk-text-small">(최신순)</span>
+        </div>
+        <ul uk-accordion="multiple: true" class="uk-margin-medium-bottom uk-background-muted uk-padding-small">
+            <!-- SELECT * FROM upload WHERE utype=1 AND ??? -->
+            <li>
+                <a class="uk-accordion-title" href="#">분류 <span uk-icon=" chevron-down"></span></a>
+                <div class="uk-accordion-content">
+                    <div class="uk-child-width-1-4 uk-overflow-hidden" uk-grid>
+                        <div>
+                            <p>정렬순</p>
+                            <ul class="uk-tab-right" uk-tab>
+                                <li><a href="#">전체</a></li>
+                                <li><a href="#">인기순</a></li>
+                                <li><a href="#">최신순</a></li>
+                                <li><a href="#">좋아요</a></li>
+                                <li><a href="#">댓글</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p>지역별</p>
+                            <ul class="uk-tab-right " uk-tab>
+                                <li ><a href="#">강원도</a></li>
+                                <li><a href="#">경기도</a></li>
+                                <li><a href="#">경상남도</a></li>
+                                <li><a href="#">경상북도</a></li>
+                                <li><a href="#">대구광역시</a></li>
+                                <li><a href="#">대전광역시</a></li>
+                                <li><a href="#">광주광역시</a></li>
+                                <li><a href="#">부산광역시</a></li>
+                                <li><a href="#">서울특별시</a></li>
+                                <li><a href="#">세종특별자치시</a></li>
+                                <li><a href="#">울산광역시</a></li>
+                                <li><a href="#">인천광역시</a></li>
+                                <li><a href="#">제주특별자치도</a></li>
+                                <li><a href="#">전라남도</a></li>
+                                <li><a href="#">전라북도</a></li>
+                                <li><a href="#">충청남도</a></li>
+                                <li><a href="#">충청북도</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p>여가별</p>
+                            <ul class="uk-tab-right" uk-tab>
+                                <p>관광정보</p>
+                                <li><a href="#">숙소</a></li>
+                                <li><a href="#">관광지</a></li>
+                                <p>레저/스포츠</p>
+                                <li><a href="#">어트렉션</a></li>
+                                <li><a href="#">산/계곡</a></li>
+                                <li><a href="#">바다</a></li>
+                                <p>맛집/음식점</p>
+                                <li><a href="#">일반음식점</a></li>
+                                <li><a href="#">레스토랑</a></li>
+                                <li><a href="#">재래시장</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p>계절별</p>
+                            <ul class="uk-tab-right" uk-tab>
+                                <li><a href="#">봄</a></li>
+                                <li><a href="#">여름</a></li>
+                                <li><a href="#">가을</a></li>
+                                <li><a href="#">겨울</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-child-width-1-6@xl uk-grid">
+            <li class="uk-margin-medium-bottom uk-card-hover uk-padding-remove-left uk-margin-medium-left" th:each="upload : ${uploadList}">
+                <div class="uk-card uk-card-default">
+                    <div class="uk-card-media-top">
+                        <!-- 썸네일 사진 가져올 방법 필요함 -->
+                        <a th:href="@{'/upload/detail.do'(uploadNo=${upload.uploadNo})}">
+                            <img src="http://via.placeholder.com/400" width="600" height="600" alt="">
+                        </a>
+                    </div>
+                    <div class="uk-card-header">
+                        <!-- 제목 -->
+                        <p class="uk-text-bold" th:text="${upload.title}"> </p>
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <img class="uk-border-circle" width="40" height="40" src="http://via.placeholder.com/40" alt="Avatar">
+                            </div>
+                            <div class="uk-width-expand">
+                                <!-- 이름(id) mapper 에서 resultMap 으로 유저 전체 정보를 받아와 이름도 같이 출력할 것 -->
+                                <div class="uk-flex uk-flex-between">
+                                    <p class="uk-margin-remove-bottom" th:text="${upload.userId}"></p>
+                                    <div class="uk-flex prefer">
+                                        <div>
+                                            <span uk-icon="heart"></span>
+                                            <span th:text="${upload.likes}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="uk-text-small uk-margin-remove-top uk-text-meta" th:text="${#calendars.format(upload.postdate,'yyyy-MM-dd HH:mm')}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</main>
+</div>
+<div>
+    하단 부분입니다.
+</div>
+</main>
+<footer>
+
+</footer>
+</body>
+</html>
