@@ -35,14 +35,14 @@
     </delete>
 <!--    int updateById(CourseDto dto) throws Exception;-->
     <update id="updateById">
-        UPDATE course SET
+        UPDATE template SET
                           title,
                           content
         WHERE tp_no=#{tpNo}
     </update>
 <!--    int insert(CourseDto dto) throws Exception;-->
     <insert id="insert">
-        INSERT INTO course (title, content)
+        INSERT INTO template (title, content)
         VALUES (#{title}, #{content})
     </insert>
 </mapper>
