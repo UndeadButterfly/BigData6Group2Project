@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface MatchingMapper extends CRUD<MatchingDto,Integer>{
-
     @Override
     List<MatchingDto> findAll();
 
@@ -20,8 +19,7 @@ public interface MatchingMapper extends CRUD<MatchingDto,Integer>{
     @Override
     int count(PagingDto paging);
 
-    @Override
-    MatchingDto findById(Integer id);
+    MatchingDto findById(String id);
 
     @Override
     int deleteById(Integer id);

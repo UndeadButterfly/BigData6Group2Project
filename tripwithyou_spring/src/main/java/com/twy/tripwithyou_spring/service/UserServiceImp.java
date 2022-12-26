@@ -14,7 +14,17 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto login(String id, String pw) {
+        userMapper.updateLogin(id);
+        userMapper.switchLoginState(id);
         UserDto user = userMapper.findByUserIdAndPw(id, pw);
+        user.setAges();
+
+        return user;
+    }
+
+    @Override
+    public UserDto logout(UserDto user) {
+        userMapper.switchLoginState(user.getUserId());
         return user;
     }
 
@@ -22,4 +32,5 @@ public class UserServiceImp implements UserService {
     public int register(UserDto user) {
         return userMapper.insert(user);
     }
+
 }

@@ -8,8 +8,9 @@ import java.util.List;
 public interface MatchingService {
     int register(MatchingDto Match) throws Exception;
 
-    MatchingDto detail(int matchNo) throws Exception;
+    MatchingDto detail(int matchNo);
 
-    List<MatchingDto> list(PagingDto paging) throws Exception;
+    List<MatchingDto> list(PagingDto paging);
 
+    List<MatchingDto> listAll();
 }

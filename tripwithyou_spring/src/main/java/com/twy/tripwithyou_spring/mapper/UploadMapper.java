@@ -14,11 +14,13 @@ public interface UploadMapper{
 
     int count(PagingDto paging);
 
-    UploadDto findById(int id);
+    UploadDto findById(int uploadNo);
 
-    int deleteById(String id);
+    int deleteById(int id);
 
     int updateById(UploadDto dto);
 
     int insert(UploadDto dto);
+
+    List<UploadDto> findByType(int type, PagingDto paging); //추가한것
 }

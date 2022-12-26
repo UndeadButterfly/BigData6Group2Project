@@ -15,11 +15,17 @@ public class MatchingServiceImp implements MatchingService {
     }
 
     @Override
-    public List<MatchingDto> list(PagingDto paging) throws Exception {
+    public List<MatchingDto> list(PagingDto paging){
         int totalRows = matchingMapper.count(paging);
         paging.setTotalRows(totalRows);
         return matchingMapper.findPaging(paging);
     }
+
+    @Override
+    public List<MatchingDto> listAll() {
+        return matchingMapper.findAll();
+    }
+
 
     @Override
     public int register(MatchingDto Match) {
@@ -27,7 +33,7 @@ public class MatchingServiceImp implements MatchingService {
     }
 
     @Override
-    public MatchingDto detail(int matchNo) throws Exception {
+    public MatchingDto detail(int matchNo){
         return matchingMapper.findById(matchNo);
     }
 }

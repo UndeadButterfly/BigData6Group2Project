@@ -7,6 +7,11 @@
     <resultMap id="courseMap" type="courseDto" autoMapping="true">
         <id column="course_no" property="courseNo"/>
         <result column="upload_no" property="uploadNo"/>
+        <association property="uploadDto"
+                     column="upload_no"
+                     select="com.twy.tripwithyou_spring.mapper.UploadMapper.findById"
+                     fetchType="lazy"
+                     autoMapping="true"/>
     </resultMap>
 
     <select id="findAll" resultMap="courseMap">

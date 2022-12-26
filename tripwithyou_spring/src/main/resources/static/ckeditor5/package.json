@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "license": "SEE LICENSE IN LICENSE.md",
   "private": true,
-  "main": "./build/ckeditor.js",
+  "main": "build/ckeditor.js",
   "devDependencies": {
     "@ckeditor/ckeditor5-autoformat": "^35.4.0",
     "@ckeditor/ckeditor5-basic-styles": "^35.4.0",

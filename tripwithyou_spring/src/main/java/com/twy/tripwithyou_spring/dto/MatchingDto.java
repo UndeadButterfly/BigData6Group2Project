@@ -3,12 +3,14 @@ package com.twy.tripwithyou_spring.dto;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 public class MatchingDto extends UploadDto {
     private int matchingNo;
-    private String title;
+    private String title; // 매칭 제목
+    private String contents; //내용
     private String userId; //작성자
     private String tDestination; //목적지
     private String matchingImgPath; //매칭 이미지
@@ -20,7 +22,7 @@ public class MatchingDto extends UploadDto {
     private int tMember; //매칭 인원 수
     private int duration; //일정
 
-//    public MatchingDto() {
-//        this.duration = (int) ((tEnd.getTime() - tStart.getTime()) * 60 * 60 * 24);
+//    public void setDuration() {
+//        this.duration = (int) ((tEnd.getTime() - tStart.getTime()) * 60 * 60 * 24)+1;
 //    }
 }

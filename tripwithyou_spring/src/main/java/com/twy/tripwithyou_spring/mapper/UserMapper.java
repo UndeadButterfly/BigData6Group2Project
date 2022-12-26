@@ -12,4 +12,7 @@ public interface UserMapper extends CRUD<UserDto,String>{
     UserDto findByUserIdAndPw(String id, String pw);
     List<UserDto> findPaging(PagingDto paging);
     int insert(UserDto dto);
+    int updateLogin(String userId);
+
+    void switchLoginState(String id);
 }

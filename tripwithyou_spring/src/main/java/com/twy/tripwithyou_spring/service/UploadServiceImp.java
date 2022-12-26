@@ -2,17 +2,22 @@ package com.twy.tripwithyou_spring.service;
 
 import com.twy.tripwithyou_spring.dto.PagingDto;
 import com.twy.tripwithyou_spring.dto.UploadDto;
+import com.twy.tripwithyou_spring.dto.UploadImgDto;
+import com.twy.tripwithyou_spring.mapper.UploadImgMapper;
 import com.twy.tripwithyou_spring.mapper.UploadMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class UploadServiceImp implements UploadService{
     private UploadMapper uploadMapper;
+    private UploadImgMapper uploadImgMapper;
 
-    public UploadServiceImp(UploadMapper uploadMapper) {
+    public UploadServiceImp(UploadMapper uploadMapper, UploadImgMapper uploadImgMapper) {
         this.uploadMapper = uploadMapper;
+        this.uploadImgMapper = uploadImgMapper;
     }
 
     @Override
@@ -25,9 +30,18 @@ public class UploadServiceImp implements UploadService{
         return uploadMapper.findById(uploadNo);
     }
 
+    @Transactional
     @Override
     public int register(UploadDto upload) {
-        return 0;
+        int register=0;
+        register+=uploadMapper.insert(upload);
+        if (upload.getUploadImgList()!=null){
+            for(UploadImgDto uploadImg : upload.getUploadImgList()){
+                uploadImg.setUploadNo(upload.getUploadNo());
+                register+=uploadImgMapper.insertOne(uploadImg);
+            }
+        }
+        return register;
     }
 
     @Override

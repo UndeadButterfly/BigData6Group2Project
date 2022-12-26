@@ -72,50 +72,12 @@ header {
 .nav>div>a {font-weight:lighter;}
 .nav>div:hover {background-color: #ddd;}
 
-.box1 {
-    margin: 0 auto;
-    border: 1px solid #000;
-    width: 1000px;
-}
-.box2 {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-.menubar {
-    height: 100%;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-}
-.menubar>div {flex: 1;}
-.seoul {
-    height: 408px;
-    width: 100%;
-}
-.seoul>img {
-    width: 100%;
-    height: 100%;
-}
-.box3 {
-    height: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-.box3>input {
-    height: 40px;
-}
-
-
-.imgChoice {
+.registerForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.imgChoice>div {
+.registerForm>div {
     margin: 15px 0;
 }

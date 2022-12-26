@@ -1,156 +1,166 @@
 <!DOCTYPE html>
 <html lang="en"
+      layout:decorate="~{/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Document</title>
-<!--    <link rel="stylesheet" href="list.css">-->
+    <!--    <link rel="stylesheet" href="list.css">-->
     <link href="/css/index.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/board/detail.css">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src=""></script>
+    <link href="/css/board/detail.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <style>
-
+        .header a,
+        .inline a {
+            text-decoration: none;
+            color: black;
+        }
     </style>
 </head>
 <body>
 <th:block th:include="headerNav"></th:block>
 <th:block th:include="headerNavMenu"></th:block>
-    <div class="search">
-        <form action="">
-            <span></span>
-            <input type="text">
-        </form>
+<div class="search">
+    <form action="">
+        <span></span>
+        <input type="text">
+    </form>
+</div>
+<main class="container">
+    <!-- Title -->
+    <h2 class="title" th:text="${detail.title}"></h2>
+    <div class="articleInfo">
+        <i aria-hidden="true" class="fa fa-user-circle-o"></i>
+        <div>
+            <!-- getName(getUserId),getPostTime -->
+            <span th:text="${detail.userId}"></span>
+            <span th:text="${detail.postdate}"></span>
+        </div>
     </div>
-    <main class="container">
-        <!-- Title -->
-        <h2 class="title" th:text="${detail.title}"></h2>
-        <div class="articleInfo">
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+    <hr>
+    <!-- 여기서부터 글 내용(contents -->
+    <div th:text="${detail.contents}">
+    </div>
+    <!-- 밑은 예시 글임. -->
+    <h3><strong>일주일 동안 여행한 코스</strong></h3>
+
+    <img alt="..." class="d-block w-100" src="https://via.placeholder.com/1000/330000">
+    <br><br><br>
+    <h3>1일차</h3>
+    <img alt="" src="https://via.placeholder.com/500/003333">
+    <br><br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    <br><br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus rerum saepe sed!
+    <br><br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, odio.
+    <br><br>
+
+    <!-- 좋아요,댓글 수,조회수 등등  -->
+    <div class="prefer d-flex justify-content-end">
+        <div class="likes pe-3">
+            <i aria-hidden="true" class="fa fa-thumbs-o-up"></i>
+            <i aria-hidden="true" class="fa fa-thumbs-up"></i>
+            <span class="content-footer">좋아요 <strong th:text="${detail.likes}">1</strong></span>
+        </div>
+        <div class="dislikes pe-3">
+            <i aria-hidden="true" class="fa fa-thumbs-o-down"></i>
+            <i aria-hidden="true" class="fa fa-thumbs-down"></i>
+            <span class="content-footer">싫어요 <strong th:text="${detail.hates}">0</strong></span>
+        </div>
+
+        <span> 댓글<b></b> </span>
+    </div>
+    <a class="" href="#">등록순</a>
+    <a class="" href="#">인기순</a>
+
+    <hr>
+    <!-- 댓글 리스트 시작 -->
+    <div id="replyListContainer">
+        <th:block layout:insert="/reply/list"></th:block>
+    </div>
+    <div class="commentsList">
+        <!-- 댓글 for문 시작 -->
+        <div class="comment">
             <div>
-                <!-- getName(getUserId),getPostTime -->
-                <span th:text="${detail.user_id}"></span>
-                <span>2022.12.04 19:29</span>
-            </div>
-        </div>
-        <hr>
-        <!-- 여기서부터 글 내용(contents -->
-        <div th:text="${detail.contents}">
-        </div>
-            <!-- 밑은 예시 글임. -->
-            <h3><strong>일주일 동안 여행한 코스</strong></h3>
-
-            <img src="https://via.placeholder.com/1000/330000" class="d-block w-100" alt="...">
-            <br><br><br>
-            <h3>1일차</h3>
-            <img src="https://via.placeholder.com/500/003333" alt="">
-            <br><br>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            <br><br>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus rerum saepe sed!
-            <br><br>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, odio.
-            <br><br>
-
-        <!-- 좋아요,댓글 수,조회수 등등  -->
-        <div class="prefer d-flex justify-content-end">
-            <div class="likes pe-3">
-                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                <span class="content-footer">좋아요 <strong th:text="${detail.likes}">1</strong></span>
-            </div>
-            <div class="dislikes pe-3">
-                <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                <span class="content-footer">싫어요 <strong th:text="${detail.hates}">0</strong></span>
-            </div>
-
-            <span> 댓글<b></b> </span>
-        </div>
-            <a class="" href="#">등록순</a>
-            <a class="" href="#">인기순</a>
-            
-            <hr>
-            <!-- 댓글 리스트 시작 -->
-            <div class="commentsList">
-                <!-- 댓글 for문 시작 -->
-                <div class="comment">
-                    <div>
-                        <!-- 유저 프로필 이미지 -->
-                        <img src="https://via.placeholder.com/50/" alt="">
-                        <span class="userInfo">
+                <!-- 유저 프로필 이미지 -->
+                <img alt="" src="https://via.placeholder.com/50/">
+                <span class="userInfo">
                         <!-- 유저 정보 -->
-                        <!-- getName,getUserId,getPostTime -->
+                    <!-- getName,getUserId,getPostTime -->
                             김현섭
                             (kkhs224)
                             <small>2022.12.10 18:56</small>
                         </span>
-                    </div>
-                    <!-- 댓글 내용 getRcontent -->
-                    <div style="text-indent:50px">
-                        Lorem ipsum dolor sit amet.
-                    </div>
-                    <hr>
-                    <!-- 대댓글 목록 if(대댓글 !=null){ -->
-                    <div class="incommentList">
-                        <!-- for문(){ -->
-                        <div class="incomment">
-                            <div>
-                                <!-- 유저 정보들 -->
-                                <img src="https://via.placeholder.com/50/" alt="">
-                                <span class="userInfo">
+            </div>
+            <!-- 댓글 내용 getRcontent -->
+            <div style="text-indent:50px">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <hr>
+            <!-- 대댓글 목록 if(대댓글 !=null){ -->
+            <div class="incommentList">
+                <!-- for문(){ -->
+                <div class="incomment">
+                    <div>
+                        <!-- 유저 정보들 -->
+                        <img alt="" src="https://via.placeholder.com/50/">
+                        <span class="userInfo">
                                 dddd
                                 (test123)
                                 <small>2022.12.12 18:56</small>
                                 </span>
-                            </div>
-                            <!-- rcontent -->
-                            <div style="text-indent:50px">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            </div>
-                            <hr>
-                        <!-- 대댓글 for문 종료
-                             대댓글 존재유무 if 종료 -->
-                        </div>
                     </div>
+                    <!-- rcontent -->
+                    <div style="text-indent:50px">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    </div>
+                    <hr>
+                    <!-- 대댓글 for문 종료
+                         대댓글 존재유무 if 종료 -->
                 </div>
-                <!-- 댓글 for문 종료 -->
-                <div class="comment">
-                    <div>
-                        <img src="https://via.placeholder.com/50/" alt="">
-                        <span class="userInfo">
+            </div>
+        </div>
+        <!-- 댓글 for문 종료 -->
+        <div class="comment">
+            <div>
+                <img alt="" src="https://via.placeholder.com/50/">
+                <span class="userInfo">
                             김현섭
                             (kkhs224)
                             <small>2022.12.10 18:56</small>
                         </span>
-                    </div>
-                    <div style="text-indent:50px">
-                        Lorem ipsum dolor sit amet.
-                    </div>
-                    <hr>
-                    <div class="incommentList">
-                        <div class="incomment">
+            </div>
+            <div style="text-indent:50px">
+                Lorem ipsum dolor sit amet.
+            </div>
+            <hr>
+            <div class="incommentList">
+                <div class="incomment">
 
 
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="insertComment" >
-                <p><b>userName</b></p>
-                <form >
-                    <input type="text" placeholder="댓글을 남기세요.">
-                    <button type="submit">등록</button>
-                </form>
-            </div>
-    </main>
-    <!-- 수정/삭제 -->
-    <div class="container border my-2 p-3">
-        <a th:href="@{'update.do'(uploadNo=${detail.upload_no})}" class="btn btn-outline-primary">수정하기</a>
-        <a href="" class="btn btn-outline-primary">삭제</a>
+        </div>
     </div>
+    <div class="insertComment">
+        <p><b>userName</b></p>
+        <form>
+            <input placeholder="댓글을 남기세요." type="text">
+            <button type="submit">등록</button>
+        </form>
+    </div>
+</main>
+<!-- 수정/삭제 -->
+<div class="container border my-2 p-3">
+    <a class="btn btn-outline-primary" th:href="@{'modify.do'(uploadNo=${detail.uploadNo})}">수정하기</a>
+    <a class="btn btn-outline-primary" href="">삭제</a>
+</div>
 
 </html>

@@ -19,4 +19,5 @@ public class UploadDto {
     private int reports;
     private int upstate; //NN DEFAULT 0 | 0:없음 1:신고됨
     private List<UploadImgDto> uploadImgList;
+    private List<ReplyDto> replyList;
 }

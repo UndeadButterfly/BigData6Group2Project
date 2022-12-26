@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.twy.tripwithyou_spring.mapper.UploadMapper">
     <resultMap id="uploadMap" type="uploadDto" autoMapping="true">
         <id column="upload_no" property="uploadNo"/>
         <result column="user_id" property="userId"/>
+        <collection property="uploadImgList"
+                    select="com.twy.tripwithyou_spring.mapper.UploadImgMapper.findByUploadNo"
+                    column="upload_no"
+                    fetchType="lazy"/>
     </resultMap>
     <!--  CRUD.List<T> findAll();  -->
     <select id="findAll" resultType="UploadDto">
         SELECT * FROM upload
     </select>
     <!--    List<T> findPaging(PagingDto paging)-->
-    <select id="findPaging" parameterType="PagingDto" resultType="UploadDto">
+    <select id="findPaging" parameterType="PagingDto" resultMap="uploadMap">
         SELECT * FROM upload
         <if test="orderField!=null">
             ORDER BY ${orderField} ${direct}
@@ -24,11 +27,11 @@
         SELECT COUNT(*) FROM upload
     </select>
     <!--    T findById(P id);-->
-    <select id="findById" resultType="UploadDto" parameterType="int">
-        SELECT * FROM UPLOAD WHERE upload_no=#{id}
+    <select id="findById" resultMap="uploadMap" parameterType="int">
+        SELECT * FROM UPLOAD WHERE upload_no=#{uploadNo}
     </select>
     <!--    int deleteById(P id);-->
-    <delete id="deleteById" parameterType="String">
+    <delete id="deleteById" parameterType="int">
         DELETE FROM UPLOAD WHERE upload_no=#{id}
     </delete>
     <!--    int updateById(T dto);-->

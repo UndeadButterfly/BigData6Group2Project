@@ -4,10 +4,7 @@ import com.twy.tripwithyou_spring.dto.UserDto;
 import com.twy.tripwithyou_spring.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
@@ -28,6 +25,7 @@ public class UserController {
                         HttpSession session) {
         UserDto loginInfo = userService.login(id, pw);
         if (loginInfo != null) {
+            loginInfo.setUserId(id);
             session.setAttribute("loginInfo", loginInfo);
             Object reqUrl = session.getAttribute("reqUrl");
             if (reqUrl == null) {
@@ -42,7 +40,8 @@ public class UserController {
     }
 
     @GetMapping("/logout.do")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, @SessionAttribute UserDto loginInfo) {
+        userService.logout(loginInfo);
         session.removeAttribute("loginInfo");
         return "redirect:/";
     }
@@ -65,4 +64,6 @@ public class UserController {
             return "redirect:/user/register.do";
         }
     }
+    @GetMapping("/detail.do")
+    public void detail(@SessionAttribute UserDto loginInfo){}
 }
