@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/uikit/css/uikit.css">
     <script src="/uikit/js/uikit.js"></script>
-    <script src="/js/course/place_id_find.js" defer></script>
     <script src="/js/course/register.js" defer></script>
 </head>
 
@@ -35,7 +34,7 @@
     <div class="overflow-auto dragBox" uk-sortable="group: sortable-group" id="locListCard" style="height: 50vh;" >
         <!-- #1 card -->
         <th:block th:each="i : ${#numbers.sequence(0,session.coursePlaceList.size()-1)}">
-            <div class="card p-0 draggable item m-1" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
+            <div class="card p-0 draggable item m-1 courseplace" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
                  th:data-name="${session.coursePlaceList.get(i).name}"
                  th:data-address="${session.coursePlaceList.get(i).address}"
                  th:data-rate="${session.coursePlaceList.get(i).rate}">
@@ -57,6 +56,7 @@
                             </div>
                         </div>
                     </div>
+                    <p class="cardJson" th:text="${session.jsonList.get(i)}"></p>
                 </div>
             </div>
         </th:block>
@@ -173,7 +173,7 @@
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form action="/course/register" id="plannerRegister" name="plannerRegister">
+    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post">
         <!-- 여행 제목 -->
         <div class="mb-3">
             <label for="planTitle" class="form-label">여행 제목</label>
