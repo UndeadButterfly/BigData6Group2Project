@@ -56,7 +56,7 @@ function searchPlace(queryString) {
         searchResults.innerHTML = '';
         if (status === google.maps.places.PlacesServiceStatus.OK) {
             for (let i = 0; i < results.length; i++) {
-                let json= {
+                const json= {
                     cplaceNo : null,
                     name : results[i].name,
                     address : results[i].formatted_address,
@@ -75,13 +75,12 @@ function searchPlace(queryString) {
                                 data-lat="${results[i].geometry.location.lat()}"
                                 data-lng="${results[i].geometry.location.lng()}"
                                 data-name="${results[i].name}"
-                                data-address="${results[i].formatted_address}"
-                                data-json="${json}">
+                                data-address="${results[i].formatted_address}">
                                     <p>${results[i].name}</p>
                                     <p>${results[i].formatted_address}</p>
                                     <p>${results[i].rating}</p>
                                     <!--전송할 값-->   
-                                    <textarea name="json" id="" cols="30" rows="10">${JSON.stringify(json)}</textarea>
+                                    <p class="json" style="display: none;">${JSON.stringify(json)}</p>
                                     <button type="button" class="find">찾아가기</button>
                                     <button type="button" class="delete">삭제하기</button>
                                     <span class="addBtnContainer">
@@ -93,6 +92,7 @@ function searchPlace(queryString) {
             map.setCenter(results[0].geometry.location);
             buttonFunctions();
         }
+        // <textarea name="json" id="" cols="30" rows="10">${JSON.stringify(json)}</textarea>
     });
 }
 
@@ -129,3 +129,19 @@ search.onsubmit = (e) => {
     rightBar.classList.add("drop-down");
 }
 // initMap();
+
+const addedPlaces = document.forms["addedPlaces"];
+addedPlaces.onsubmit=(e)=>{
+    const textArea = document.createElement("textarea");
+    textArea.name="json";
+    const places = addedPlaces.querySelectorAll(".place");
+    let jsonList =[];
+    places.forEach(place=>{
+        const json = place.querySelector(".json");
+        jsonList.push(JSON.parse(json.innerText));
+    });
+    const textValue = document.createTextNode(JSON.stringify(jsonList));
+    alert(JSON.stringify(jsonList));
+    textArea.append(textValue);
+    addedPlaces.append(textArea);
+}
