@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 public class CourseDto {
     private int courseNo; //PK course_no
+//    private String userId; // FK NN userID 1:1
     private Date startdate; //NN
     private Date enddate; //NN
     private int duration; //NN

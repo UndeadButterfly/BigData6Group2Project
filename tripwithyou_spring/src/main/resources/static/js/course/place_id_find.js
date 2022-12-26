@@ -3,6 +3,20 @@ const locListCard = document.getElementById("locListCard");
 placeList.forEach((json_str)=>{
     const json = JSON.parse(json_str.value);
     let i = 1;
+    let placeJson = {
+        cPlaceNo: null,
+        name:json.name,
+        address:json.address,
+        imgPath:null,
+        tel:null,
+        openHour:null,
+        rate:json.rate,
+        type:null,
+        courseNo:null,
+        pDay:null,
+        pOrder:null,
+        memo:null,
+    }
     locListCard.innerHTML+=`
         <div class="card p-0 draggable item m-2" id="src_move${i}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
             data-name="${json.name}"
@@ -26,7 +40,9 @@ placeList.forEach((json_str)=>{
                     </div>
                 </div>
             </div>
+            <p class="cardJson" style="display: none;">${JSON.stringify(placeJson)}</p>
         </div>`;
+    console.log(placeJson);
     i++;
 });
 

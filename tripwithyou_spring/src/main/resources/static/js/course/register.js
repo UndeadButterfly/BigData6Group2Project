@@ -54,13 +54,14 @@ function drop(ev) {
                 ev.target.appendChild(nodeCopy);
                 let vtype = ev.target.getElementsByClassName("transport-card-title")[0].innerText;
                 let json = {
-                    vehicle_no : null,
-                    course_no : null,
+                    vehicleNo : null,
+                    courseNo : null,
                     vday : null,
                     vorder : null,
                     vtype : vtype,
                     memo : null
                 }
+                console.log(json);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
                 nodeCopy.innerHTML += `<p class="cardJson" style="display: none;">${JSON.stringify(json)}</p>`
                 deleteBtn();
@@ -127,32 +128,72 @@ function makeDayBoxes(days) {
         `;
     }
 }
-
+// json object를 controller에 넘겨주기
+const planForm = document.forms["plannerRegister"];
+const dayBoxes = dayBoxContainer.querySelectorAll(".dragBox");
+const courseTextarea = planForm.courseJson;
+const uploadTextarea = planForm.uploadJson;
+const placeListTextarea = planForm.placeListJson;
+const vehicleListTextarea = planForm.vehicleListJson;
 //onsubmit 일때 {
 // course json을 만들어서 courseJson textarea에 입력
 // update json을 만들어서 ..
-const dayBoxes = dayBoxContainer.querySelectorAll(".dragBox");
-let vehicleList=[];
-let coursePlaceList=[];
-for(let day=1; day<dayBoxes.length+1; day++) {
-    const dayBox = dayBoxes.children
-    for(let order=1; order<dayBox.length+1; order++) {
-        const card = dayBox.children[order];
-        const cardJson = card.querySelector(".cardJson");
-        let json = JSON.parse(cardJson.innerText);
-        //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
-        if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
-            json.vday=day;
-            json.vorder=order;
-            vehicleList.push(json);
-        }
-        else if(card.classList.contains("item")){
-            json.pday = day;
-            json.porder = order;
-            coursePlaceList.push(json);
+//*****************FIX: dayDiffer가 먹힐지 모르겠다.
+planForm.onsubmit=(e)=>{
+    let courseJson = {
+        courseNo:null,
+        startdate:startdateInput.value,
+        enddate:enddateInput.value,
+        duration:dayDiffer+1,
+        image:null,
+        budget:null,
+        uploadNo:null,
+        uploadDto:null,
+        coursePlaceList:null,
+        vehicleList:null
+    }
+    let uploadJson = {
+        uploadNo:null,
+        uptype:null,
+        userId:null,
+        title:planForm.title.value,
+        contents:planForm.contents.value,
+        postdate:null,
+        views:null,
+        likes:null,
+        dislikes:null,
+        reports:null,
+        upstate:null
+    }
+    let vehicleList=[];
+    let coursePlaceList=[];
+    for(let day=1; day<dayBoxes.length+1; day++) {
+        const dayBox = dayBoxes.children
+        for(let order=1; order<dayBox.length+1; order++) {
+            const card = dayBox.children[order];
+            const cardJson = card.querySelector(".cardJson");
+            let json = JSON.parse(cardJson.innerText);
+            //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
+            if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
+                json.vday=day;
+                json.vorder=order;
+                vehicleList.push(json);
+            }
+            else if(card.classList.contains("item")){
+                json.pday = day;
+                json.porder = order;
+                coursePlaceList.push(json);
+            }
         }
     }
+
+    courseTextarea.value = JSON.stringify(courseJson);
+    uploadTextarea.value = JSON.stringify(uploadJson);
+    placeListTextarea.value=JSON.stringify(coursePlaceList);
+    vehicleListTextarea.value=JSON.stringify(vehicleList);
+
 }
+
 // vehicleList는 textarea name="vehicleListJson" 에 stringify 해서 입력
 // placeList는 textarea name="placeListJson" 에 stringify 해서 입력
 // }
