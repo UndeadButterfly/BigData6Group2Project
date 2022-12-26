@@ -34,6 +34,32 @@
     <span class="my-2">선택한 장소(drag & paste)</span>
     <div class="overflow-auto dragBox" uk-sortable="group: sortable-group" id="locListCard" style="height: 50vh;" >
         <!-- #1 card -->
+        <th:block th:each="i : ${#numbers.sequence(0,session.coursePlaceList.size()-1)}">
+            <div class="card p-0 draggable item m-1" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
+                 th:data-name="${session.coursePlaceList.get(i).name}"
+                 th:data-address="${session.coursePlaceList.get(i).address}"
+                 th:data-rate="${session.coursePlaceList.get(i).rate}">
+                <div class="row g-0">
+                    <div class="col-sm-4">
+                        <img src=""
+                             class="img-fluid rounded-start"
+                             style="height:100%"
+                             th:alt="${session.coursePlaceList.get(i).name}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-1">
+                            <h5 class="card-title" id="name" th:text="${session.coursePlaceList.get(i).name}"></h5>
+                            <p class="card-text p-0 m-0 " id="address" th:text="${session.coursePlaceList.get(i).name}"></p>
+                            <div class="moreInfo text-end">
+                                <a class="card-text p-0 m-0" href="#">
+                                    <small class="text-muted">더보기</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
     </div>
 </div>
 <!-- 대중교통 선택 사이드 바 -->

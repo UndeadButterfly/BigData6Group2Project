@@ -3,19 +3,18 @@ package com.twy.tripwithyou_spring.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twy.tripwithyou_spring.dto.CourseDto;
-import com.twy.tripwithyou_spring.dto.CoursePlaceDto;
-import com.twy.tripwithyou_spring.dto.UploadDto;
-import com.twy.tripwithyou_spring.dto.VehicleDto;
+import com.twy.tripwithyou_spring.dto.*;
 import com.twy.tripwithyou_spring.service.CoursePlaceService;
 import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
 import com.twy.tripwithyou_spring.service.CourseService;
 import com.twy.tripwithyou_spring.service.VehicleService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.ibatis.reflection.ArrayUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,18 +63,35 @@ public class CourseController {
 
     @GetMapping("/{courseNo}/detail")
     public String detail(Model model,
-                       @PathVariable int courseNo) {
+                         @PathVariable int courseNo) {
         CourseDto course = courseService.detail(courseNo);
         List<CoursePlaceDto> coursePlaceList = coursePlaceService.list(courseNo);
         List<VehicleDto> vehicleList = vehicleService.list(courseNo);
+        List<Integer> cardsForDay = new ArrayList<>();
+        for(int i=0; i<course.getDuration(); i++) {
+            final int day=i;
+            int num=0;
+            num+=coursePlaceList.stream().filter(p->p.getPDay()==(day+1)).count();
+            num+=vehicleList.stream().filter(v->v.getVDay()==(day+1)).count();
+            cardsForDay.add(num);
+        }
         model.addAttribute("course", course);
         model.addAttribute("coursePlaceList", coursePlaceList);
         model.addAttribute("vehicleList", vehicleList);
+        model.addAttribute("cardsForDay", cardsForDay);
+
         System.out.println("detail 페이지 입니다");
         System.out.println(course);
         System.out.println(coursePlaceList);
         System.out.println(vehicleList);
         return "/course/detail";
+    }
+
+    @GetMapping("/{courseNo}/modifyMap")
+    public String modifyMap(Model model,
+                            @PathVariable int courseNo) {
+        model.addAttribute("courseNo", courseNo);
+        return "/course/map";
     }
 
     @GetMapping("/{courseNo}/modify")
