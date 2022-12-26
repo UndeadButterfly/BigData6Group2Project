@@ -164,10 +164,14 @@ create table course
     image     varchar(255) not null,
     budget    int          null,
     upload_no int          not null,
+    user_id   varchar(50)  not null,
     constraint UK_course
         unique (upload_no),
     constraint FK_courseUp
         foreign key (upload_no) references upload (upload_no)
+            on update cascade on delete cascade
+    constraint course_user_user_id_fk
+        foreign key (user_id) references user (user_id)
             on update cascade on delete cascade
 );
 
@@ -315,17 +319,17 @@ INSERT INTO upload (uptype, user_id, title, contents) VALUES
 (3,'user9','user9가 쓴 매칭글입니다', 'user9가 쓴 매칭글의 내용입니다'),
 (3,'user10','user10가 쓴 매칭글입니다', 'user10가 쓴 매칭글의 내용입니다');
 
-INSERT INTO course (startdate, enddate, duration, image, budget, upload_no) VALUES
-('2022-12-1','2022-12-11',10,'something.jpeg',10000,11),
-('2022-12-2','2022-12-12',10,'something.jpeg',20000,12),
-('2022-12-3','2022-12-13',10,'something.jpeg',30000,13),
-('2022-12-4','2022-12-14',10,'something.jpeg',40000,14),
-('2022-12-5','2022-12-15',10,'something.jpeg',50000,15),
-('2022-12-6','2022-12-16',10,'something.jpeg',60000,16),
-('2022-12-7','2022-12-17',10,'something.jpeg',70000,17),
-('2022-12-8','2022-12-18',10,'something.jpeg',80000,18),
-('2022-12-9','2022-12-19',10,'something.jpeg',90000,19),
-('2022-12-10','2022-12-20',10,'something.jpeg',100000,20);
+INSERT INTO course (startdate, enddate, duration, image, budget, upload_no, user_id) VALUES
+('2022-12-1','2022-12-11',10,'something.jpeg',10000,11,user1),
+('2022-12-2','2022-12-12',10,'something.jpeg',20000,12,user1),
+('2022-12-3','2022-12-13',10,'something.jpeg',30000,13,user1),
+('2022-12-4','2022-12-14',10,'something.jpeg',40000,14,user1),
+('2022-12-5','2022-12-15',10,'something.jpeg',50000,15,user1),
+('2022-12-6','2022-12-16',10,'something.jpeg',60000,16,user1),
+('2022-12-7','2022-12-17',10,'something.jpeg',70000,17,user1),
+('2022-12-8','2022-12-18',10,'something.jpeg',80000,18,user1),
+('2022-12-9','2022-12-19',10,'something.jpeg',90000,19,user1),
+('2022-12-10','2022-12-20',10,'something.jpeg',100000,20,user1);
 
 
 INSERT INTO VEHICLE (course_no,vday,vorder,vtype,memo) VALUES
