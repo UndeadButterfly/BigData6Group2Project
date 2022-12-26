@@ -5,7 +5,3 @@ function recommendToggle(){
 const recLocCardList = document.getElementById("recLocCardList");
 const recFoodCardList = document.getElementById("recFoodCardList");
 const recSleepCardList=document.getElementById("recSleepCardList");
-
-
-
-

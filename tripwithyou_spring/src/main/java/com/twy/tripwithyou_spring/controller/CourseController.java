@@ -12,10 +12,12 @@ import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
 import com.twy.tripwithyou_spring.service.CourseService;
 import com.twy.tripwithyou_spring.service.VehicleService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.ibatis.reflection.ArrayUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,9 +70,19 @@ public class CourseController {
         CourseDto course = courseService.detail(courseNo);
         List<CoursePlaceDto> coursePlaceList = coursePlaceService.list(courseNo);
         List<VehicleDto> vehicleList = vehicleService.list(courseNo);
+        List<Integer> cardsForDay = new ArrayList<>();
+        for(int i=0; i<course.getDuration(); i++) {
+            final int day=i;
+            int num=0;
+            num+=coursePlaceList.stream().filter(p->p.getPDay()==(day+1)).count();
+            num+=vehicleList.stream().filter(v->v.getVDay()==(day+1)).count();
+            cardsForDay.add(num);
+        }
         model.addAttribute("course", course);
         model.addAttribute("coursePlaceList", coursePlaceList);
         model.addAttribute("vehicleList", vehicleList);
+        model.addAttribute("cardsForDay", cardsForDay);
+
         System.out.println("detail 페이지 입니다");
         System.out.println(course);
         System.out.println(coursePlaceList);

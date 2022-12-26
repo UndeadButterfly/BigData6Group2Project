@@ -132,8 +132,6 @@ search.onsubmit = (e) => {
 
 const addedPlaces = document.forms["addedPlaces"];
 addedPlaces.onsubmit=(e)=>{
-    const textArea = document.createElement("textarea");
-    textArea.name="json";
     const places = addedPlaces.querySelectorAll(".place");
     let jsonList =[];
     places.forEach(place=>{
@@ -141,7 +139,6 @@ addedPlaces.onsubmit=(e)=>{
         jsonList.push(JSON.parse(json.innerText));
     });
     const textValue = document.createTextNode(JSON.stringify(jsonList));
-    alert(JSON.stringify(jsonList));
-    textArea.append(textValue);
-    addedPlaces.append(textArea);
+    addedPlaces["json"].innerHTML='';
+    addedPlaces["json"].append(textValue);
 }
