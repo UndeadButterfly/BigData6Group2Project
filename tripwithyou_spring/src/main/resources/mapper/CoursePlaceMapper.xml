@@ -6,6 +6,8 @@
         <result column="img_path" property="imgPath"/>
         <result column="open_hour" property="openHour"/>
         <result column="course_no" property="courseNo"/>
+        <result column="pday" property="pDay"/>
+        <result column="porder" property="pOrder"/>
     </resultMap>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="coursePlaceNo">

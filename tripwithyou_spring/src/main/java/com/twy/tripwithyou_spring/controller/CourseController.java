@@ -1,5 +1,8 @@
 package com.twy.tripwithyou_spring.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twy.tripwithyou_spring.dto.CourseDto;
 import com.twy.tripwithyou_spring.dto.CoursePlaceDto;
 import com.twy.tripwithyou_spring.dto.UploadDto;
@@ -113,9 +116,15 @@ public class CourseController {
     public void map() {}
     @PostMapping("/map")
     public String map(HttpSession session,
-                      @RequestParam(name = "json") List<String> jsonList) {
-        System.out.println(jsonList);
-        session.setAttribute("jsonList", jsonList);
+                      @RequestParam(name = "json") String json) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(json);
+        try {
+            List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(json, new TypeReference<List<CoursePlaceDto>>(){});
+            session.setAttribute("coursePlaceList", coursePlaceList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return "redirect:/course/register";
     }
 }

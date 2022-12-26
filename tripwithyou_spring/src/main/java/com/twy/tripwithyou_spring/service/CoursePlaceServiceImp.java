@@ -17,4 +17,8 @@ public class CoursePlaceServiceImp implements CoursePlaceService{
     public List<CoursePlaceDto> list(int courseNo) {
         return coursePlaceMapper.findByCourseNo(courseNo);
     }
+
+    public void jsonToCoursePlace(String json) {
+//        CoursePlaceDto coursePlace = coursePlaceMapper.readValue();
+    }
 }
