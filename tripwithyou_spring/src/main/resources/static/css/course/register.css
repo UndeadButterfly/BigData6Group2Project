@@ -25,6 +25,7 @@ nav a, header span a{
     display: inline-block;
     width: 20%;
     top: 30%;
+    background-color: lightgoldenrodyellow;
 }
 #transportList{
     right: 0;
@@ -61,18 +62,26 @@ form>div{
 /* form 안에 div들 설정 */
 form #planDayList{
     border: 1px solid #343434;
-   
-    
+
 }
 form #planDayList>div{
     margin: 20px;
 }
+form #planDayList #allignCard .dayBoxContainer{
+    background-color: lavender;
+    border: 2px solid pink;
 
-form #planDayList #allignCard{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
 }
+.dest{
+    padding: 10px;
+    border: 1px solid red;
+    width:300px;
+}
+
+/*form #planDayList #allignCard{*/
+/*    display: flex;*/
+/*    justify-content: space-around;*/
+/*}*/
 form #planDayList #allignCard>div{
     padding: 5px;
     background-color: #eeeeee;
@@ -88,7 +97,7 @@ form #planDayList #allignCard>div{
     font-weight: bold;
     cursor: pointer;
 }
-.dragbox{
-    width: 50%;
-    min-height: 100px;
-}
+/*.dragbox{*/
+/*    width: 50%;*/
+/*    min-height: 100px;*/
+/*}*/

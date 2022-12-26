@@ -1,62 +1,109 @@
-const dragBox = document.querySelectorAll(".dragBox");
-// console.log(dragBox);
-let coursePlaceJsonList = [];
-let vehicleJsonList=[];
-for(let i=0; i<dragBox.length; i++){
-    const localCardList = dragBox[i].children;
-    for(let j=0; j<localCardList.length; j++){
-        console.log(localCardList);
-        const coursePlaceJson={
-            name:(localCardList[i].dataset.name)?localCardList[i].dataset.name:null,
-            address:(localCardList[i].dataset.address)?localCardList[i].dataset.address:null,
-            imgPath:null,
-            tel:null,
-            openHour:null,
-            rate:(localCardList[i].dataset.rate)?localCardList[i].dataset.rate:null,
-            type:null,
-            courseNo:null,
-            pDay:(i+1),
-            pOrder:null,
-            memo: "나 여기 갈거지롱"
-        }
-        coursePlaceJsonList.push(coursePlaceJson);
-    }
-    const vehicleCardList = dragBox[i].children;
-    for(let k=0; k<vehicleCardList.length; k++){
-        const vehicleJson={
-            courseNo:null,
-            vDay:(i+1),
-            vOrder:null,
-            vType:(i),
-            memo:"나 차끌고 갈거지롱"
-        }
-        vehicleJsonList.push(vehicleJson);
-    }
-}
-const planRegisterForm = document.forms["plannerRegister"];
-let uploadJson={
-    uptype:1,
-    userId:(planRegisterForm.userId)?planRegisterForm.userId:null,
-    title:(planRegisterForm.title)?planRegisterForm.title:null,
-    contents:(planRegisterForm.contents)?planRegisterForm.contents:null,
-    postdate:(planRegisterForm.postdate)?planRegisterForm.postdate:null,
-    views:0,
-    likes:0,
-    dislikes:0,
-    reports:0,
-    upstate:0,
-}
-const courseJson = {
-    startdate:(planRegisterForm.startdate)?planRegisterForm.startdate:null,
-    enddate:(planRegisterForm.enddate)?planRegisterForm.enddate:null,
-    duration:(planRegisterForm.duration)?planRegisterForm.duration:null,
-    image:null,
-    budget:(planRegisterForm.budget)?planRegisterForm.budget:null,
-    uploadNo:null,
-    uploadDto:uploadJson,
-    coursePlaceList:coursePlaceJsonList,
-    vehicleList:vehicleJsonList
+function dragstart(ev) {
+    console.log("dragStart");
+    // Change the source element's background color to signify drag has started
+    ev.currentTarget.style.border = "dashed";
+    // Add the id of the drag source element to the drag data payload so
+    // it is available when the drop event is fired
+    ev.dataTransfer.setData("text", ev.target.id);
+    // Tell the browser both copy and move are possible
+    ev.target.classList.add("dragging");
+    ev.effectAllowed = "copyMove";
 }
 
-const completeJson = JSON.stringify(courseJson);
-console.log(completeJson);
+function dragover(ev) {
+    console.log("dragOver");
+    // Change the target element's border to signify a drag over event
+    // has occurred
+    ev.currentTarget.style.background = "lightblue";
+    ev.preventDefault();
+    const afterElement = getDragAfterElement(ev.target, e.clientY);
+    const draggable = document.querySelector('.dragging')
+    // container.appendChild(draggable)
+    container.insertBefore(draggable, afterElement)
+}
+function deleteBtn() {
+    const newIds = document.querySelectorAll("#newId");
+    newIds.forEach(newId => {
+        console.log(newId + ": 삭제버튼 눌림");
+        const deleteBtn = newId.querySelector(".delete");
+        console.log("deleteBtn:" + deleteBtn);
+        deleteBtn.addEventListener("click", e => {
+            newId.remove();
+        })
+    })
+}
+
+function drop(ev) {
+    console.log("Drop");
+    ev.preventDefault();
+    // Get the id of drag source element (that was added to the drag data
+    // payload by the dragstart event handler)
+    var id = ev.dataTransfer.getData("text");
+    const dragCopies = document.querySelectorAll(".dragCopy");
+    const items = document.querySelectorAll(".item");
+    const dests = document.querySelectorAll(".dest");
+    const dragBoxes = document.querySelectorAll(".dragBox");
+    for (let j = 1; j < dests.length + 1; j++) {
+        for (let i = 1; i < items.length + 1; i++) {
+            if (id == `src_move${i}` && ev.target.id == `day${j}`) {
+                ev.target.appendChild(document.getElementById(id));
+            }
+        }
+    }
+    for (let j = 1; j < dests.length + 1; j++) {
+        for (let i = 1; i < dragCopies.length + 1; i++) {
+            if (id == `src_copy${i}` && ev.target.id == `day${j}`) {
+                var nodeCopy = document.getElementById(id).cloneNode(true);
+                nodeCopy.id = "newId";
+                ev.target.appendChild(nodeCopy);
+                nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete" type="button">삭제하기</button>';
+                deleteBtn();
+            }
+        }
+    }
+
+
+}
+function dragend(ev) {
+    console.log("dragEnd");
+    // Restore source's border
+    ev.target.style.border = "solid black";
+    // Remove all of the drag data
+    ev.target.classList.remove("dragging");
+    ev.dataTransfer.clearData();
+}
+
+let startdateInput = document.getElementById("planStartDate");
+let enddateInput = document.getElementById("planEndDate");
+const planDays =document.getElementById("planDays");
+const planDuration = document.forms["planner"].planDuration;
+console.log(startdateInput);
+let startdate;
+let enddate;
+let dayDiffer;
+startdateInput.onchange=(e)=>{
+    startdate = new Date(startdateInput.value);
+    console.log(startdate);
+    if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
+        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        console.log(dayDiffer);
+        planDays.value = dayDiffer+1;
+        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
+    }
+}
+
+enddateInput.onchange=(e)=>{
+    enddate = new Date(enddateInput.value);
+    console.log(enddate);
+    if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
+        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        console.log(dayDiffer);
+        planDays.value = dayDiffer+1;
+        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
+
+    }
+}
+
+function datediff(first,second){
+    return Math.round((second-first)/(1000*60*60*24));
+}
