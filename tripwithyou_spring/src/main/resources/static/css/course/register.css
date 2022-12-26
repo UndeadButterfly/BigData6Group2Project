@@ -43,9 +43,11 @@ nav a, header span a{
     font-size: 1.5em;
     font-weight: 600;
     text-align: center;
-    line-height: 2em;
+    line-height: 1.5em;
 }
-
+/*.dragCopy{*/
+/*    height:80px;*/
+/*}*/
 /* form 설정 */
 form{
     width: 70%;
@@ -69,19 +71,23 @@ form #planDayList>div{
 }
 form #planDayList #allignCard .dayBoxContainer{
     background-color: lavender;
-    border: 2px solid pink;
+    height: 600px;
+    border: 2px solid black;
 
 }
 .dest{
     padding: 10px;
     border: 1px solid red;
     width:300px;
+    box-sizing: border-box;
+}
+.dayBoxes{
+    width:300px;
+    border: 2px solid red;
+    margin: 0 5px;
+    box-sizing: border-box;
 }
 
-/*form #planDayList #allignCard{*/
-/*    display: flex;*/
-/*    justify-content: space-around;*/
-/*}*/
 form #planDayList #allignCard>div{
     padding: 5px;
     background-color: #eeeeee;
@@ -97,7 +103,3 @@ form #planDayList #allignCard>div{
     font-weight: bold;
     cursor: pointer;
 }
-/*.dragbox{*/
-/*    width: 50%;*/
-/*    min-height: 100px;*/
-/*}*/

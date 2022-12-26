@@ -56,7 +56,7 @@ function drop(ev) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
                 nodeCopy.id = "newId";
                 ev.target.appendChild(nodeCopy);
-                nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete" type="button">삭제하기</button>';
+                nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
                 deleteBtn();
             }
         }
@@ -76,7 +76,8 @@ function dragend(ev) {
 let startdateInput = document.getElementById("planStartDate");
 let enddateInput = document.getElementById("planEndDate");
 const planDays =document.getElementById("planDays");
-const planDuration = document.forms["planner"].planDuration;
+const planDuration = document.forms["plannerRegister"].planDuration;
+const dayBoxContainer = document.getElementById("dayContainer")
 console.log(startdateInput);
 let startdate;
 let enddate;
@@ -89,6 +90,7 @@ startdateInput.onchange=(e)=>{
         console.log(dayDiffer);
         planDays.value = dayDiffer+1;
         planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
+        makeDayBoxes(dayDiffer+1);
     }
 }
 
@@ -100,10 +102,22 @@ enddateInput.onchange=(e)=>{
         console.log(dayDiffer);
         planDays.value = dayDiffer+1;
         planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-
+        makeDayBoxes(dayDiffer+1);
     }
 }
 
 function datediff(first,second){
     return Math.round((second-first)/(1000*60*60*24));
+}
+
+function makeDayBoxes(days) {
+    for (let i = 0; i < days; i++) {
+        dayBoxContainer.innerHTML += `
+        <div class="dayBoxes">
+            <span>day${i+1}</span>
+            <div class="dest dragBox overflow-auto" style="height:550px" id="day${i+1}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
+            </div>
+        </div>
+        `;
+    }
 }
