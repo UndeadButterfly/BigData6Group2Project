@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.twy</groupId>
-    <artifactId>tripwithyou_spring</artifactId>
+    <artifactId>tripwithyou_spring_old</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>tripwithyou_spring</name>
     <description>tripwithyou_spring</description>

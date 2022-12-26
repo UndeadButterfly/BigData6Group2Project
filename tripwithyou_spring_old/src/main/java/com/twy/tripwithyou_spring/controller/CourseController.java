@@ -122,9 +122,15 @@ public class CourseController {
     //    public String register(CourseDto course,
 //                         List<CoursePlaceDto> coursePlaceList,
 //                         List<VehicleDto> vehicleList) {
-    public String register(@RequestBody CourseDto course
+    public String register(@RequestParam(name="courseJson") String courseJson,
+                           @RequestParam(name="uploadJson") String uploadJson,
+                           @RequestParam(name="placeListJson") String placeListJson,
+                           @RequestParam(name="vehicleListJson") String vehicleLisJson
                            ) {
-        System.out.println(course);
+        System.out.println(courseJson);
+        System.out.println(uploadJson);
+        System.out.println(placeListJson);
+        System.out.println(vehicleLisJson);
         return null;
     }
 
