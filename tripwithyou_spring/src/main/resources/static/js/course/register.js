@@ -16,10 +16,6 @@ function dragover(ev) {
     // has occurred
     ev.currentTarget.style.background = "lightblue";
     ev.preventDefault();
-    const afterElement = getDragAfterElement(ev.target, e.clientY);
-    const draggable = document.querySelector('.dragging')
-    // container.appendChild(draggable)
-    container.insertBefore(draggable, afterElement)
 }
 function deleteBtn() {
     const newIds = document.querySelectorAll("#newId");
@@ -56,7 +52,17 @@ function drop(ev) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
                 nodeCopy.id = "newId";
                 ev.target.appendChild(nodeCopy);
+                let vtype = ev.target.getElementsByClassName("transport-card-title")[0].innerText;
+                let json = {
+                    vehicle_no : null,
+                    course_no : null,
+                    vday : null,
+                    vorder : null,
+                    vtype : vtype,
+                    memo : null
+                }
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
+                nodeCopy.innerHTML += `<p class="cardJson" style="display: none;">${JSON.stringify(json)}</p>`
                 deleteBtn();
             }
         }
@@ -121,3 +127,33 @@ function makeDayBoxes(days) {
         `;
     }
 }
+
+//onsubmit 일때 {
+// course json을 만들어서 courseJson textarea에 입력
+// update json을 만들어서 ..
+const dayBoxes = dayBoxContainer.querySelectorAll(".dragBox");
+let vehicleList=[];
+let coursePlaceList=[];
+for(let day=1; day<dayBoxes.length+1; day++) {
+    const dayBox = dayBoxes.children
+    for(let order=1; order<dayBox.length+1; order++) {
+        const card = dayBox.children[order];
+        const cardJson = card.querySelector(".cardJson");
+        let json = JSON.parse(cardJson.innerText);
+        //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
+        if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
+            json.vday=day;
+            json.vorder=order;
+            vehicleList.push(json);
+        }
+        else if(card.classList.contains("item")){
+            json.pday = day;
+            json.porder = order;
+            coursePlaceList.push(json);
+        }
+    }
+}
+// vehicleList는 textarea name="vehicleListJson" 에 stringify 해서 입력
+// placeList는 textarea name="placeListJson" 에 stringify 해서 입력
+// }
+
