@@ -90,6 +90,7 @@ let startdate;
 let enddate;
 let dayDiffer;
 startdateInput.onchange=(e)=>{
+    dayBoxContainer.innerHTML='';
     startdate = new Date(startdateInput.value);
     console.log(startdate);
     if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
@@ -102,6 +103,7 @@ startdateInput.onchange=(e)=>{
 }
 
 enddateInput.onchange=(e)=>{
+    dayBoxContainer.innerHTML='';
     enddate = new Date(enddateInput.value);
     console.log(enddate);
     if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
@@ -128,18 +130,19 @@ function makeDayBoxes(days) {
         `;
     }
 }
-// json object를 controller에 넘겨주기
 const planForm = document.forms["plannerRegister"];
-const dayBoxes = dayBoxContainer.querySelectorAll(".dragBox");
-const courseTextarea = planForm.courseJson;
-const uploadTextarea = planForm.uploadJson;
-const placeListTextarea = planForm.placeListJson;
-const vehicleListTextarea = planForm.vehicleListJson;
+// json object를 controller에 넘겨주기
 //onsubmit 일때 {
 // course json을 만들어서 courseJson textarea에 입력
 // update json을 만들어서 ..
 //*****************FIX: dayDiffer가 먹힐지 모르겠다.
 planForm.onsubmit=(e)=>{
+    const dayBoxes = dayBoxContainer.querySelectorAll(".dragBox");
+    const courseTextarea = planForm.courseJson;
+    const uploadTextarea = planForm.uploadJson;
+    const placeListTextarea = planForm.placeListJson;
+    const vehicleListTextarea = planForm.vehicleListJson;
+
     let courseJson = {
         courseNo:null,
         startdate:startdateInput.value,
@@ -167,13 +170,17 @@ planForm.onsubmit=(e)=>{
     }
     let vehicleList=[];
     let coursePlaceList=[];
-    for(let day=1; day<dayBoxes.length+1; day++) {
-        const dayBox = dayBoxes.children
-        for(let order=1; order<dayBox.length+1; order++) {
-            const card = dayBox.children[order];
+    alert(dayBoxes.length);
+    let day=1;
+    dayBoxes.forEach(dayBox=> {
+        const cards = dayBox.querySelectorAll(".card");
+        alert(cards.length);
+        let order=1;
+        cards.forEach(card=>{
             const cardJson = card.querySelector(".cardJson");
             let json = JSON.parse(cardJson.innerText);
             //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
+            alert(cardJson.innerText);
             if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
                 json.vday=day;
                 json.vorder=order;
@@ -184,8 +191,10 @@ planForm.onsubmit=(e)=>{
                 json.porder = order;
                 coursePlaceList.push(json);
             }
-        }
-    }
+            order++;
+        });
+        day++;
+    });
 
     courseTextarea.value = JSON.stringify(courseJson);
     uploadTextarea.value = JSON.stringify(uploadJson);

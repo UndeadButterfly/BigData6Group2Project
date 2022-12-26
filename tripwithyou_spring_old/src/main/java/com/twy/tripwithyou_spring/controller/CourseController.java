@@ -118,10 +118,7 @@ public class CourseController {
         return "/course/register";
     }
 
-    @PostMapping(value = "/register",consumes = "application/json",produces = "application/json")
-    //    public String register(CourseDto course,
-//                         List<CoursePlaceDto> coursePlaceList,
-//                         List<VehicleDto> vehicleList) {
+    @PostMapping(value = "/register")
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
@@ -131,6 +128,13 @@ public class CourseController {
         System.out.println(uploadJson);
         System.out.println(placeListJson);
         System.out.println(vehicleLisJson);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {
+            });
+        }catch(JsonProcessingException e){
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -140,7 +144,6 @@ public class CourseController {
     public String map(HttpSession session,
                       @RequestParam(name = "json") String json) {
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(json);
         try {
             List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(json, new TypeReference<List<CoursePlaceDto>>(){});
             session.setAttribute("coursePlaceList", coursePlaceList);
