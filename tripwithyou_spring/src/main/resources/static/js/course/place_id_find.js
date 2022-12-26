@@ -2,8 +2,9 @@ const placeList = document.querySelectorAll(".placeIdDiv");
 const locListCard = document.getElementById("locListCard");
 placeList.forEach((json_str)=>{
     const json = JSON.parse(json_str.value);
+    let i = 1;
     locListCard.innerHTML+=`
-        <div class="card p-0 draggable item" draggable="true" style="width:100%;"
+        <div class="card p-0 draggable item m-1" id="src_move${i}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
             data-name="${json.name}"
             data-address="${json.address}"
             data-rate="${json.rate}">
@@ -16,8 +17,8 @@ placeList.forEach((json_str)=>{
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
-                        <h5 class="card-title">${json.name}</h5>
-                        <p class="card-text p-0 m-0 ">${json.address}</p>
+                        <h5 class="card-title" id="name">${json.name}</h5>
+                        <p class="card-text p-0 m-0 " id="address">${json.address}</p>
                         <div class="moreInfo text-end">
                             <a class="card-text p-0 m-0" href="#"><small
                                 class="text-muted">더보기</small></a>
@@ -26,6 +27,7 @@ placeList.forEach((json_str)=>{
                 </div>
             </div>
         </div>`;
+    i++;
 });
 
 let map;
@@ -47,7 +49,7 @@ function initMap() {
             .then(({ results }) => {
                 if (results[0]) {
                     locListCard.innerHTML+=`
-                            <div class="card p-0 draggable item" draggable="true" style="width:100%;">
+                            <div div class="card p-0 draggable item m-1" id="src_move4" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
                                 <div class="row g-0">
                                     <div class="col-sm-4">
                                         <img src="/img/course/hallasan.jpg" class="img-fluid rounded-start"

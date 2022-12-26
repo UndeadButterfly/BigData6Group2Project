@@ -2,10 +2,10 @@ const dragBox = document.querySelectorAll(".dragBox");
 // console.log(dragBox);
 let coursePlaceJsonList = [];
 let vehicleJsonList=[];
-
 for(let i=0; i<dragBox.length; i++){
     const localCardList = dragBox[i].children;
     for(let j=0; j<localCardList.length; j++){
+        console.log(localCardList);
         const coursePlaceJson={
             name:(localCardList[i].dataset.name)?localCardList[i].dataset.name:null,
             address:(localCardList[i].dataset.address)?localCardList[i].dataset.address:null,
