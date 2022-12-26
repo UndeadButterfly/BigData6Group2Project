@@ -3,18 +3,19 @@ package com.twy.tripwithyou_spring.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twy.tripwithyou_spring.dto.CourseDto;
-import com.twy.tripwithyou_spring.dto.CoursePlaceDto;
-import com.twy.tripwithyou_spring.dto.VehicleDto;
+import com.twy.tripwithyou_spring.dto.*;
 import com.twy.tripwithyou_spring.service.CoursePlaceService;
+import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
 import com.twy.tripwithyou_spring.service.CourseService;
 import com.twy.tripwithyou_spring.service.VehicleService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.ibatis.reflection.ArrayUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -121,9 +122,15 @@ public class CourseController {
     //    public String register(CourseDto course,
 //                         List<CoursePlaceDto> coursePlaceList,
 //                         List<VehicleDto> vehicleList) {
-    public String register(@RequestBody CourseDto course
+    public String register(@RequestParam(name="courseJson") String courseJson,
+                           @RequestParam(name="uploadJson") String uploadJson,
+                           @RequestParam(name="placeListJson") String placeListJson,
+                           @RequestParam(name="vehicleListJson") String vehicleLisJson
                            ) {
-        System.out.println(course);
+        System.out.println(courseJson);
+        System.out.println(uploadJson);
+        System.out.println(placeListJson);
+        System.out.println(vehicleLisJson);
         return null;
     }
 
