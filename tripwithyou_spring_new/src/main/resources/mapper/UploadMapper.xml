@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UploadMapper">
+    <resultMap id="uploadMap" type="uploadDto" autoMapping="true">
+        <id column="upload_no" property="uploadNo"/>
+        <result column="user_id" property="userId"/>
+        <collection property="uploadImgList"
+                    select="com.twy.tripwithyou_spring.mapper.UploadImgMapper.findByUploadNo"
+                    column="upload_no"
+                    fetchType="lazy"/>
+    </resultMap>
+    <!--  CRUD.List<T> findAll();  -->
+    <select id="findAll" resultType="UploadDto">
+        SELECT * FROM upload
+    </select>
+    <!--    List<T> findPaging(PagingDto paging)-->
+    <select id="findPaging" parameterType="PagingDto" resultMap="uploadMap">
+        SELECT * FROM upload
+        <if test="orderField!=null">
+            ORDER BY ${orderField} ${direct}
+        </if>
+        LIMIT #{startRow},#{rows}
+    </select>
+    <!--    int count(PagingDto paging);-->
+    <select id="count" resultType="int" parameterType="PagingDto">
+        SELECT COUNT(*) FROM upload
+    </select>
+    <select id="countByType" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM upload WHERE uptype=#{upType}
+    </select>
+    <!--    T findById(P id);-->
+    <select id="findById" resultMap="uploadMap" parameterType="int">
+        SELECT * FROM UPLOAD WHERE upload_no=#{uploadNo}
+    </select>
+    <!--    int deleteById(P id);-->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM UPLOAD WHERE upload_no=#{uploadNo}
+    </delete>
+    <!--    int updateById(T dto);-->
+    <update id="updateById" parameterType="UploadDto">
+        UPDATE UPLOAD SET
+        title=#{title},
+        contents=#{contents},
+        postdate=#{postdate},
+        upstate=#{upstate}
+        WHERE upload_no=#{uploadNo}
+    </update>
+    <!--    int insert(T dto);-->
+    <insert id="insert" parameterType="UploadDto" useGeneratedKeys="true" keyProperty="uploadNo">
+        INSERT INTO Upload (upType,user_id,title,contents,upstate)
+        VALUES (#{upType},#{userId},#{title},#{contents},#{upstate})
+    </insert>
+    <select id="findByType" resultMap="uploadMap">
+        SELECT * FROM upload WHERE uptype=#{upType}
+        <if test="paging.orderField!=null">
+            ORDER BY ${paging.orderField} ${paging.direct}
+        </if>
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
+    <select id="findByPrefer" resultMap="uploadMap">
+        SELECT *,views+likes-dislikes prefer FROM upload WHERE uptype=#{upType} ORDER BY prefer DESC LIMIT 0,10;
+    </select>
+    <select id="countByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM upload WHERE user_id=#{userId}
+    </select>
+    <select id="findPagingByUserId" resultType="com.twy.tripwithyou_spring.dto.UploadDto">
+        SELECT * FROM upload WHERE user_id=#{userId}
+        <if test="paging.orderField!=null">
+            ORDER BY ${paging.orderField} ${paging.direct}
+        </if>
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
+</mapper>
