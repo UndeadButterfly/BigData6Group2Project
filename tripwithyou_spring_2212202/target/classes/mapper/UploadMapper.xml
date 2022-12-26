@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UploadMapper">
+
+    <!--  CRUD.List<T> findAll();  -->
+    <select id="findAll" resultType="UploadDto">
+        SELECT * FROM upload
+    </select>
+    <!--    List<T> findPaging(PagingDto paging)-->
+    <select id="findPaging" parameterType="PagingDto" resultType="UploadDto">
+        SELECT * FROM upload
+        <if test="orderField!=null">
+            ORDER BY ${orderField} ${direct}
+        </if>
+        LIMIT #{startRow},#{rows}
+    </select>
+    <!--    int count(PagingDto paging);-->
+    <select id="count" resultType="int" parameterType="PagingDto">
+        SELECT COUNT(*) FROM upload
+    </select>
+    <!--    T findById(P id);-->
+    <select id="findById" resultType="UploadDto" parameterType="int">
+        SELECT * FROM UPLOAD WHERE upload_no=#{id}
+    </select>
+    <!--    int deleteById(P id);-->
+    <delete id="deleteById" parameterType="String">
+        DELETE FROM UPLOAD WHERE upload_no=#{id}
+    </delete>
+    <!--    int updateById(T dto);-->
+    <update id="updateById" parameterType="UploadDto">
+        UPDATE UPLOAD SET
+        title=#{title},
+        contents=#{contents},
+        upstate=#{upstate}
+        WHERE user_id=#{user_id}
+    </update>
+    <!--    int insert(T dto);-->
+    <insert id="insert" parameterType="UploadDto">
+        INSERT INTO Upload (upType,user_id,title,contents,upstate)
+        VALUES (#{upType},#{user_id},#{title},#{contents},#{upstate})
+    </insert>
+
+</mapper>
