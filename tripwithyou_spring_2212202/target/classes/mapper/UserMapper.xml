@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UserMapper">
+    <insert id="insert">
+        INSERT INTO USER (user_id,name,pw,phone,gender,email,birth) VALUES
+        (#{userId},#{name},#{pw},#{phone}, #{gender},#{email},#{birth})
+    </insert>
+    <!--    id: 해당 타입의 method 전달-->
+    <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.User">
+        SELECT * FROM USER WHERE user_id = #{id} AND pw =#{pw}
+    </select>
+</mapper>

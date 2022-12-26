@@ -49,7 +49,7 @@
         WHERE course_no=#{courseNo}
     </update>
 <!--    int insert(CourseDto dto) throws Exception;-->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="courseNo">
         INSERT INTO course (startdate, enddate, duration, image, budget, upload_no)
         VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, ${uploadNo})
     </insert>

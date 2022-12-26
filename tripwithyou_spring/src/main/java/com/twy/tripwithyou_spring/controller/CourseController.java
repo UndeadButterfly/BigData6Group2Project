@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twy.tripwithyou_spring.dto.CourseDto;
 import com.twy.tripwithyou_spring.dto.CoursePlaceDto;
+import com.twy.tripwithyou_spring.dto.UploadDto;
 import com.twy.tripwithyou_spring.dto.VehicleDto;
 import com.twy.tripwithyou_spring.service.CoursePlaceService;
 import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
@@ -101,12 +102,14 @@ public class CourseController {
         return "/course/register";
     }
 
-    @PostMapping("/register")
-//    public String register(CourseDto course,
+    @PostMapping(value = "/register",consumes = "application/json",produces = "application/json")
+    //    public String register(CourseDto course,
 //                         List<CoursePlaceDto> coursePlaceList,
 //                         List<VehicleDto> vehicleList) {
-    public String register() {
-        return "redirect:/course/1/detail";
+    public String register(@RequestBody CourseDto course
+                           ) {
+        System.out.println(course);
+        return null;
     }
 
     @GetMapping("/map")

@@ -8,7 +8,7 @@
         <id column="upload_no" property="uploadNo"/>
         <result column="user_id" property="userId"/>
     </resultMap>
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uploadNo">
         INSERT INTO upload (uptype, user_id, title, contents)
         VALUES (#{uptype}, #{userId}, #{title}, #{contents})
     </insert>

@@ -10,7 +10,7 @@
         <result column="porder" property="pOrder"/>
     </resultMap>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="coursePlaceNo">
         INSERT INTO course_place (name, address, img_path, tel, open_hour, rate, type, course_no, pday, porder, memo)
         VALUES (#{name}, #{address}, #{imgPath}, #{tel}, #{openHour}, #{rate}, #{type}, #{courseNo}, #{pDay}, #{pOrder}, #{memo})
     </insert>
