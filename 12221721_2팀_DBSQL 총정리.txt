@@ -63,7 +63,7 @@ create table user
     gender       int                                    not null,
     email        varchar(30)                            not null,
     signup       timestamp    default CURRENT_TIMESTAMP null,
-    latest_login datetime                               not null,
+    latest_login datetime                               null,
     location     varchar(30)  default '0'               null,
     hobby        varchar(255) default '1'               null,
     user_type    int          default 1                 not null,
