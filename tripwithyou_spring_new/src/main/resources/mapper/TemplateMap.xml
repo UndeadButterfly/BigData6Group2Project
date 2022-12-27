@@ -1,0 +1,48 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<!DOCTYPE mapper-->
+<!--        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+<!--        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--&lt;!&ndash;sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.&ndash;&gt;-->
+<!--<mapper namespace="com.twy.tripwithyou_spring.mapper.TemplateMapper">-->
+<!--    <resultMap id="templateMap" type="templateDto" autoMapping="true">-->
+<!--        <id column="tp_no" property="tpNo"/>-->
+<!--        <result column="tp_update" property="tpUpdate"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="findAll" resultMap="templateMap">-->
+<!--        SELECT * FROM template-->
+<!--    </select>-->
+<!--    &lt;!&ndash;    List<CourseDto> findPaging(PagingDto paging) throws Exception;&ndash;&gt;-->
+<!--    <select id="findPaging" resultMap="templateMap">-->
+<!--        SELECT * FROM template-->
+<!--        ORDER BY ${orderField} ${direct}-->
+<!--        LIMIT #{startRow}, #{rows}-->
+<!--    </select>-->
+<!--    &lt;!&ndash;    int count(PagingDto paging);&ndash;&gt;-->
+<!--    <select id="count" resultType="int">-->
+<!--        SELECT COUNT(*) FROM template-->
+<!--    </select>-->
+<!--    &lt;!&ndash;    CourseDto findById(String id) throws Exception;&ndash;&gt;-->
+<!--    <select id="findById" resultMap="templateMap">-->
+<!--        SELECT * FROM template WHERE tp_no=#{id}-->
+<!--    </select>-->
+<!--    <select id="findByUploadNo" resultType="TemplateDto">-->
+<!--        SELECT * FROM template WHERE upload_no=#{uploadNo}-->
+<!--    </select>-->
+<!--    &lt;!&ndash;    int deleteById(String id) throws Exception;&ndash;&gt;-->
+<!--    <delete id="deleteById">-->
+<!--        DELETE FROM template WHERE tp_no=#{id}-->
+<!--    </delete>-->
+<!--    &lt;!&ndash;    int updateById(CourseDto dto) throws Exception;&ndash;&gt;-->
+<!--    <update id="updateById">-->
+<!--        UPDATE template SET-->
+<!--        title,-->
+<!--        content-->
+<!--        WHERE tp_no=#{tpNo}-->
+<!--    </update>-->
+<!--    &lt;!&ndash;    int insert(CourseDto dto) throws Exception;&ndash;&gt;-->
+<!--    <insert id="insert">-->
+<!--        INSERT INTO template (title, content)-->
+<!--        VALUES (#{title}, #{content})-->
+<!--    </insert>-->
+<!--</mapper>-->
