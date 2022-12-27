@@ -22,7 +22,7 @@
 </head>
 
 <body>
-<th:block th:include="headerNav"></th:block>
+<th:block th:inclde="headerNav"></th:block>
 <!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
 <!-- 장소선택 사이드 바 -->
 <!--<th:block th:each="json:${session.jsonList}">-->
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="cardJson" th:text="${session.jsonList.get(i)}"></p>
+                    <p class="cardJson" th:text="${session.jsonList.get(i)}" style="display: none;"></p>
                 </div>
             </div>
         </th:block>

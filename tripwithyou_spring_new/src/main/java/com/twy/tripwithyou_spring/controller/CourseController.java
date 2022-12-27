@@ -123,18 +123,8 @@ public class CourseController {
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
-                           @RequestParam(name="vehicleListJson") String vehicleLisJson
+                           @RequestParam(name="vehicleListJson") String vehicleListJson
                            ) {
-        System.out.println(courseJson);
-        System.out.println(uploadJson);
-        System.out.println(placeListJson);
-        System.out.println(vehicleLisJson);
-//        try{
-//            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {
-//            });
-//        }catch(JsonProcessingException e){
-//            throw new RuntimeException(e);
-//        }
         return null;
     }
 

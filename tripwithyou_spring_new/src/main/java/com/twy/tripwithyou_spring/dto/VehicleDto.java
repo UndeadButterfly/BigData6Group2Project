@@ -8,6 +8,6 @@ public class VehicleDto {
     private int courseNo;//course.course_no fk N(vehicle):1(course) NN
     private int vDay;//vday NN
     private int vOrder;//vorder NN
-    private int vType;//vtype NN
+    private String vType;//vtype NN
     private String memo;//memo mediumtext
 }
