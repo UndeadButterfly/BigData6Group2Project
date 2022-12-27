@@ -1,3 +1,4 @@
+const planForm = document.forms["plannerRegister"];
 function dragstart(ev) {
     console.log("dragStart");
     // Change the source element's background color to signify drag has started
@@ -82,23 +83,23 @@ function dragend(ev) {
 
 let startdateInput = document.getElementById("planStartDate");
 let enddateInput = document.getElementById("planEndDate");
-const planDays =document.getElementById("planDays");
+const duration =document.getElementById("planDays");
 const planDuration = document.forms["plannerRegister"].planDuration;
 const dayBoxContainer = document.getElementById("dayContainer")
 console.log(startdateInput);
 let startdate;
 let enddate;
-let dayDiffer;
+let dayDiffer=planForm.planDuration.value;
 startdateInput.onchange=(e)=>{
     startdate = new Date(startdateInput.value);
     console.log(startdate);
     if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
         dayBoxContainer.innerHTML='';
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
@@ -107,11 +108,11 @@ enddateInput.onchange=(e)=>{
     console.log(enddate);
     if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
         dayBoxContainer.innerHTML='';
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
@@ -130,7 +131,6 @@ function makeDayBoxes(days) {
         `;
     }
 }
-const planForm = document.forms["plannerRegister"];
 // json object를 controller에 넘겨주기
 //onsubmit 일때 {
 // course json을 만들어서 courseJson textarea에 입력
@@ -144,28 +144,28 @@ planForm.onsubmit=(e)=>{
     const vehicleListTextarea = planForm.vehicleListJson;
 
     let courseJson = {
-        courseNo:null,
+        courseNo:planForm.courseNo.value,
         startdate:startdateInput.value,
         enddate:enddateInput.value,
-        duration:dayDiffer+1,
+        duration:dayDiffer,
         image:null,
         budget:document.getElementById("planBudget").value,
-        uploadNo:null,
+        uploadNo:planForm.uploadNo.value,
         uploadDto:null,
         coursePlaceList:null,
         vehicleList:null
     }
     let uploadJson = {
-        uploadNo:null,
+        uploadNo:planForm.uploadNo.value,
         upType:1,
         userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
-        views:null,
-        likes:null,
-        hates:null,
-        reports:null,
+        views:planForm.views.value,
+        likes:planForm.likes.value,
+        hates:planForm.hates.value,
+        reports:planForm.reports.value,
         upstate:0
     }
     let vehicleList=[];

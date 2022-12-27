@@ -4,15 +4,14 @@
     <resultMap id="coursePlaceMap" type="CoursePlaceDto" autoMapping="true">
         <id column="c_place_no" property="cPlaceNo"/>
         <result column="img_path" property="imgPath"/>
-        <result column="open_hour" property="openHour"/>
         <result column="course_no" property="courseNo"/>
         <result column="pday" property="pDay"/>
         <result column="porder" property="pOrder"/>
     </resultMap>
 
-    <insert id="insert">
-        INSERT INTO course_place (name, address, img_path, tel, open_hour, rate, type, course_no, pday, porder, memo)
-        VALUES (#{name}, #{address}, #{imgPath}, #{tel}, #{openHour}, #{rate}, #{type}, #{courseNo}, #{pDay}, #{pOrder}, #{memo})
+    <insert id="insert" useGeneratedKeys="true" keyProperty="cPlaceNo">
+        INSERT INTO course_place (name, address, img_path, rate,course_no, pday, porder, memo)
+        VALUES (#{name}, #{address}, #{imgPath},  #{rate}, #{courseNo}, #{pDay}, #{pOrder}, #{memo})
     </insert>
     <delete id="deleteByCourseNo">
         DELETE FROM course_place WHERE course_no=#{courseNo}

@@ -34,13 +34,13 @@
     <select id="findByUploadNo" resultMap="courseMap">
         SELECT * FROM course WHERE upload_no=#{uploadNo}
     </select>
-    <select id="findPagingByUserId" resultType="com.twy.tripwithyou_spring.dto.CourseDto">
-        SELECT * FROM course Where user_id = #{userId} ORDER BY ${pagingDto.orderField} ${pagingDto.direct} LIMIT
-        #{pagingDto.page},#{pagingDto.rows}
-    </select>
-    <select id="countById" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM course WHERE user_id=#{userId}
-    </select>
+<!--    <select id="findPagingByUserId" resultType="com.twy.tripwithyou_spring.dto.CourseDto">-->
+<!--        SELECT * FROM course WHERE user_id = #{userId} ORDER BY ${pagingDto.orderField} ${pagingDto.direct} LIMIT-->
+<!--        #{pagingDto.page},#{pagingDto.rows}-->
+<!--    </select>-->
+<!--    <select id="countById" resultType="java.lang.Integer">-->
+<!--        SELECT COUNT(*) FROM course WHERE user_id=#{userId}-->
+<!--    </select>-->
     <!--    int deleteById(String id) throws Exception;-->
     <delete id="deleteById">
         DELETE FROM course WHERE course_no=#{id}
@@ -56,7 +56,7 @@
         WHERE course_no=#{courseNo}
     </update>
     <!--    int insert(CourseDto dto) throws Exception;-->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="courseNo">
         INSERT INTO course (startdate, enddate, duration, image, budget, upload_no)
         VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, ${uploadNo})
     </insert>

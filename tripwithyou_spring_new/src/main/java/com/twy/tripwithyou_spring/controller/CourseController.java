@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twy.tripwithyou_spring.dto.*;
-import com.twy.tripwithyou_spring.service.CoursePlaceService;
-import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
-import com.twy.tripwithyou_spring.service.CourseService;
-import com.twy.tripwithyou_spring.service.VehicleService;
+import com.twy.tripwithyou_spring.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.apache.ibatis.reflection.ArrayUtil;
 import org.springframework.stereotype.Controller;
@@ -24,6 +21,7 @@ public class CourseController {
     private CourseService courseService;
     private CoursePlaceService coursePlaceService;
     private VehicleService vehicleService;
+    private UploadService uploadService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public CourseController(CourseService courseService,
@@ -76,6 +74,9 @@ public class CourseController {
             num+=vehicleList.stream().filter(v->v.getVDay()==(day+1)).count();
             cardsForDay.add(num);
         }
+        System.out.println("coursePlaceList : "+coursePlaceList);
+        System.out.println("vehicleList : "+vehicleList);
+        System.out.println("cardsForDay : "+cardsForDay);
         model.addAttribute("course", course);
         model.addAttribute("coursePlaceList", coursePlaceList);
         model.addAttribute("vehicleList", vehicleList);
@@ -165,13 +166,53 @@ public class CourseController {
     }
 
     @PostMapping("/{courseNo}/modify")
-    public void modify(@RequestParam(name="courseJson") String courseJson,
+    public String modify(@RequestParam(name="courseJson") String courseJson,
                        @RequestParam(name="uploadJson") String uploadJson,
                        @RequestParam(name="placeListJson") String placeListJson,
                        @RequestParam(name="vehicleListJson") String vehicleListJson,
                        @PathVariable(name = "courseNo") int courseNo
     ){
+        try {
+//            courseJson parse
+            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
+//            uploadJson parse
+            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
+//            coursePlaceJsonList parse
+            List<CoursePlaceDto> coursePlaceList = new ArrayList<>();
+            List<CoursePlaceDto> coursePlaceJsonList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
+            for(CoursePlaceDto coursePlace : coursePlaceJsonList) {
+                coursePlace.setCourseNo(courseNo);
+                coursePlaceList.add(coursePlace);
+            }
+//            vehicleJsonList parse
+            List<VehicleDto> vehicleList = new ArrayList<>();
+            List<VehicleDto> vehicleJsonList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
+            for(VehicleDto vehicle : vehicleJsonList){
+                vehicle.setCourseNo(courseNo);
+                vehicleList.add(vehicle);
+            }
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
+            course.setUploadDto(upload);
+            // course parsing finished
 
+            int modify = courseService.modify(course);
+            if(modify<2) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            modify = coursePlaceService.modify(courseNo, coursePlaceList);
+            if(modify<coursePlaceList.size()) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            modify = vehicleService.modify(courseNo, vehicleList);
+            if(modify<vehicleList.size()) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            // modification was successful
+            return "redirect:/course/"+courseNo+"/detail";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/register")
@@ -184,32 +225,60 @@ public class CourseController {
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
                            @RequestParam(name="vehicleListJson") String vehicleListJson
-                           ) {
+    ) {
+        CourseDto course = null;
+        UploadDto upload = null;
+        List<CoursePlaceDto> coursePlaceList = null;
+        List<VehicleDto> vehicleList = null;
         try {
 //            courseJson parse
-            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
-            System.out.println(course);
+            course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
+//            System.out.println(course);
 //            uploadJson parse
-            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
-            System.out.println(upload);
+            upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
+//            System.out.println(upload);
 //            coursePlaceJsonList parse
-            List<String> courseJsonList = new ArrayList<>();
-            List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
-            for(CoursePlaceDto coursePlace : coursePlaceList) {
-                System.out.println(coursePlace);
-                courseJsonList.add(objectMapper.writeValueAsString(coursePlace));
+           coursePlaceList = new ArrayList<>();
+            List<CoursePlaceDto> coursePlaceJsonList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
+            for(CoursePlaceDto coursePlace : coursePlaceJsonList) {
+//                System.out.println(coursePlace);
+                coursePlaceList.add(coursePlace);
             }
-//            vehicleJsonLsit
-            List<String> vehicleJsonList = new ArrayList<>();
-            List<VehicleDto> vehicleList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
-            for(VehicleDto vehicle : vehicleList){
-                System.out.println(vehicle);
-                vehicleJsonList.add(objectMapper.writeValueAsString(vehicle));
+//            vehicleJsonList parse
+            vehicleList = new ArrayList<>();
+            List<VehicleDto> vehicleJsonList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
+            for(VehicleDto vehicle : vehicleJsonList){
+//                System.out.println(vehicle);
+                vehicleList.add(vehicle);
             }
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        System.out.println("courseList+VehicleList: "+ course);
+        course.setUploadDto(upload);
+        int register = courseService.register(course);
+        int courseNo = course.getCourseNo();
+        if(register>1){
+            int listRegister = 0;
+            for(CoursePlaceDto coursePlace: coursePlaceList){
+                coursePlace.setCourseNo(courseNo);
+                listRegister += coursePlaceService.register(coursePlace);
+            }
+            for(VehicleDto vehicle: vehicleList){
+                vehicle.setCourseNo(courseNo);
+                listRegister += vehicleService.register(vehicle);
+            }
+            if(listRegister>0){
+                return "redirect:/course/"+courseNo+"/detail";
+            }else{
+                return "redirect:/course/map";
+            }
+        }else{
+            return "redirect:/course/register";
+        }
+
     }
 
     @GetMapping("/map")
@@ -229,6 +298,7 @@ public class CourseController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
         return "redirect:/course/register";
     }
 }
