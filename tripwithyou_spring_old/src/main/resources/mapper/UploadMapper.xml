@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UploadMapper">
+    <resultMap id="uploadMap" type="uploadDto" autoMapping="true">
+        <id column="upload_no" property="uploadNo"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uploadNo">
+        INSERT INTO upload (uptype, user_id, title, contents)
+        VALUES (#{uptype}, #{userId}, #{title}, #{contents})
+    </insert>
+    <update id="updateById">
+        UPDATE upload SET title=#{title},
+                          contents=#{contents},
+                          postdate=#{postdate},
+                          upstate=#{upstate}
+        WHERE upload_no=#{uploadNo}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM upload WHERE upload_no=#{id}
+    </delete>
+    <select id="findAll" resultMap="uploadMap">
+        SELECT * FROM upload
+    </select>
+    <select id="findPaging" resultMap="uploadMap">
+        SELECT * FROM upload ORDER BY ${orderField} ${direct}
+        LIMIT #{startRow}, #{rows}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM upload
+    </select>
+    <select id="findById" resultMap="uploadMap">
+        SELECT * FROM upload WHERE upload_no=#{id}
+    </select>
+    <select id="findByType" resultMap="uploadMap">
+        SELECT * FROM upload WHERE uptype=#{type} ORDER BY ${paging.orderField} ${paging.direct}
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
+
+</mapper>

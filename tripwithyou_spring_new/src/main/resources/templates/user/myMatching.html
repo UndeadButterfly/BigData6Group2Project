@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 상세 페이지</title>
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src="/uikit/js/uikit.js"></script>
+    <script src="/uikit/js/uikit-icons.js"></script>
+    <style>
+        body {
+            width: 100vw;
+            background-color: rgba(159, 173, 153, 0.99);
+        }
+
+        #detailBox {
+            width: 100%;
+        }
+
+    </style>
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div id="detailBox">
+    <div class="listContainer" id="myMatchingList">
+        <figure>
+            <table id="matchingTable">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="matching : ${matchingList}" style="cursor: pointer"
+                    th:onclick="location.href = [[@{'/matching/matchigDetail.do' (matchingNo=${matching.matchigNo})}]]">
+                    <td th:text="${matching.matchingNo}"></td>
+                    <td th:text="${matching.title}"></td>
+                    <td th:text="${matching.localNo}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <th:block th:insert="/pagination"></th:block>
+        </figure>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 상세 페이지</title>
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src="/uikit/js/uikit.js"></script>
+    <script src="/uikit/js/uikit-icons.js"></script>
+    <link rel="stylesheet" href="/css/user/detail.css">
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div id="detailBox">
+    <div id="menuList">
+        <ul>
+            <li><a href="/user/myUpload.do">내가 작성한 후기</a></li>
+            <li><a href="/user/myCourse.do">내가 작성한 코스</a></li>
+            <li><a href="/user/myMatching.do">내가 작성한 매칭</a></li>
+        </ul>
+
+    </div>
+    <form>
+        <div class="uk-margin formR">
+            <label for="userUserId">아이디 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: user"></span>
+                <input class="uk-input uk-form-blank" id="userUserId" name="userId"
+                       type="text" th:value="${session.loginInfo.userId}">
+            </div>
+        </div>
+        <div class="uk-margin formR">
+            <label for="userName">이름 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: happy"></span>
+                <input class="uk-input uk-form-blank" id="userName" name="name"
+                       type="text" th:value="${session.loginInfo.name}">
+            </div>
+        </div>
+        <div class="uk-margin formR" hidden>
+            <label for="userPw">비밀번호 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
+                <input class="uk-input uk-form-blank" id="userPw" name="pw"
+                       type="password" th:value="${session.loginInfo.pw}">
+            </div>
+        </div>
+
+        <div class="uk-margin formR">
+            <label for="userPhone">폰번호 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: phone"></span>
+                <input class="uk-input uk-form-blank" id="userPhone" name="phone"
+                       type="text" th:value="${session.loginInfo.phone}">
+            </div>
+        </div>
+        <div class="uk-margin formR">
+            <label for="userGender">성별 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: "></span>
+                <input class="uk-input uk-form-blank" id="userGender" name="phone"
+                       type="text" th:value="${(session.loginInfo.gender==0)?'남자':'여자'}">
+            </div>
+        </div>
+
+        <div class="uk-margin formR">
+            <label for="userEmail">이메일 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: mail"></span>
+                <input class="uk-input uk-form-blank" id="userEmail" name="email"
+                       type="text" th:value="${session.loginInfo.email}">
+            </div>
+        </div>
+        <div class="uk-margin formR">
+            <label for="userBirth">생일(나이) : </label>
+            <div class="uk-inline">
+                <input class="uk-input uk-form-blank" id="userBirth" name="birth"
+                       type="date" th:value="${session.loginInfo.birth+'('+session.loginInfo.ages+')'}">
+            </div>
+        </div>
+        <div class="uk-margin formR">
+            <label for="location">지역 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: happy"></span>
+                <input class="uk-input uk-form-blank" id="location" name="location"
+                       type="text" th:value="${session.loginInfo.location}">
+            </div>
+        </div>
+        <div class="uk-margin formR">
+            <label for="hobby">취미 : </label>
+            <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: happy"></span>
+                <input class="uk-input uk-form-blank" id="hobby" name="hobby"
+                       type="text" th:value="${session.loginInfo.hobby}">
+            </div>
+        </div>
+        <div class="formR">
+            <a class="uk-button uk-button-default" href="/user/modify.do">수정</a>
+            <a class="uk-button uk-button-danger" href="/user/delete.do">탈퇴</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
