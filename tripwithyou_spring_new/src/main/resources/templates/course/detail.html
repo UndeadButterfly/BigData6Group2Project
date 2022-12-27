@@ -70,7 +70,7 @@
     </div>
     <div class="fixed">
         <!--/course/1/modify로 바꿔야함-->
-        <a href="/course/map" class="edit">수정하기</a>
+        <a th:href="@{'/course/{courseNo}/modifyMap'(courseNo=${course.courseNo})}" class="edit">수정하기</a>
         <a href="" class="delete">삭제하기</a>
     </div>
 </main>

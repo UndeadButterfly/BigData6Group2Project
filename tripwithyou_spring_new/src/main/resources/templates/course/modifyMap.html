@@ -24,10 +24,24 @@
                 <button>검색</button>
             </form>
             <h5>장소</h5>
-            <form class="added" name="addedPlaces" method="post" action="/course/map">
+            <form class="added" name="addedPlaces" method="post" th:action="@{'/course/{courseNo}/modifyMap'(courseNo=${courseNo})}">
                 <textarea name="json" id="" cols="30" rows="10" style="display: none;"></textarea>
                 <button>코스짜기!</button>
             </form>
+            <div>
+                <h5>기존에 있던 장소들</h5>
+                <p>여기서는 삭제 할 수 없습니다.</p>
+                <th:block th:each="i : ${#numbers.sequence(0, coursePlaceList.size()-1)}">
+                    <div class="place">
+                        <p th:text="${coursePlaceList.get(i).name}"></p>
+                        <p th:text="${coursePlaceList.get(i).address}"></p>
+                        <p th:text="${coursePlaceList.get(i).rate}"></p>
+                        <!--전송할 값-->
+                        <p class="json" style="display: none;" th:text="${coursePlaceJsonList.get(i)}"></p>
+                        <button type="button" class="find">찾아가기</button>
+                    </div>
+                </th:block>
+            </div>
         </div>
     </div>
 </div>
@@ -37,7 +51,6 @@
         <div class="drop-bar">
             <h5>검색 결과</h5>
             <div class="searchResults">
-
             </div>
         </div>
     </div>

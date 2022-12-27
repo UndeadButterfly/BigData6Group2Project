@@ -90,10 +90,10 @@ let startdate;
 let enddate;
 let dayDiffer;
 startdateInput.onchange=(e)=>{
-    dayBoxContainer.innerHTML='';
     startdate = new Date(startdateInput.value);
     console.log(startdate);
     if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
+        dayBoxContainer.innerHTML='';
         dayDiffer = datediff(startdate.getTime(),enddate.getTime());
         console.log(dayDiffer);
         planDays.value = dayDiffer+1;
@@ -103,10 +103,10 @@ startdateInput.onchange=(e)=>{
 }
 
 enddateInput.onchange=(e)=>{
-    dayBoxContainer.innerHTML='';
     enddate = new Date(enddateInput.value);
     console.log(enddate);
     if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
+        dayBoxContainer.innerHTML='';
         dayDiffer = datediff(startdate.getTime(),enddate.getTime());
         console.log(dayDiffer);
         planDays.value = dayDiffer+1;

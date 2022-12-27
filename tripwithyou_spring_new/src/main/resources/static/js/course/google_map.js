@@ -106,14 +106,17 @@ function buttonFunctions() {
             let position = new google.maps.LatLng(place.dataset.lat, place.dataset.lng);
             placeMarker(position, map);
         });
-        deleteBtn.addEventListener("click", e => {
-            place.remove();
-        });
-        if(addBtn!=null) {
+        if(deleteBtn) {
+            deleteBtn.addEventListener("click", e => {
+                place.remove();
+            });
+        }
+        if(addBtn) {
             addBtn.addEventListener("click", e => {
                 place.querySelector(".addBtnContainer").innerHTML=""
                 added.prepend(place);
                 buttonFunctions();
+                console.log(3);
             });
         }
     });
