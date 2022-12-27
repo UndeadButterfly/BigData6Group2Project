@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CoursePlaceService {
     List<CoursePlaceDto> list(int courseNo);
+    int register(CoursePlaceDto coursePlace);
 }

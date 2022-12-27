@@ -64,7 +64,7 @@ function searchPlace(queryString) {
                     tel : null,
                     openHour : null,
                     rate : results[i].rating,
-                    type : null,
+                    type : 1,
                     courseNo : null,
                     pday : null,
                     porder : null,

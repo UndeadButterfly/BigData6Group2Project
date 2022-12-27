@@ -129,33 +129,61 @@ public class CourseController {
 //        System.out.println(uploadJson);
 //        System.out.println(placeListJson);
 //        System.out.println(vehicleListJson);
+        CourseDto course = null;
+        UploadDto upload = null;
+        List<CoursePlaceDto> coursePlaceList = null;
+        List<VehicleDto> vehicleList = null;
+
         try {
 //            courseJson parse
-            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
-            System.out.println(course);
+            course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
+//            System.out.println(course);
 //            uploadJson parse
-            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
-            System.out.println(upload);
+            upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
+//            System.out.println(upload);
 //            coursePlaceJsonList parse
-            List<String> courseJsonList = new ArrayList<>();
-            List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
-            for(CoursePlaceDto coursePlace : coursePlaceList) {
-                System.out.println(coursePlace);
-                courseJsonList.add(objectMapper.writeValueAsString(coursePlace));
+           coursePlaceList = new ArrayList<>();
+            List<CoursePlaceDto> coursePlaceJsonList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
+            for(CoursePlaceDto coursePlace : coursePlaceJsonList) {
+//                System.out.println(coursePlace);
+                coursePlaceList.add(coursePlace);
             }
-//            vehicleJsonLsit
-            List<String> vehicleJsonList = new ArrayList<>();
-            List<VehicleDto> vehicleList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
-            for(VehicleDto vehicle : vehicleList){
-                System.out.println(vehicle);
-                vehicleJsonList.add(objectMapper.writeValueAsString(vehicle));
+//            vehicleJsonList parse
+            vehicleList = new ArrayList<>();
+            List<VehicleDto> vehicleJsonList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
+            for(VehicleDto vehicle : vehicleJsonList){
+//                System.out.println(vehicle);
+                vehicleList.add(vehicle);
             }
-
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        System.out.println("courseList+VehicleList: "+ course);
+        course.setUploadDto(upload);
+        int register = courseService.register(course);
+        int courseNo = course.getCourseNo();
+        if(register>1){
+            int listRegister = 0;
+            for(CoursePlaceDto coursePlace: coursePlaceList){
+                coursePlace.setCourseNo(courseNo);
+                listRegister += coursePlaceService.register(coursePlace);
+            }
+            for(VehicleDto vehicle: vehicleList){
+                vehicle.setCourseNo(courseNo);
+                listRegister += vehicleService.register(vehicle);
+            }
+            if(listRegister>0){
+                return "redirect:/{courseNo}/detail";
+            }else{
+                return "redirect:/course/map";
+            }
+        }else{
+            return "redirect:/course/register";
+        }
+
     }
 
     @GetMapping("/map")
@@ -175,6 +203,7 @@ public class CourseController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
         return "redirect:/course/register";
     }
 }

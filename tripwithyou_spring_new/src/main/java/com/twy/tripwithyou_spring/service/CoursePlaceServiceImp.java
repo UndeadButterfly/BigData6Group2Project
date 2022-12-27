@@ -18,6 +18,11 @@ public class CoursePlaceServiceImp implements CoursePlaceService{
         return coursePlaceMapper.findByCourseNo(courseNo);
     }
 
+    @Override
+    public int register(CoursePlaceDto coursePlace) {
+        return coursePlaceMapper.insert(coursePlace);
+    }
+
     public void jsonToCoursePlace(String json) {
 //        CoursePlaceDto coursePlace = coursePlaceMapper.readValue();
     }

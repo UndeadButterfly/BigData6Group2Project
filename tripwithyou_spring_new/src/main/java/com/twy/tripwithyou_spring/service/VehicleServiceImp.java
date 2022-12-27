@@ -18,4 +18,9 @@ public class VehicleServiceImp implements VehicleService{
     public List<VehicleDto> list(int courseNo) {
         return vehicleMapper.findByCourseNo(courseNo);
     }
+
+    @Override
+    public int register(VehicleDto vehicle) {
+        return vehicleMapper.insert(vehicle);
+    }
 }

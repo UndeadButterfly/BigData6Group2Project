@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface VehicleService {
     List<VehicleDto> list(int courseNo);
+    int register(VehicleDto vehicle);
 }

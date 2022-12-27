@@ -60,4 +60,17 @@ public class CourseServiceImp implements CourseService{
         pagingDto.setTotalRows(totalRows);
         return courseMapper.findPagingByUserId(pagingDto,userId);
     }
+
+    @Override
+    public int register(CourseDto course) {
+        int register = 0;
+        UploadDto upload = course.getUploadDto();
+        register = uploadMapper.insert(upload);
+        int uploadNo = upload.getUploadNo();
+        course.setUploadNo(uploadNo);
+        register += courseMapper.insert(course);
+        System.out.println(register);
+
+        return register;
+    }
 }

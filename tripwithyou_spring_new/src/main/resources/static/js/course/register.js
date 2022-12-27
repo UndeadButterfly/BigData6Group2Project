@@ -157,8 +157,8 @@ planForm.onsubmit=(e)=>{
     }
     let uploadJson = {
         uploadNo:null,
-        upType:null,
-        userId:null,
+        upType:1,
+        userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
