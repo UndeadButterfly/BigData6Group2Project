@@ -14,9 +14,38 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserDto login(String id, String pw) {
-        System.out.println(userMapper);
+        userMapper.updateLogin(id);
+        userMapper.switchLoginState(id);
         UserDto user = userMapper.findByUserIdAndPw(id, pw);
-        System.out.println(user);
+        user.setAges();
+
         return user;
     }
+
+    @Override
+    public UserDto logout(UserDto user) {
+        userMapper.switchLoginState(user.getUserId());
+        return user;
+    }
+
+    @Override
+    public int register(UserDto user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public UserDto getInfo(String userId) {
+        return userMapper.findById(userId);
+    }
+
+    @Override
+    public int withdrawal(String userId) {
+        return userMapper.deleteById(userId);
+    }
+
+    @Override
+    public int modify(UserDto user) {
+        return userMapper.update(user);
+    }
+
 }

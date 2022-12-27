@@ -1,11 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE mapper
-                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-                "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-        <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.twy.tripwithyou_spring.mapper.UserMapper">
-    <!--    id: 해당 타입의 method 전달-->
+    <insert id="insert">
+        INSERT INTO tripwithyou.user (user_id,tripwithyou.user.name,pw,phone,gender,email,birth) VALUES
+            (#{userId},#{name},#{pw},#{phone},#{gender},#{email},#{birth})
+    </insert>
+    <update id="updateLogin">
+        UPDATE tripwithyou.user SET latest_login=now() where user_id= #{userId}
+    </update>
+    <update id="switchLoginState">
+        UPDATE tripwithyou.user SET login_state=(1-user.login_state) where user_id= #{userId}
+    </update>
+    <update id="update">
+        UPDATE tripwithyou.user
+        SET name=#{name},
+            pw=#{pw},
+            birth=#{birth},
+            phone=#{phone},
+            gender=#{gender},
+            email=#{email},
+            location=#{location},
+            hobby=#{hobby}
+        WHERE user_id= #{userId}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM tripwithyou.user WHERE user_id= #{user_id}
+    </delete>
     <select id="findByUserIdAndPw" resultType="com.twy.tripwithyou_spring.dto.UserDto">
-        SELECT * FROM USER WHERE user_id = #{id} AND pw =#{pw}
+        SELECT * FROM tripwithyou.user where user_id=#{id} and pw=#{pw}
+    </select>
+    <select id="findById" resultType="com.twy.tripwithyou_spring.dto.UserDto">
+        SELECT * FROM tripwithyou.user where user_id = #{userId}
     </select>
 </mapper>

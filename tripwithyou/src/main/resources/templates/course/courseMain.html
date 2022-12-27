@@ -1,14 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Document</title>
+    <link href="/css/course/base.css" rel="stylesheet">
+    <link href="/css/course/card.css" rel="stylesheet">
+    <link href="/css/course/search-bar.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
-<th:block th:include="headerNav"></th:block>
-<h1>코스 메인입니다.</h1>
-<p>1문2천</p>
-<div>얼심히 만든 코스 플래너 페이지 메인입니다. 여러분들의 창의력과 실력을 보겠습니다.</div>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<form action="/course/searchResult" id="search-course" name="search-course">
+    <select id="search-region" name="search-region">
+        <option value="">지역</option>
+        <option value="1">경기도</option>
+        <option value="2">강원도</option>
+        <option value="3">충청북도</option>
+        <option value="4">충청남도</option>
+        <option value="5">경상북도</option>
+        <option value="6">경상남도</option>
+        <option value="7">전라북도</option>
+        <option value="8">전라남도</option>
+    </select>
+    <select id="search-transporation" name="search-vehicle">
+        <option value="">정렬 방법</option>
+        <option value="LIKE">인기순</option>
+        <option value="POST_DATE">최신순</option>
+    </select>
+    <input id="search-course-text" name="search-course-text" placeholder="검색..." type="text">
+    <button type="submit">검색</button>
+</form>
+<a href="/template/list" style="
+    padding: 5px 15px;
+    background-color: rgb(255, 166, 166);
+    color: #fff;
+    font-weight: bold;
+    ">새로 만들기</a>
+<main class="container">
+    <a class="course-create-btn" href="/template/list">코스 만들기</a>
+    <th:block th:each="courseList:${courseListsList}">
+        <div class="course-list">
+            <p class="course-list-title">겨울에 가기 좋은 코스</p>
+            <div class="cards-container">
+                <ul class="cards-list">
+                    <button class="custom-card" th:each="course:${courseList}">
+                        <div class="card-left">
+                            <img alt="" src="/img/course/winter.jpg">
+                            <div class="custom-card-text">
+                                <div class="card-top">
+                                    <h4 class="card-title" th:text="${course.getUploadDto().title}"></h4>
+                                    <label>
+                                        <input type="checkbox" value="1"><span></span>
+                                    </label>
+                                </div>
+                                <p th:text="${course.getUploadDto().userId}"></p>
+                                <!--          <a href="/course/{courseNo}/detail">자세히 보기</a> 로 바꾸기              -->
+                                <a th:href="@{'/course/{courseNo}/detail'(courseNo=${course.courseNo})}">자세히 보기</a>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque dicta, nesciunt
+                                vero placeat sed aut delectus, quisquam nostrum aspernatur omnis libero eos. Esse rerum
+                                doloremque ex veniam dolorem nesciunt pariatur.
+                            </p>
+                        </div>
+                    </button>
+                </ul>
+            </div>
+        </div>
+    </th:block>
+</main>
+<script>
+    const cards = document.querySelectorAll(".custom-card");
+    cards.forEach(card => {
+        card.addEventListener("click", e => {
+            card.classList.toggle("course");
+        })
+        card.addEventListener("blur", e => {
+            card.classList.remove("course");
+        })
+    })
+</script>
 </body>
 </html>

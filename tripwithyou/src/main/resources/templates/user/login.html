@@ -5,24 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인 폼</title>
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/user/login.css">
 </head>
 <body>
 <!-- 헤더 -->
-<header class="header">
-    <div class="header_height">
-        <div class="header_left" style="width: 341px;"></div>
-        <div class="header_center" style="width: 100%;">
-            <a class="subject" href="/">TRIP WITH YOU</a>
-        </div>
-        <div class="header_right" style="width:341px;">
-            <div class="header_right_menu">
-                <a class="login" href="/user/login.do">로그인</a>
-                <a class="mypage" href="#">마이페이지</a>
-                <a class="service-center" href="#">고객센터</a>
-            </div>
-        </div>
-    </div>
+<header>
+    <th:block th:include="headerNav"></th:block>
 </header>
 <!-- 로그인 폼 -->
 <div class="container">

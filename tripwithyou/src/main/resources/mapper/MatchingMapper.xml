@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.twy.tripwithyou_spring.mapper.MatchingMapper">
-
+    <resultMap id="matchingMap" type="MatchingDto" autoMapping="true">
+        <id column="matching_no" property="matchingNo"/>
+        <result column="tdestination" property="tDestination"/>
+        <result column="tstart" property="tStart"/>
+        <result column="tend" property="tEnd"/>
+        <result column="tmember" property="tMember"/>
+        <result column="local_no" property="localNo"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <insert id="insert" parameterType="MatchingDto">
+        INSERT INTO matching (tdestination, tstart, tend, tmember, title, contents, local_no, user_id)
+            VALUE (#{tDestination}, #{tStart}, #{tEnd},#{tMember}, #{title}, #{contents}, #{localNo}, #{userId})
+    </insert>
+    <select id="findByStartAndEnd" resultMap="matchingMap">
+        SELECT * FROM matching WHERE tstart= #{tStart} and tend= #{tEnd}
+    </select>
+    <select id="findAll" resultMap="matchingMap">
+        SELECT * FROM matching
+    </select>
+    <select id="findById" resultType="com.twy.tripwithyou_spring.dto.MatchingDto">
+        SELECT * FROM matching WHERE matching_no= #{matchingNo}
+    </select>
+    <select id="findPaging" resultMap="matchingMap" parameterType="PagingDto">
+        SELECT *
+        FROM matching
+        ORDER BY #{orderField} #{direct}
+        LIMIT #{startRow}, #{rows}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM matching
+    </select>
+    <select id="countById" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM matching where user_id= #{user_id}
+    </select>
+    <select id="findPagingById" resultMap="matchingMap">
+        SELECT *
+        FROM matching
+        WHERE user_id= #{userId}
+        ORDER BY ${paging.orderField} ${paging.direct}
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
 </mapper>
