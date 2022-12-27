@@ -125,6 +125,30 @@ public class CourseController {
                            @RequestParam(name="placeListJson") String placeListJson,
                            @RequestParam(name="vehicleListJson") String vehicleListJson
                            ) {
+        try {
+//            courseJson parse
+            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
+            System.out.println(course);
+//            uploadJson parse
+            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
+            System.out.println(upload);
+//            coursePlaceJsonList parse
+            List<String> courseJsonList = new ArrayList<>();
+            List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
+            for(CoursePlaceDto coursePlace : coursePlaceList) {
+                System.out.println(coursePlace);
+                courseJsonList.add(objectMapper.writeValueAsString(coursePlace));
+            }
+//            vehicleJsonLsit
+            List<String> vehicleJsonList = new ArrayList<>();
+            List<VehicleDto> vehicleList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
+            for(VehicleDto vehicle : vehicleList){
+                System.out.println(vehicle);
+                vehicleJsonList.add(objectMapper.writeValueAsString(vehicle));
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
@@ -133,6 +157,7 @@ public class CourseController {
     @PostMapping("/map")
     public String map(HttpSession session,
                       @RequestParam(name = "json") String json) {
+
         try {
             List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(json, new TypeReference<List<CoursePlaceDto>>(){});
             List<String> jsonList = new ArrayList<>();

@@ -132,6 +132,8 @@ public class CourseController {
         try{
             CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {
             });
+            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {
+            });
         }catch(JsonProcessingException e){
             throw new RuntimeException(e);
         }

@@ -157,14 +157,14 @@ planForm.onsubmit=(e)=>{
     }
     let uploadJson = {
         uploadNo:null,
-        uptype:null,
+        upType:null,
         userId:null,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
         views:null,
         likes:null,
-        dislikes:null,
+        hates:null,
         reports:null,
         upstate:null
     }
