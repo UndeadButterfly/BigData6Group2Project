@@ -176,7 +176,7 @@ public class CourseController {
                 listRegister += vehicleService.register(vehicle);
             }
             if(listRegister>0){
-                return "redirect:/{courseNo}/detail";
+                return "redirect:/course/"+courseNo+"/detail";
             }else{
                 return "redirect:/course/map";
             }

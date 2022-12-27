@@ -8,10 +8,7 @@ public class CoursePlaceDto {
     private String name;// name NN
     private String address;//address NN
     private String imgPath;//img_path
-    private String tel;//tel
-    private String openHour;//open_hour //변경됨
     private Float rate;//rate
-    private String type;//type NN
     private int courseNo;//course.course_no fk 1(course):N(CoursePlace) NN
     private int pDay;//pday NN
     private int pOrder;//porder NN
