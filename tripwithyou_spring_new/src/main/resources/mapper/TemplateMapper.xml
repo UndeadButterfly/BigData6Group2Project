@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<mapper namespace="com.twy.tripwithyou_spring.mapper.TemplateMapper">
+    <resultMap id="templateMap" type="templateDto" autoMapping="true">
+        <id column="tp_no" property="tpNo"/>
+        <result column="tp_update" property="tpUpdate"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="templateMap">
+        SELECT * FROM template
+    </select>
+    <!--    List<CourseDto> findPaging(PagingDto paging) throws Exception;-->
+    <select id="findPaging" resultMap="templateMap">
+        SELECT * FROM template
+        ORDER BY ${orderField} ${direct}
+        LIMIT #{startRow}, #{rows}
+    </select>
+    <!--    int count(PagingDto paging);-->
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM template
+    </select>
+    <!--    CourseDto findById(String id) throws Exception;-->
+    <select id="findById" resultMap="templateMap">
+        SELECT * FROM template WHERE tp_no=#{id}
+    </select>
+    <select id="findByUploadNo" resultType="TemplateDto">
+        SELECT * FROM template WHERE upload_no=#{uploadNo}
+    </select>
+    <!--    int deleteById(String id) throws Exception;-->
+    <delete id="deleteById">
+        DELETE FROM template WHERE tp_no=#{id}
+    </delete>
+    <!--    int updateById(CourseDto dto) throws Exception;-->
+    <update id="updateById">
+        UPDATE template SET
+        title,
+        content
+        WHERE tp_no=#{tpNo}
+    </update>
+    <!--    int insert(CourseDto dto) throws Exception;-->
+    <insert id="insert">
+        INSERT INTO template (title, content)
+        VALUES (#{title}, #{content})
+    </insert>
+</mapper>
