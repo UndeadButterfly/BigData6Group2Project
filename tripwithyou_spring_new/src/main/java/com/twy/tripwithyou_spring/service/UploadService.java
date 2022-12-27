@@ -19,7 +19,7 @@ public interface UploadService {
     //게시판 글 수정
     int modify(UploadDto upload);
     //게시글 삭제
-    int delete(UploadDto upload);
+    int delete(int uploadNo);
     //로그인 여부 확인
 
     //인기 상위 10개 글

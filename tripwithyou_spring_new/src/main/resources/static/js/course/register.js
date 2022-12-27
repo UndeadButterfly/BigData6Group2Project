@@ -17,17 +17,7 @@ function dragover(ev) {
     ev.currentTarget.style.background = "lightblue";
     ev.preventDefault();
 }
-function deleteBtn() {
-    const newIds = document.querySelectorAll("#newId");
-    newIds.forEach(newId => {
-        console.log(newId + ": 삭제버튼 눌림");
-        const deleteBtn = newId.querySelector(".delete");
-        console.log("deleteBtn:" + deleteBtn);
-        deleteBtn.addEventListener("click", e => {
-            newId.remove();
-        })
-    })
-}
+
 
 function drop(ev) {
     console.log("Drop");
@@ -61,15 +51,24 @@ function drop(ev) {
                     vtype : vtype,
                     memo : null
                 }
-                console.log(json);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
+                nodeCopy.innerHTML += '<textarea name="memo" rows="2" cols="20" class="overflow-scroll vmemo" placeholder="추가 설명"></textarea>'
                 nodeCopy.innerHTML += `<p class="cardJson" style="display: none;">${JSON.stringify(json)}</p>`
                 deleteBtn();
             }
         }
     }
-
-
+}
+function deleteBtn() {
+    const newIds = document.querySelectorAll("#newId");
+    newIds.forEach(newId => {
+        console.log(newId + ": 삭제버튼 눌림");
+        const deleteBtn = newId.querySelector(".delete");
+        console.log("deleteBtn:" + deleteBtn);
+        deleteBtn.addEventListener("click", e => {
+            newId.remove();
+        })
+    })
 }
 function dragend(ev) {
     console.log("dragEnd");
@@ -124,12 +123,13 @@ function makeDayBoxes(days) {
         dayBoxContainer.innerHTML += `
         <div class="dayBoxes">
             <span>day${i+1}</span>
-            <div class="dest dragBox overflow-auto" style="height:550px" id="day${i+1}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
+            <div class="dest dragBox" id="day${i+1}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
             </div>
         </div>
         `;
     }
 }
+
 const planForm = document.forms["plannerRegister"];
 // json object를 controller에 넘겨주기
 //onsubmit 일때 {
@@ -171,16 +171,21 @@ planForm.onsubmit=(e)=>{
     let vehicleList=[];
     let coursePlaceList=[];
     let day=1;
+    const newIds = document.querySelectorAll("#newId");
     dayBoxes.forEach(dayBox=> {
         const cards = dayBox.querySelectorAll(".card");
         let order=1;
         cards.forEach(card=>{
             const cardJson = card.querySelector(".cardJson");
             let json = JSON.parse(cardJson.innerText);
+            // let memoValue = planForm.memo.value;
             //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
             if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
                 json.vday=day;
                 json.vorder=order;
+                const memo = card.querySelector(".vmemo");
+                const memoValue = memo.value;
+                json.memo = memoValue;
                 vehicleList.push(json);
             }
             else if(card.classList.contains("courseplace")){

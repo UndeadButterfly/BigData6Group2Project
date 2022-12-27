@@ -4,18 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twy.tripwithyou_spring.dto.*;
-import com.twy.tripwithyou_spring.service.CoursePlaceService;
-import com.twy.tripwithyou_spring.service.CoursePlaceServiceImp;
-import com.twy.tripwithyou_spring.service.CourseService;
-import com.twy.tripwithyou_spring.service.VehicleService;
+import com.twy.tripwithyou_spring.service.*;
 import jakarta.servlet.http.HttpSession;
-import org.apache.ibatis.reflection.ArrayUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -24,14 +25,20 @@ public class CourseController {
     private CourseService courseService;
     private CoursePlaceService coursePlaceService;
     private VehicleService vehicleService;
+    private UploadService uploadService;
     private ObjectMapper objectMapper = new ObjectMapper();
+    private Logger log= LoggerFactory.getLogger(this.getClass().getSimpleName());
+    @Value("C:/Users/oyunm/intellij_study_workspace/BigData6Group2Project/tripwithyou_spring_new/src/main/resources/static/img")
+    private String imgPath;
 
     public CourseController(CourseService courseService,
                             CoursePlaceService coursePlaceService,
-                            VehicleService vehicleService) {
+                            VehicleService vehicleService,
+                            UploadService uploadService) {
         this.courseService = courseService;
         this.coursePlaceService = coursePlaceService;
         this.vehicleService = vehicleService;
+        this.uploadService = uploadService;
     }
 
     @GetMapping("/courseMain")
@@ -113,6 +120,19 @@ public class CourseController {
 
     @PostMapping("/{courseNo}/modify")
     public void modify(){}
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name = "courseNo")int courseNo){
+        System.out.println("delete페이지입니다.");
+        CourseDto course = courseService.detail(courseNo);
+        int uploadNo = course.getUploadNo();
+        int delete = 0;
+        delete = uploadService.delete(uploadNo);
+        if(uploadNo>0){
+            return "/course/courseMain";
+        }else{
+            return "/course/"+courseNo+"/detail";
+        }
+    }
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -123,7 +143,8 @@ public class CourseController {
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
-                           @RequestParam(name="vehicleListJson") String vehicleListJson
+                           @RequestParam(name="vehicleListJson") String vehicleListJson,
+                           @RequestParam(name="imgFile", required = false)MultipartFile imgFile
                            ) {
 //        System.out.println(courseJson);
 //        System.out.println(uploadJson);
@@ -162,6 +183,19 @@ public class CourseController {
             throw new RuntimeException(e);
         }
         System.out.println("courseList+VehicleList: "+ course);
+        if(imgFile!=null&& !imgFile.isEmpty()){
+            String[] contentsTypes = imgFile.getContentType().split("/");
+            if(contentsTypes[0].equals("image")){
+                try{
+                    String fileName="course_"+System.currentTimeMillis()+"_"+(int)(Math.random()*10000+1)+"."+contentsTypes[1];
+                    Path path = Paths.get(imgPath+"/"+fileName);
+                    imgFile.transferTo(path);
+                    course.setImage(fileName);
+                }catch(Exception e){
+                    log.error(e.getMessage());
+                }
+            }
+        }
         course.setUploadDto(upload);
         int register = courseService.register(course);
         int courseNo = course.getCourseNo();
