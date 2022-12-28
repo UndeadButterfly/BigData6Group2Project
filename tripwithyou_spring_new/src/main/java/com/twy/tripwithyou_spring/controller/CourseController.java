@@ -30,7 +30,7 @@ public class CourseController {
     private UploadHashService uploadHashService;
     private ObjectMapper objectMapper = new ObjectMapper();
     private Logger log= LoggerFactory.getLogger(this.getClass().getSimpleName());
-    @Value("C:/Users/oyunm/intellij_study_workspace/BigData6Group2Project/tripwithyou_spring_new/src/main/resources/static/img")
+    @Value("C:\\Users\\oyunm\\intellij_study_workspace\\BigData6Group2Project\\tripwithyou_spring_new\\src\\main\\resources\\static\\img")
     private String imgPath;
 
     public CourseController(CourseService courseService,

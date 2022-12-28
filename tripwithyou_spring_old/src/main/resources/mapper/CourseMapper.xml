@@ -13,7 +13,11 @@
                      fetchType="lazy"
                      autoMapping="true"/>
     </resultMap>
-
+    <resultMap id="zzimViewMap" type="ZzimViewDto">
+        <association property="zzim"
+                     select="com.twy.tripwithyou_spring.mapper.ZzimMapper.countByCourseNoAndZzim"
+                     column="course_no"/>
+    </resultMap>
     <select id="findAll" resultMap="courseMap">
         SELECT * FROM course
     </select>
@@ -33,6 +37,9 @@
     </select>
     <select id="findByUploadNo" resultMap="courseMap">
         SELECT * FROM course WHERE upload_no=#{uploadNo}
+    </select>
+    <select id="countZzimById" resultMap="zzimViewMap">
+        SELECT * FROM COURSE WHERE course_no=#{id}
     </select>
     <!--    int deleteById(String id) throws Exception;-->
     <delete id="deleteById">

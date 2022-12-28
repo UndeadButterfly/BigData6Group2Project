@@ -2,6 +2,7 @@ package com.twy.tripwithyou_spring.mapper;
 
 import com.twy.tripwithyou_spring.dto.CourseDto;
 import com.twy.tripwithyou_spring.dto.PagingDto;
+import com.twy.tripwithyou_spring.dto.ZzimViewDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface CourseMapper extends CRUD<CourseDto,String> {
     List<CourseDto> findPagingByUserId(PagingDto pagingDto, String userId);
 
     int countById(String userId);
+    ZzimViewDto countZzimById(int courseNo);
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ZzimViewDto {
-    private int Zzim; //countByCourseNoandZzimIsTrue(coureNo)
+    private int zzim; //countByCourseNoandZzimIsTrue(coureNo)
     private ZzimDto loginUserZzim; //findByCourseNoAndUserId(courseNo,userId)
 }
