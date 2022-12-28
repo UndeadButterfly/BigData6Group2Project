@@ -42,7 +42,7 @@ function drop(ev) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
                 nodeCopy.id = "newId";
                 ev.target.appendChild(nodeCopy);
-                let vtype = ev.target.getElementsByClassName("transport-card-title")[0].innerText;
+                let vtype = nodeCopy.getElementsByClassName("transport-card-title")[0].innerText;
                 let json = {
                     vehicleNo : null,
                     courseNo : null,
