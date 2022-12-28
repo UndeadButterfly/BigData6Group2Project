@@ -28,6 +28,9 @@ class UploadMapperTest {
 
     @Test
     void deleteById() {
+        int delete = 0;
+        delete = uploadMapper.deleteById(32);
+        System.out.println(delete);
     }
 
     @Test

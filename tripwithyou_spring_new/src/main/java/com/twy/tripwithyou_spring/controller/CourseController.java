@@ -6,12 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twy.tripwithyou_spring.dto.*;
 import com.twy.tripwithyou_spring.service.*;
 import jakarta.servlet.http.HttpSession;
-import org.apache.ibatis.reflection.ArrayUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/course")
@@ -22,6 +29,9 @@ public class CourseController {
     private UploadService uploadService;
     private UploadHashService uploadHashService;
     private ObjectMapper objectMapper = new ObjectMapper();
+    private Logger log= LoggerFactory.getLogger(this.getClass().getSimpleName());
+    @Value("C:/Users/oyunm/intellij_study_workspace/BigData6Group2Project/tripwithyou_spring_new/src/main/resources/static/img")
+    private String imgPath;
 
     public CourseController(CourseService courseService,
                             CoursePlaceService coursePlaceService,
@@ -260,8 +270,9 @@ public class CourseController {
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
-                           @RequestParam(name="vehicleListJson") String vehicleListJson
-    ) {
+                           @RequestParam(name="vehicleListJson") String vehicleListJson,
+                           @RequestParam(name="imgFile", required = false)MultipartFile imgFile
+                           ) {
         CourseDto course = null;
         UploadDto upload = null;
         List<CoursePlaceDto> coursePlaceList = null;
@@ -293,6 +304,19 @@ public class CourseController {
             throw new RuntimeException(e);
         }
         System.out.println("courseList+VehicleList: "+ course);
+        if(imgFile!=null&& !imgFile.isEmpty()){
+            String[] contentsTypes = imgFile.getContentType().split("/");
+            if(contentsTypes[0].equals("image")){
+                try{
+                    String fileName="course_"+System.currentTimeMillis()+"_"+(int)(Math.random()*10000+1)+"."+contentsTypes[1];
+                    Path path = Paths.get(imgPath+"/"+fileName);
+                    imgFile.transferTo(path);
+                    course.setImage(fileName);
+                }catch(Exception e){
+                    log.error(e.getMessage());
+                }
+            }
+        }
         course.setUploadDto(upload);
         int register = courseService.register(course);
         int courseNo = course.getCourseNo();

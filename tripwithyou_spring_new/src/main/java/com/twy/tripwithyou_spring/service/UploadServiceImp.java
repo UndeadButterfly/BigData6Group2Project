@@ -74,8 +74,9 @@ public class UploadServiceImp implements UploadService{
     }
 
     @Override
-    public int delete(UploadDto upload) {
-        return 0;
+    public int delete(int uploadNo) {
+
+        return uploadMapper.deleteById(uploadNo);
     }
 
     @Override

@@ -219,7 +219,7 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
         <!-- 썸네일 사진 -->
         <div class="mb-3 input-group w-75">
             <label for="thumbnailImg" class="input-group-text">코스 대표 사진</label>
-            <input name="image" value="" type="file" class="form-control" id="thumbnailImg">
+            <input name="imgFile" value="" type="file" class="form-control" id="thumbnailImg">
         </div>
         <!-- 여행 일정 -->
         <div class="mb-3">
@@ -261,10 +261,10 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
             <button class="btn btn-success">초기화</button>
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <textarea name="courseJson"  cols="30" rows="10"></textarea>
-        <textarea name="uploadJson"  cols="30" rows="10"></textarea>
-        <textarea name="placeListJson"  cols="30" rows="10"></textarea>
-        <textarea name="vehicleListJson"  cols="30" rows="10"></textarea>
+        <textarea name="courseJson" style="display: none;"  cols="30" rows="10"></textarea>
+        <textarea name="uploadJson" style="display: none;"  cols="30" rows="10"></textarea>
+        <textarea name="placeListJson"   cols="30" rows="10"></textarea>
+        <textarea name="vehicleListJson" style="display: none;" cols="30" rows="10"></textarea>
     </form>
 
 
