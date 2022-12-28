@@ -76,7 +76,7 @@
             </div>
         </th:block>
     </div>
-    <th:block th:if="${session.loginInfo.userId==course.userId}">
+    <th:block th:if="${session.loginInfo!=null and session.loginInfo.userId.equals(course.userId)}">
         <div class="fixed">
             <!--/course/1/modify로 바꿔야함-->
             <a th:href="@{'/course/{courseNo}/modifyMap'(courseNo=${course.courseNo})}" class="edit">수정하기</a>
