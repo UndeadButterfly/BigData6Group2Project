@@ -61,7 +61,7 @@ function searchPlace(queryString) {
                     name : results[i].name,
                     address : results[i].formatted_address,
                     imgPath : null,
-                    rate : results[i].rating,
+                    rate : (results[i].rating)?Number(results[i].rating):0,
                     courseNo : null,
                     pday : null,
                     porder : null,
@@ -75,7 +75,7 @@ function searchPlace(queryString) {
                                 data-address="${results[i].formatted_address}">
                                     <p>${results[i].name}</p>
                                     <p>${results[i].formatted_address}</p>
-                                    <p>${results[i].rating}</p>
+                                    <p>${(results[i].rating)?results[i].rating:0}</p>
                                     <!--전송할 값-->   
                                     <p class="json" style="display: none;">${JSON.stringify(json)}</p>
                                     <button type="button" class="find">찾아가기</button>
