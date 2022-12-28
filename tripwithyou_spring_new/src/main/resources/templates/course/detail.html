@@ -28,7 +28,7 @@
     </div>
     <div class="course-title">
         <h1 th:text="${course.uploadDto.title}"></h1>
-        <h5 th:text="${course.uploadDto.userId}"></h5>
+        <h5 th:text="${course.userId}"></h5>
         <a href="">
                 <span class="material-symbols-outlined share">
                     share
@@ -76,11 +76,13 @@
             </div>
         </th:block>
     </div>
-    <div class="fixed">
-        <!--/course/1/modify로 바꿔야함-->
-        <a th:href="@{'/course/{courseNo}/modifyMap'(courseNo=${course.courseNo})}" class="edit">수정하기</a>
-        <a th:href="@{'/course/delete'(courseNo=${course.courseNo})}" class="delete">삭제하기</a>
-    </div>
+    <th:block th:if="${session.loginInfo.userId==course.userId}">
+        <div class="fixed">
+            <!--/course/1/modify로 바꿔야함-->
+            <a th:href="@{'/course/{courseNo}/modifyMap'(courseNo=${course.courseNo})}" class="edit">수정하기</a>
+            <a th:href="@{'/course/delete'(courseNo=${course.courseNo})}" class="delete">삭제하기</a>
+        </div>
+    </th:block>
 </main>
 </body>
 </html>
