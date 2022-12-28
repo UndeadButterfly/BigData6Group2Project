@@ -197,14 +197,14 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
         <!-- 여행 제목 -->
         <div class="mb-3">
             <label for="planTitle" class="form-label">여행 제목</label>
-            <input name="title" value="등록시도1" type="text" class="form-control" id="planTitle" required>
+            <input name="title" value="" type="text" class="form-control" id="planTitle" placeholder="여행 제목을 정해보자!" required>
             <div id="titleHelp" class="form-text">이번 여행의 이름을 정해보세요!</div>
         </div>
         <!-- 작성자, 작성날짜 -->
         <div class="mb-3 d-flex justify-content-between">
             <div class="col-5">
                 <label for="planUser" class="form-label">작성자</label>
-                <input name="userId" value="user1" type="text" class="form-control" id="planUser" required>
+                <input name="userId" value ="user1" type="text" class="form-control" id="planUser" required>
             </div>
             <div class="col-6">
                 <label for="planDate" class="form-label" >작성날짜(NOW)</label>
@@ -214,7 +214,7 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
         <!-- 여행 목적 -->
         <div class="mb-3">
             <label for="planPurpose" class="form-label">여행 목적</label>
-            <input name="contents" value="목적1" type="text" class="form-control" id="planPurpose" required>
+            <input name="contents" value="" placeholder="이번 여행 테마는?" type="text" class="form-control" id="planPurpose" required>
         </div>
         <!-- 썸네일 사진 -->
         <div class="mb-3 input-group w-75">
@@ -263,7 +263,7 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
         </div>
         <textarea name="courseJson" style="display: none;"  cols="30" rows="10"></textarea>
         <textarea name="uploadJson" style="display: none;"  cols="30" rows="10"></textarea>
-        <textarea name="placeListJson"   cols="30" rows="10"></textarea>
+        <textarea name="placeListJson" style="display: none"   cols="30" rows="10"></textarea>
         <textarea name="vehicleListJson" style="display: none;" cols="30" rows="10"></textarea>
     </form>
 

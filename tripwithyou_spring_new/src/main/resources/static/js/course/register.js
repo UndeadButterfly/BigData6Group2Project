@@ -77,6 +77,7 @@ function drop(ev) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
                 ev.target.appendChild(nodeCopy);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
+                // nodeCopy.innerHTML += '<input class="" type="text" name="memo"></input>';
                 deleteBtn(nodeCopy);
             }
         }
