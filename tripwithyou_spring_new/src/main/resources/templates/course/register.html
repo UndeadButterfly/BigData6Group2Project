@@ -192,7 +192,7 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post">
+    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post" enctype="multipart/form-data">
         <input type="hidden" value="2" name="uptype">
         <!-- 여행 제목 -->
         <div class="mb-3">
@@ -207,8 +207,9 @@ RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
                 <input name="userId" th:value ="${session.loginInfo.userId}" type="text" class="form-control" id="planUser" required>
             </div>
             <div class="col-6">
-                <label for="planDate" class="form-label" >작성날짜(NOW)</label>
-                <input name="postdate" value="" type="Date" class="form-control" required readonly id="planDate">
+                <label for="planDate" class="form-label">작성날짜</label>
+                 <p id="planDateDis"></p>
+                <input name="postdate" value="" type="Date" style="display: none"  class="form-control" required readonly id="planDate">
             </div>
         </div>
         <!-- 여행 목적 -->
