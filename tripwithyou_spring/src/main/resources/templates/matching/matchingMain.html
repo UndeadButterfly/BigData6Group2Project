@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/matching/matchingMain.css" rel="stylesheet">
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src="/uikit/js/uikit.js"></script>
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<!-- 전체 컨테이너 -->
+<div class="container">
+
+    <!--  컨텐츠들 헤더  -->
+    <div class="container_header">
+        <div class="date_pick">
+            <input data-placeholder="가는 날" required type="date">
+            -
+            <input data-placeholder="오는 날" required type="date">
+            <button>검색</button>
+        </div>
+        <div>
+            <button class="uk-button uk-button-default" style="border-radius: 12px;" type="button">모집중인 글만보기</button>
+        </div>
+        <div class="uk-margin">
+            <div class="uk-inline">
+                <button class="uk-button uk-button-default" style="border-radius: 12px;" type="button"><a
+                        href="/matching/matchingRegister.do">글 쓰기</a></button>
+            </div>
+        </div>
+    </div>
+    <!--  컨텐츠들 담는 컨테이너  -->
+    <div class="container_mid">
+        <a th:each="matching:${matchingList}"
+           th:onclick="location.href=[[@{'/matching/matchingDetail.do' (matchingNo=${matching.matchingNo})}]]">
+            <div class="box">
+                <div class="img_box uk-inline-clip uk-transition-toggle" tabindex="0"
+                     th:each="matchingImg:${matching.matchingImgList}">
+                    <img alt="" class="uk-transition-fade uk-transition-opaque"
+                         th:src="@{'/img/match/{file}'(file=${matchingImg.imgPath})}">
+                </div>
+                <div class="text_contents">
+                    <div class="contents_head">
+                        <p class="board_ing" th:text="${matching.localNo}"></p>
+                        <p class="board_title" th:text="${matching.title}"></p>
+                    </div>
+                    <p class="board_text" th:text="${matching.contents}"></p>
+                    <div class="user_info">
+                        <span class="user_id"><img alt="" src="/img/profile_icon.svg" th:text="${matching.userId}"></span>
+                        <span class="views"><img alt="" src="/img/view.svg"><span
+                                style="margin-left: 4px">38</span></span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <th:block th:insert="/matching/pagination"></th:block>
+    <!--  푸터  -->
+</div>
+</body>
+</html>
