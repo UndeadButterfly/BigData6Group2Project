@@ -29,25 +29,46 @@ public class UserController {
     }
 
     @GetMapping("/login.do")
-    public void login() {
+    public void login(HttpServletRequest req,
+                      HttpSession session,
+                      @SessionAttribute(required = false) String redirectUri
+                      ) {
+        String referer = req.getHeader("referer");
+        if(redirectUri==null&&!(referer.equals("http://localhost:8888")||referer.equals("http://localhost:8888/user/login.do"))){
+            session.setAttribute("redirectUri",referer);
+        }
     }
 
     @PostMapping("/login.do")
     public String login(@RequestParam(defaultValue = "") String id,
                         @RequestParam(defaultValue = "") String pw,
-                        HttpSession session) {
-        UserDto loginInfo = userService.login(id, pw);
-        if (loginInfo != null) {
+                        HttpSession session,
+                        @SessionAttribute(required=false) String redirectUri) {
+//        UserDto loginInfo = userService.login(id, pw);
+//        if (loginInfo != null) {
+//            loginInfo.setUserId(id);
+//            session.setAttribute("loginInfo", loginInfo);
+//            Object reqUrl = session.getAttribute("reqUrl");
+//            if (reqUrl == null) {
+//                return "redirect:/";
+//            } else {
+//                session.removeAttribute("reqUrl");
+//                return "redirect:" + reqUrl;
+//            }
+//        } else {
+//            return "redirect:/user/login.do";
+//        }
+        UserDto loginInfo=userService.login(id,pw);
+        session.setAttribute("loginInfo", loginInfo);
+        System.out.println("redirectUri: "+redirectUri);
+        if(loginInfo != null){
             loginInfo.setUserId(id);
-            session.setAttribute("loginInfo", loginInfo);
-            Object reqUrl = session.getAttribute("reqUrl");
-            if (reqUrl == null) {
+            if(redirectUri==null){
                 return "redirect:/";
-            } else {
-                session.removeAttribute("reqUrl");
-                return "redirect:" + reqUrl;
             }
-        } else {
+            session.removeAttribute("redirectUri");
+            return "redirect:"+redirectUri;
+        }else{
             return "redirect:/user/login.do";
         }
     }

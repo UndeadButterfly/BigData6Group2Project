@@ -135,7 +135,9 @@ public class CourseController {
     }
 
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model,
+                           @SessionAttribute UserDto loginInfo
+                           ) {
         return "/course/register";
     }
 
@@ -144,12 +146,14 @@ public class CourseController {
                            @RequestParam(name="uploadJson") String uploadJson,
                            @RequestParam(name="placeListJson") String placeListJson,
                            @RequestParam(name="vehicleListJson") String vehicleListJson,
-                           @RequestParam(name="imgFile", required = false)MultipartFile imgFile
+                           @RequestParam(name="imgFile", required = false)MultipartFile imgFile,
+                           @SessionAttribute UserDto loginInfo
                            ) {
 //        System.out.println(courseJson);
 //        System.out.println(uploadJson);
 //        System.out.println(placeListJson);
 //        System.out.println(vehicleListJson);
+        int register=0;
         CourseDto course = null;
         UploadDto upload = null;
         List<CoursePlaceDto> coursePlaceList = null;
@@ -176,28 +180,33 @@ public class CourseController {
 //                System.out.println(vehicle);
                 vehicleList.add(vehicle);
             }
-            course.setCoursePlaceList(coursePlaceList);
-            course.setVehicleList(vehicleList);
+
 
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("courseList+VehicleList: "+ course);
-        if(imgFile!=null&& !imgFile.isEmpty()){
-            String[] contentsTypes = imgFile.getContentType().split("/");
-            if(contentsTypes[0].equals("image")){
-                try{
-                    String fileName="course_"+System.currentTimeMillis()+"_"+(int)(Math.random()*10000+1)+"."+contentsTypes[1];
-                    Path path = Paths.get(imgPath+"/"+fileName);
-                    imgFile.transferTo(path);
-                    course.setImage(fileName);
-                }catch(Exception e){
-                    log.error(e.getMessage());
+        if(loginInfo.getUserId().equals(course.getCourseNo())){
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
+            if(imgFile!=null&& !imgFile.isEmpty()){
+                String[] contentsTypes = imgFile.getContentType().split("/");
+                if(contentsTypes[0].equals("image")){
+                    try{
+                        String fileName="course_"+System.currentTimeMillis()+"_"+(int)(Math.random()*10000+1)+"."+contentsTypes[1];
+                        Path path = Paths.get(imgPath+"/"+fileName);
+                        imgFile.transferTo(path);
+                        course.setImage(fileName);
+                    }catch(Exception e){
+                        log.error(e.getMessage());
+                    }
                 }
             }
+            course.setUploadDto(upload);
+            register = courseService.register(course);
+
+        }else{
+            return "redirect:/user/login.do";
         }
-        course.setUploadDto(upload);
-        int register = courseService.register(course);
         int courseNo = course.getCourseNo();
         if(register>1){
             int listRegister = 0;
