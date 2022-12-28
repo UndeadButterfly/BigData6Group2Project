@@ -83,4 +83,11 @@ public class CourseServiceImp implements CourseService{
         modify += courseMapper.updateById(course);
         return modify;
     }
+
+    @Override
+    public CourseDto showByUploadNo(int uploadNo) {
+        return courseMapper.findByUploadNo(uploadNo);
+    }
+
+
 }

@@ -7,10 +7,14 @@
     <script src="/bootstrap/js/bootstrap.bundle.js"></script>
     <link rel="stylesheet" href="/css/course/register.css">
     <link rel="stylesheet" href="/css/course/base.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/uikit/css/uikit.css">
     <script src="/uikit/js/uikit.js"></script>
@@ -31,15 +35,21 @@
         <!-- #1 card -->
         <th:block th:if="${!session.coursePlaceList.isEmpty()}">
             <th:block th:each="i : ${#numbers.sequence(0,session.coursePlaceList.size()-1)}">
-                <div class="card p-0 draggable item m-1 courseplace" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);" th:data-name="${session.coursePlaceList.get(i).name}" th:data-address="${session.coursePlaceList.get(i).address}" th:data-rate="${session.coursePlaceList.get(i).rate}">
+                <div class="card p-0 draggable item m-1 courseplace" th:id="'src_move'+${i+1}" draggable="true"
+                     ondragstart="dragstart(event);" ondragend="dragend(event);"
+                     th:data-name="${session.coursePlaceList.get(i).name}"
+                     th:data-address="${session.coursePlaceList.get(i).address}"
+                     th:data-rate="${session.coursePlaceList.get(i).rate}">
                     <div class="row g-0">
                         <div class="col-sm-4">
-                            <img src="" class="img-fluid rounded-start" style="height:100%" th:alt="${session.coursePlaceList.get(i).name}">
+                            <img src="" class="img-fluid rounded-start" style="height:100%"
+                                 th:alt="${session.coursePlaceList.get(i).name}">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-1">
                                 <h5 class="card-title" id="name" th:text="${session.coursePlaceList.get(i).name}"></h5>
-                                <p class="card-text p-0 m-0 " id="address" th:text="${session.coursePlaceList.get(i).address}"></p>
+                                <p class="card-text p-0 m-0 " id="address"
+                                   th:text="${session.coursePlaceList.get(i).address}"></p>
                                 <div class="moreInfo text-end">
                                     <a class="card-text p-0 m-0" href="#">
                                         <small class="text-muted">더보기</small>
@@ -56,10 +66,12 @@
 </div>
 <!-- 대중교통 선택 사이드 바 -->
 <div class="position-fixed mx-3 p-3" id="transportList">
-    <span class="my-2">이동수단(drag&amp;paste)</span>
+    <span class="my-2">이동수단(drag&paste)</span>
     <div class="overflow-auto dragBox" id="transportListCard" style="height: 50vh;">
         <!-- #t1 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy1" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy1" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-bus" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -72,7 +84,9 @@
             </div>
         </div>
         <!-- #t2 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy2" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy2" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-subway" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -85,7 +99,9 @@
             </div>
         </div>
         <!-- #t3 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy3" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy3" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-child" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -98,7 +114,9 @@
             </div>
         </div>
         <!-- #t4 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy4" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy4" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-car" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -111,7 +129,9 @@
             </div>
         </div>
         <!-- #t5 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy5" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy5" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-train" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -123,7 +143,9 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy6" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy6" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-bicycle" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -135,7 +157,9 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy7" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy7" draggable="true"
+             ondragstart="dragstart(event);"
+             ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
                     <i class="fa fa-motorcycle" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
@@ -147,9 +171,8 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
-
+</div>
 
 
 <main class="container">
@@ -158,9 +181,11 @@
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form th:action="@{'/course/{courseNo}/modify'(courseNo=${course.courseNo})}" id="plannerRegister" name="plannerRegister" method="post">
+    <form th:action="@{'/course/{courseNo}/modify'(courseNo=${course.courseNo})}" id="plannerRegister"
+          name="plannerRegister" method="post">
         <input type="hidden" th:value="${course.courseNo}" name="courseNo">
         <input type="hidden" th:value="${course.uploadDto.uploadNo}" name="uploadNo">
+        <input type="hidden" th:value="${course.uploadDto.upType}" name="upType">
         <input type="hidden" th:value="${course.uploadDto.views}" name="views">
         <input type="hidden" th:value="${course.uploadDto.likes}" name="likes">
         <input type="hidden" th:value="${course.uploadDto.hates}" name="hates">
@@ -168,23 +193,27 @@
         <!-- 여행 제목 -->
         <div class="mb-3">
             <label for="planTitle" class="form-label">여행 제목</label>
-            <input name="title" th:value="${course.uploadDto.title}" type="text" class="form-control" id="planTitle" required>
+            <input name="title" th:value="${course.uploadDto.title}" type="text" class="form-control" id="planTitle"
+                   required>
         </div>
         <!-- 작성자, 작성날짜 -->
         <div class="mb-3 d-flex justify-content-between">
             <div class="col-5">
                 <label for="planUser" class="form-label">작성자</label>
-                <input name="userId" th:value="${course.uploadDto.userId}" type="text" class="form-control" id="planUser" required>
+                <input name="userId" th:value="${course.uploadDto.userId}" type="text" class="form-control"
+                       id="planUser" required>
             </div>
             <div class="col-6">
                 <label for="planDate" class="form-label">작성날짜(NOW)</label>
-                <input name="postdate" th:value="${course.uploadDto.postdate}" type="Date" class="form-control" required readonly id="planDate">
+                <input name="postdate" th:value="${course.uploadDto.postdate}" type="Date" class="form-control" required
+                       readonly id="planDate">
             </div>
         </div>
         <!-- 여행 목적 -->
         <div class="mb-3">
             <label for="planPurpose" class="form-label">여행 목적</label>
-            <input name="contents" th:value="${course.uploadDto.contents}" type="text" class="form-control" id="planPurpose" required>
+            <input name="contents" th:value="${course.uploadDto.contents}" type="text" class="form-control"
+                   id="planPurpose" required>
         </div>
         <!-- 썸네일 사진 -->
         <div class="mb-3 input-group w-75">
@@ -199,23 +228,27 @@
                 <div class="col-5">
                     여행 일정
                     <label for="planStartDate" class="form-label">시작날</label>
-                    <input name="startdate" th:value="${#calendars.format(course.startdate, 'yyyy-MM-dd')}" type="date" class="form-control" id="planStartDate" placeholder="시작날" required>
+                    <input name="startdate" th:value="${#calendars.format(course.startdate, 'yyyy-MM-dd')}" type="date"
+                           class="form-control" id="planStartDate" placeholder="시작날" required>
                 </div>
                 <div class="col-5">
                     <label for="planEndDate" class="form-label">마지막날</label>
-                    <input name="enddate" th:value="${#calendars.format(course.enddate, 'yyyy-MM-dd')}" type="date" class="form-control" id="planEndDate" placeholder="마지막날" required>
+                    <input name="enddate" th:value="${#calendars.format(course.enddate, 'yyyy-MM-dd')}" type="date"
+                           class="form-control" id="planEndDate" placeholder="마지막날" required>
                 </div>
             </div>
             <div class="mt-3">
                 <label for="planDays" class="form-label">몇박몇일?</label>
                 <input type="hidden" th:value="${course.duration}" name="planDuration">
-                <input name="duration" th:value="${(course.duration)-1}+'박'+${course.duration}+'일'" type="hidden" class="form-control" id="planDays" placeholder="몇박 몇일" required>
+                <input name="duration" th:value="${(course.duration)-1}+'박'+${course.duration}+'일'" type="hidden"
+                       class="form-control" id="planDays" placeholder="몇박 몇일" required>
             </div>
         </div>
         <!-- 여행 예산 -->
         <div class="mb-3">
             <label for="planBudget" class="form-label">여행 예산</label>
-            <input name="budget" type="number" class="form-control" id="planBudget" placeholder="200,000" th:value="${course.budget}">원
+            <input name="budget" type="number" class="form-control" id="planBudget" placeholder="200,000"
+                   th:value="${course.budget}">원
         </div>
         <!--선택 장소, 대중교통 옮길 박스 -->
         <div class="mb-3" id="planDayList">
@@ -225,11 +258,16 @@
                     <th:block th:each="day : ${#numbers.sequence(1, course.duration)}">
                         <div class="dayBoxes">
                             <span th:text="'day'+${day}"></span>
-                            <div class="dest dragBox overflow-auto" style="height:550px" th:id="'day'+${day}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
+                            <div class="dest dragBox overflow-auto" style="height:550px" th:id="'day'+${day}"
+                                 uk-sortable="group: sortable-group" ondrop="drop(event);"
+                                 ondragover="dragover(event);">
                                 <th:block th:each="order : ${#numbers.sequence(1, cardsForDay.get(day+(-1)))}">
                                     <th:block th:each="i:${#numbers.sequence(0,coursePlaceList.size()-1)}">
-                                        <th:block th:if="${coursePlaceList.get(i).PDay}==${day} and ${coursePlaceList.get(i).POrder}==${order}">
-                                            <div class="card p-0 draggable item m-1 courseplace" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
+                                        <th:block
+                                                th:if="${coursePlaceList.get(i).PDay}==${day} and ${coursePlaceList.get(i).POrder}==${order}">
+                                            <div class="card p-0 draggable item m-1 courseplace"
+                                                 th:id="'src_move'+${i+1}" draggable="true"
+                                                 ondragstart="dragstart(event);" ondragend="dragend(event);"
                                                  th:data-name="${coursePlaceList.get(i).name}"
                                                  th:data-address="${coursePlaceList.get(i).address}"
                                                  th:data-rate="${coursePlaceList.get(i).rate}">
@@ -242,31 +280,40 @@
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body p-1">
-                                                            <h5 class="card-title name" th:text="${coursePlaceList.get(i).name}"></h5>
-                                                            <p class="card-text p-0 m-0 address" th:text="${coursePlaceList.get(i).name}"></p>
+                                                            <h5 class="card-title name"
+                                                                th:text="${coursePlaceList.get(i).name}"></h5>
+                                                            <p class="card-text p-0 m-0 address"
+                                                               th:text="${coursePlaceList.get(i).name}"></p>
                                                         </div>
                                                     </div>
-                                                    <p class="cardJson" th:text="${coursePlaceJsonList.get(i)}" style="display: none;"></p>
+                                                    <p class="cardJson" th:text="${coursePlaceJsonList.get(i)}"
+                                                       style="display: none;"></p>
                                                 </div>
                                             </div>
                                         </th:block>
                                     </th:block>
                                     <th:block th:each="i:${#numbers.sequence(0,vehicleList.size()-1)}">
-                                        <th:block th:if="${vehicleList.get(i).VDay}==${day} and ${vehicleList.get(i).VOrder}==${order}">
-                                            <div class="card draggable p-0 dragCopy m-2" draggable="true" ondragstart="dragstart(event);"
-                                                 ondragend="dragend(event);" >
+                                        <th:block
+                                                th:if="${vehicleList.get(i).VDay}==${day} and ${vehicleList.get(i).VOrder}==${order}">
+                                            <div class="card transport draggable p-0 dragCopy m-2" draggable="true"
+                                                 ondragstart="dragstart(event);"
+                                                 ondragend="dragend(event);">
                                                 <div class="row g-0 m-0">
                                                     <div class="col-sm-4" style="text-align: center;">
-                                                        <i class="fa fa-child" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                                                        <i class="fa fa-child" style="font-size: 2em; line-height:1.5em"
+                                                           aria-hidden="true"></i>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <div class="card-body p-1">
-                                                            <h5 class="transport-card-title" th:text="${vehicleList.get(i).VType}"></h5>
+                                                            <h5 class="transport-card-title"
+                                                                th:text="${vehicleList.get(i).VType}"></h5>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>
-                                                <p class="cardJson" style="display: none;" th:text="${vehicleJsonList.get(i)}"></p>
+                                                <button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기
+                                                </button>
+                                                <p class="cardJson" style="display: none;"
+                                                   th:text="${vehicleJsonList.get(i)}"></p>
                                             </div>
                                         </th:block>
                                     </th:block>

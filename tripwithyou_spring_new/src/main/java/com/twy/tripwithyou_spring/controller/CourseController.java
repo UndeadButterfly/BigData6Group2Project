@@ -11,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/course")
@@ -22,14 +20,19 @@ public class CourseController {
     private CoursePlaceService coursePlaceService;
     private VehicleService vehicleService;
     private UploadService uploadService;
+    private UploadHashService uploadHashService;
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public CourseController(CourseService courseService,
                             CoursePlaceService coursePlaceService,
-                            VehicleService vehicleService) {
+                            VehicleService vehicleService,
+                            UploadService uploadService,
+                            UploadHashService uploadHashService) {
         this.courseService = courseService;
         this.coursePlaceService = coursePlaceService;
         this.vehicleService = vehicleService;
+        this.uploadService = uploadService;
+        this.uploadHashService = uploadHashService;
     }
 
     @GetMapping("/courseMain")
@@ -47,17 +50,48 @@ public class CourseController {
 
 //    ------------------------TEMPORARY----------------------
     @PostMapping("/courseMain")
-    public String tempSearch(){
+    public String tempSearch(
+            @RequestParam String searchRegion,
+            @RequestParam String searchText,
+            HttpSession session
+    ){
+        session.setAttribute("searchRegion", searchRegion);
+        session.setAttribute("searchText", searchText);
         return "redirect:/course/searchResult";
     }
     @PostMapping("/searchResult")
-    public String temp2Search(){
+    public String temp2Search(
+        @RequestParam String searchRegion,
+        @RequestParam String searchText,
+        HttpSession session
+    ){
+        session.setAttribute("searchRegion", searchRegion);
+        session.setAttribute("searchText", searchText);
         return "redirect:/course/searchResult";
     }
 //    ------------------------TEMPORARY----------------------
 
     @GetMapping("/searchResult") //검색 결과
-    public void searchResult() {
+    public String searchResult(
+            HttpSession session,
+            Model model
+    ) {
+        List<UploadHashDto> uploadHashList = uploadHashService.search(session.getAttribute("searchRegion").toString(), 2);
+        String[] searchTextSplit = session.getAttribute("searchText").toString().split(" ");
+        for(String searchText : searchTextSplit) {
+            String text = "%"+searchText+"%";
+            System.out.println(text);
+            uploadHashList.addAll(uploadHashService.search(text, 2));
+        }
+        HashSet<CourseDto> courseSet = new HashSet<>();
+        for (UploadHashDto uploadHash : uploadHashList) {
+            CourseDto course = courseService.showByUploadNo(uploadHash.getUploadNo());
+            courseSet.add(course);
+        }
+        System.out.println("검색 결과");
+        System.out.println(courseSet);
+        model.addAttribute("courseSet", courseSet);
+        return "/course/searchResult";
     }
 
     @GetMapping("/{courseNo}/detail")
@@ -209,6 +243,8 @@ public class CourseController {
                 return "redirect:/course/"+courseNo+"/modify";
             }
             // modification was successful
+            int modifyHash = uploadHashService.modifyCourseHash(course);
+            if(!(modifyHash > 0)) System.out.println("검색어 등록 안됨!");
             return "redirect:/course/"+courseNo+"/detail";
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -271,6 +307,8 @@ public class CourseController {
                 listRegister += vehicleService.register(vehicle);
             }
             if(listRegister>0){
+                int registerHash = uploadHashService.registerCourseHash(course);
+                if(!(registerHash > 0)) System.out.println("검색어 등록 안됨!");
                 return "redirect:/course/"+courseNo+"/detail";
             }else{
                 return "redirect:/course/map";

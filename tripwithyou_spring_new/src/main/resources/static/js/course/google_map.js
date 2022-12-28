@@ -45,7 +45,7 @@ function searchPlace(queryString) {
     //요청 쿼리와 받고 싶은 필드들 (정보들)
     let request = {
         query: queryString,
-        fields: ['name', 'geometry', 'formatted_address', 'rating'],
+        fields: ['name', 'geometry', 'formatted_address', 'rating', 'photos'],
     };
 
     let service = new google.maps.places.PlacesService(map);

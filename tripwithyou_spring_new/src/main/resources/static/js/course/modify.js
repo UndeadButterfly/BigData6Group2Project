@@ -18,16 +18,39 @@ function dragover(ev) {
     ev.currentTarget.style.background = "lightblue";
     ev.preventDefault();
 }
-function deleteBtn() {
-    const newIds = document.querySelectorAll("#newId");
-    newIds.forEach(newId => {
-        console.log(newId + ": 삭제버튼 눌림");
-        const deleteBtn = newId.querySelector(".delete");
-        console.log("deleteBtn:" + deleteBtn);
-        deleteBtn.addEventListener("click", e => {
-            newId.remove();
-        })
-    })
+const transportList = document.getElementById("transportList");
+const cards = transportList.querySelectorAll(".card");
+cards.forEach(card=>{
+    let vtype = card.querySelector(".transport-card-title").innerText;
+    let json = {
+        vehicleNo : null,
+        courseNo : null,
+        vday : null,
+        vorder : null,
+        vtype : vtype,
+        memo : null
+    };
+    let jsonP = document.createElement("p");
+    let jsonString = document.createTextNode(JSON.stringify(json));
+    jsonP.append(jsonString);
+    jsonP.classList.add("cardJson");
+    card.append(jsonP);
+});
+
+const transports = document.querySelectorAll(".transport");
+transports.forEach(transport =>{
+    if(transport.querySelector(".delete")!=null){
+        deleteBtn(transport);
+    }
+})
+
+function deleteBtn(node) {
+    console.log(node + ": 삭제버튼 눌림");
+    const deleteBtn = node.querySelector(".delete");
+    console.log("deleteBtn:" + deleteBtn);
+    deleteBtn.addEventListener("click", e => {
+        node.remove();
+    });
 }
 
 function drop(ev) {
@@ -42,35 +65,21 @@ function drop(ev) {
     const dragBoxes = document.querySelectorAll(".dragBox");
     for (let j = 1; j < dests.length + 1; j++) {
         for (let i = 1; i < items.length + 1; i++) {
-            if (id == `src_move${i}` && ev.target.id == `day${j}`) {
+            if (id === `src_move${i}` && ev.target.id === `day${j}`) {
                 ev.target.appendChild(document.getElementById(id));
             }
         }
     }
     for (let j = 1; j < dests.length + 1; j++) {
         for (let i = 1; i < dragCopies.length + 1; i++) {
-            if (id == `src_copy${i}` && ev.target.id == `day${j}`) {
+            if (id === `src_copy${i}` && ev.target.id === `day${j}`) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
-                nodeCopy.id = "newId";
                 ev.target.appendChild(nodeCopy);
-                let vtype = ev.target.getElementsByClassName("transport-card-title")[0].innerText;
-                let json = {
-                    vehicleNo : null,
-                    courseNo : null,
-                    vday : null,
-                    vorder : null,
-                    vtype : vtype,
-                    memo : null
-                }
-                console.log(json);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
-                nodeCopy.innerHTML += `<p class="cardJson" style="display: none;">${JSON.stringify(json)}</p>`
-                deleteBtn();
+                deleteBtn(nodeCopy);
             }
         }
     }
-
-
 }
 function dragend(ev) {
     console.log("dragEnd");
@@ -157,7 +166,7 @@ planForm.onsubmit=(e)=>{
     }
     let uploadJson = {
         uploadNo:planForm.uploadNo.value,
-        upType:1,
+        upType:planForm.upType.value,
         userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,

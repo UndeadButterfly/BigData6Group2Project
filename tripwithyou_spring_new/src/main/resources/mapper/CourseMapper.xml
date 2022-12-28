@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
 <mapper namespace="com.twy.tripwithyou_spring.mapper.CourseMapper">
-    <resultMap id="courseMap" type="courseDto" autoMapping="true">
+    <resultMap id="courseMap" type="CourseDto" autoMapping="true">
         <id column="course_no" property="courseNo"/>
         <result column="upload_no" property="uploadNo"/>
         <association property="uploadDto"

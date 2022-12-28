@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UploadHashMapper">
+    <resultMap id="uploadHashMap" type="uploadHashDto">
+        <id column="hash_no" property="hashNo"/>
+        <result column="upload_no" property="uploadNo"/>
+        <result column="hash_word" property="hashWord"/>
+    </resultMap>
+    <insert id="insertOne">
+        INSERT INTO upload_hash (upload_no, uptype, hash_word) VALUES (#{uploadNo}, #{uptype}, #{hashWord})
+    </insert>
+    <delete id="deleteByUploadNo">
+        DELETE FROM upload_hash WHERE upload_no=#{uploadNo}
+    </delete>
+
+    <select id="findByWordForType" resultMap="uploadHashMap">
+        SELECT * FROM upload_hash WHERE hash_word LIKE #{word} AND uptype=#{uptype}
+    </select>
+
+</mapper>
