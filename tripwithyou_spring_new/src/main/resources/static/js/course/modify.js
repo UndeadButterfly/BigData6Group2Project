@@ -34,6 +34,7 @@ cards.forEach(card=>{
     let jsonString = document.createTextNode(JSON.stringify(json));
     jsonP.append(jsonString);
     jsonP.classList.add("cardJson");
+    jsonP.style.display="none";
     card.append(jsonP);
 });
 

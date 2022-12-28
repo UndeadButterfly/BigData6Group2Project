@@ -86,12 +86,14 @@ public class CourseController {
             HttpSession session,
             Model model
     ) {
-        List<UploadHashDto> uploadHashList = uploadHashService.search(session.getAttribute("searchRegion").toString(), 2);
+        List<UploadHashDto> uploadHashList = uploadHashService.search("%"+session.getAttribute("searchRegion").toString()+"%", 2);
         String[] searchTextSplit = session.getAttribute("searchText").toString().split(" ");
-        for(String searchText : searchTextSplit) {
-            String text = "%"+searchText+"%";
-            System.out.println(text);
-            uploadHashList.addAll(uploadHashService.search(text, 2));
+        if(session.getAttribute("searchText").toString()!="") {
+            for(String searchText : searchTextSplit) {
+                String text = "%"+searchText+"%";
+                System.out.println(text);
+                uploadHashList.addAll(uploadHashService.search(text, 2));
+            }
         }
         HashSet<CourseDto> courseSet = new HashSet<>();
         for (UploadHashDto uploadHash : uploadHashList) {
@@ -287,6 +289,12 @@ public class CourseController {
                            @RequestParam(name="vehicleListJson") String vehicleListJson,
                            @RequestParam(name="imgFile", required = false)MultipartFile imgFile
                            ) {
+        System.out.println(courseJson);
+        System.out.println(uploadJson);
+        System.out.println(placeListJson);
+        System.out.println(vehicleListJson);
+//        System.out.println(imgFile.getContentType().toString());
+
         CourseDto course = null;
         UploadDto upload = null;
         List<CoursePlaceDto> coursePlaceList = null;

@@ -1,3 +1,4 @@
+const planForm = document.forms["plannerRegister"];
 function dragstart(ev) {
     console.log("dragStart");
     // Change the source element's background color to signify drag has started
@@ -10,25 +11,6 @@ function dragstart(ev) {
     ev.effectAllowed = "copyMove";
 }
 
-const transportList = document.getElementById("transportList");
-const cards = transportList.querySelectorAll(".card");
-cards.forEach(card=>{
-    let vtype = card.querySelector(".transport-card-title").innerText;
-    let json = {
-            vehicleNo : null,
-            courseNo : null,
-            vday : null,
-            vorder : null,
-            vtype : vtype,
-            memo : null
-        };
-    let jsonP = document.createElement("p");
-    let jsonString = document.createTextNode(JSON.stringify(json));
-    jsonP.append(jsonString);
-    jsonP.classList.add("cardJson");
-    card.append(jsonP);
-});
-
 function dragover(ev) {
     console.log("dragOver");
     // Change the target element's border to signify a drag over event
@@ -36,6 +18,32 @@ function dragover(ev) {
     ev.currentTarget.style.background = "lightblue";
     ev.preventDefault();
 }
+const transportList = document.getElementById("transportList");
+const cards = transportList.querySelectorAll(".card");
+cards.forEach(card=>{
+    let vtype = card.querySelector(".transport-card-title").innerText;
+    let json = {
+        vehicleNo : null,
+        courseNo : null,
+        vday : null,
+        vorder : null,
+        vtype : vtype,
+        memo : null
+    };
+    let jsonP = document.createElement("p");
+    let jsonString = document.createTextNode(JSON.stringify(json));
+    jsonP.append(jsonString);
+    jsonP.classList.add("cardJson");
+    jsonP.style.display="none";
+    card.append(jsonP);
+});
+
+const transports = document.querySelectorAll(".transport");
+transports.forEach(transport =>{
+    if(transport.querySelector(".delete")!=null){
+        deleteBtn(transport);
+    }
+})
 
 function deleteBtn(node) {
     console.log(node + ": 삭제버튼 눌림");
@@ -85,23 +93,23 @@ function dragend(ev) {
 
 let startdateInput = document.getElementById("planStartDate");
 let enddateInput = document.getElementById("planEndDate");
-const planDays =document.getElementById("planDays");
+const duration =document.getElementById("planDays");
 const planDuration = document.forms["plannerRegister"].planDuration;
 const dayBoxContainer = document.getElementById("dayContainer")
 console.log(startdateInput);
 let startdate;
 let enddate;
-let dayDiffer;
+let dayDiffer=planForm.planDuration.value;
 startdateInput.onchange=(e)=>{
     startdate = new Date(startdateInput.value);
     console.log(startdate);
     if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
         dayBoxContainer.innerHTML='';
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
@@ -110,11 +118,11 @@ enddateInput.onchange=(e)=>{
     console.log(enddate);
     if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
         dayBoxContainer.innerHTML='';
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
@@ -127,14 +135,12 @@ function makeDayBoxes(days) {
         dayBoxContainer.innerHTML += `
         <div class="dayBoxes">
             <span>day${i+1}</span>
-            <div class="dest dragBox" id="day${i+1}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
+            <div class="dest dragBox overflow-auto" style="height:550px" id="day${i+1}"  uk-sortable="group: sortable-group" ondrop="drop(event);" ondragover="dragover(event);">
             </div>
         </div>
         `;
     }
 }
-
-const planForm = document.forms["plannerRegister"];
 // json object를 controller에 넘겨주기
 //onsubmit 일때 {
 // course json을 만들어서 courseJson textarea에 입력
@@ -151,7 +157,7 @@ planForm.onsubmit=(e)=>{
         courseNo:null,
         startdate:startdateInput.value,
         enddate:enddateInput.value,
-        duration:dayDiffer+1,
+        duration:dayDiffer,
         image:null,
         budget:document.getElementById("planBudget").value,
         uploadNo:null,
@@ -161,35 +167,30 @@ planForm.onsubmit=(e)=>{
     }
     let uploadJson = {
         uploadNo:null,
-        upType:planForm.uptype.value,
+        upType:2,
         userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
-        views:null,
-        likes:null,
-        hates:null,
-        reports:null,
+        views:0,
+        likes:0,
+        hates:0,
+        reports:0,
         upstate:0
     }
     let vehicleList=[];
     let coursePlaceList=[];
     let day=1;
-    const newIds = document.querySelectorAll("#newId");
     dayBoxes.forEach(dayBox=> {
         const cards = dayBox.querySelectorAll(".card");
         let order=1;
         cards.forEach(card=>{
             const cardJson = card.querySelector(".cardJson");
             let json = JSON.parse(cardJson.innerText);
-            // let memoValue = planForm.memo.value;
             //json을 stringify한 태그 (내부 내용은 vehicle 이나 place일 수 있지만, 클래스는 cardJson)
             if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
                 json.vday=day;
                 json.vorder=order;
-                const memo = card.querySelector(".vmemo");
-                const memoValue = memo.value;
-                json.memo = memoValue;
                 vehicleList.push(json);
             }
             else if(card.classList.contains("courseplace")){
