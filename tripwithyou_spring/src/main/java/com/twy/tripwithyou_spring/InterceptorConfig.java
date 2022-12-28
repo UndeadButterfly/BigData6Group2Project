@@ -16,7 +16,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/matching/matchingRegister.do")
-                .addPathPatterns("/upload/register.do");
-
+                .addPathPatterns("/upload/register.do")
+                .addPathPatterns("/course/*/modifyMap")
+                .addPathPatterns("/course/*/modify")
+                .addPathPatterns("/course/delete")
+                .addPathPatterns("/course/register")
+                .addPathPatterns("/course/map");
     }
 }

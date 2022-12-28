@@ -94,8 +94,9 @@ public class UploadServiceImp implements UploadService{
 
     @Transactional
     @Override
-    public int delete(UploadDto upload) {
+    public int delete(int uploadNo) {
         int delete=0;
+        UploadDto upload= uploadMapper.findById(uploadNo);
         if(upload.getUploadImgList()!=null){
             int imgCnt=upload.getUploadImgList().size();
             for(UploadImgDto uploadImg : upload.getUploadImgList()){

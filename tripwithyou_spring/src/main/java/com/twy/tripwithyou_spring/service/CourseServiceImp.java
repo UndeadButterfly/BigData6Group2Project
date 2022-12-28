@@ -31,7 +31,6 @@ public class CourseServiceImp implements CourseService{
             //생성자로 가능하게 만들기?
             PagingDto paging = new PagingDto(1, 10, orderField, "DESC");
             List<UploadDto> uploadList = uploadMapper.findByType(2, paging);
-            System.out.println(uploadList);
             List<CourseDto> courseList = new ArrayList<>();
             for(UploadDto upload : uploadList) {
                 CourseDto course = courseMapper.findByUploadNo(upload.getUploadNo());
@@ -58,5 +57,32 @@ public class CourseServiceImp implements CourseService{
         int totalRows = courseMapper.countById(userId);
         pagingDto.setTotalRows(totalRows);
         return courseMapper.findPagingByUserId(pagingDto,userId);
+    }
+    @Override
+    public int register(CourseDto course) {
+        int register = 0;
+        UploadDto upload = course.getUploadDto();
+        register = uploadMapper.insert(upload);
+        int uploadNo = upload.getUploadNo();
+        course.setUploadNo(uploadNo);
+        register += courseMapper.insert(course);
+        System.out.println(register);
+
+        return register;
+    }
+
+    @Override
+    public int modify(CourseDto course) {
+        int modify = uploadMapper.updateById(course.getUploadDto());
+        if(modify<1) {
+            return modify;
+        }
+        modify += courseMapper.updateById(course);
+        return modify;
+    }
+
+    @Override
+    public CourseDto showByUploadNo(int uploadNo) {
+        return courseMapper.findByUploadNo(uploadNo);
     }
 }

@@ -46,7 +46,8 @@
         DELETE FROM course WHERE course_no=#{id}
     </delete>
     <!--    int updateById(CourseDto dto) throws Exception;-->
-    <update id="update">
+    <!--    int updateById(CourseDto dto) throws Exception;-->
+    <update id="updateById">
         UPDATE course SET
         startdate=#{startdate},
         enddate=#{enddate},
@@ -56,8 +57,8 @@
         WHERE course_no=#{courseNo}
     </update>
     <!--    int insert(CourseDto dto) throws Exception;-->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="courseNo">
         INSERT INTO course (startdate, enddate, duration, image, budget, upload_no, user_id)
-        VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, #{uploadNo}, #{user_id})
+        VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, #{uploadNo}, #{userId})
     </insert>
 </mapper>

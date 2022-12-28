@@ -57,10 +57,15 @@ public class UserController {
     }
 
     @GetMapping("/logout.do")
-    public String logout(HttpSession session, @SessionAttribute UserDto loginInfo) {
+    public String logout(HttpSession session, @SessionAttribute UserDto loginInfo,HttpServletRequest req) {
         userService.logout(loginInfo);
         session.removeAttribute("loginInfo");
-        return "redirect:/";
+        String redirectUri = req.getHeader("referer");
+        if (redirectUri == null) {
+            return "redirect:/";
+        } else {
+            return "redirect:"+redirectUri;
+        }
     }
 
     @GetMapping("/register.do")

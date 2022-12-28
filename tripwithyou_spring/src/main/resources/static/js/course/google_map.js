@@ -45,7 +45,7 @@ function searchPlace(queryString) {
     //요청 쿼리와 받고 싶은 필드들 (정보들)
     let request = {
         query: queryString,
-        fields: ['name', 'geometry', 'formatted_address', 'rating'],
+        fields: ['name', 'geometry', 'formatted_address', 'rating', 'photos'],
     };
 
     let service = new google.maps.places.PlacesService(map);
@@ -61,10 +61,7 @@ function searchPlace(queryString) {
                     name : results[i].name,
                     address : results[i].formatted_address,
                     imgPath : null,
-                    tel : null,
-                    openHour : null,
-                    rate : results[i].rating,
-                    type : null,
+                    rate : (results[i].rating)?Number(results[i].rating):0,
                     courseNo : null,
                     pday : null,
                     porder : null,
@@ -78,7 +75,7 @@ function searchPlace(queryString) {
                                 data-address="${results[i].formatted_address}">
                                     <p>${results[i].name}</p>
                                     <p>${results[i].formatted_address}</p>
-                                    <p>${results[i].rating}</p>
+                                    <p>${(results[i].rating)?results[i].rating:0}</p>
                                     <!--전송할 값-->   
                                     <p class="json" style="display: none;">${JSON.stringify(json)}</p>
                                     <button type="button" class="find">찾아가기</button>
@@ -106,14 +103,17 @@ function buttonFunctions() {
             let position = new google.maps.LatLng(place.dataset.lat, place.dataset.lng);
             placeMarker(position, map);
         });
-        deleteBtn.addEventListener("click", e => {
-            place.remove();
-        });
-        if(addBtn!=null) {
+        if(deleteBtn) {
+            deleteBtn.addEventListener("click", e => {
+                place.remove();
+            });
+        }
+        if(addBtn) {
             addBtn.addEventListener("click", e => {
                 place.querySelector(".addBtnContainer").innerHTML=""
                 added.prepend(place);
                 buttonFunctions();
+                console.log(3);
             });
         }
     });

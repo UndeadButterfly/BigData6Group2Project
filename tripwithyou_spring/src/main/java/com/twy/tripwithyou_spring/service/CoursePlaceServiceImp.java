@@ -17,8 +17,21 @@ public class CoursePlaceServiceImp implements CoursePlaceService{
     public List<CoursePlaceDto> list(int courseNo) {
         return coursePlaceMapper.findByCourseNo(courseNo);
     }
+    @Override
+    public int register(CoursePlaceDto coursePlace) {
+        return coursePlaceMapper.insert(coursePlace);
+    }
 
-    public void jsonToCoursePlace(String json) {
-//        CoursePlaceDto coursePlace = coursePlaceMapper.readValue();
+    @Override
+    public int modify(int courseNo, List<CoursePlaceDto> coursePlaceList) {
+        int delete = coursePlaceMapper.deleteByCourseNo(courseNo);
+        if (delete <= 0) {
+            return delete;
+        }
+        int modify=0;
+        for(CoursePlaceDto coursePlace : coursePlaceList) {
+            modify += coursePlaceMapper.insert(coursePlace);
+        }
+        return modify;
     }
 }

@@ -19,7 +19,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         String url=request.getRequestURI();
         String querString=request.getQueryString();
         url+=(querString!=null)?"?"+querString:"";
-        log.info("preHandle(url):"+url);
         if(loginInfo_obj==null){
             session.setAttribute("msg","로그인 후 이용가능 한 서비스 입니다.");
             session.setAttribute("redirectUri",url);

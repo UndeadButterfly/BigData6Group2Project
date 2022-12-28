@@ -20,7 +20,7 @@ public interface UploadService {
     //게시판 글 수정  //12.26 khs 반환타입을 UploadImgDto List 로 바꿈. controller 에서 호출 시 삭제할 이미지 리스트를 반환함.
     List<UploadImgDto> modify(UploadDto upload, int[] delImgNos);
     //게시글 삭제
-    int delete(UploadDto upload);
+    int delete(int uploadNo);
     //로그인 여부 확인
 
     //인기 상위 10개 글

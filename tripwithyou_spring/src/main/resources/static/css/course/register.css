@@ -45,10 +45,6 @@ nav a, header span a{
     text-align: center;
     line-height: 1.5em;
 }
-/*.dragCopy{*/
-/*    height:80px;*/
-/*}*/
-/* form 설정 */
 form{
     width: 70%;
     margin: 10px auto;

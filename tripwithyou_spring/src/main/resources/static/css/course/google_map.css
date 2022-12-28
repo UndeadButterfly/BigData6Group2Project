@@ -45,3 +45,9 @@
     height: 90vh;
     overflow: auto;
 }
+
+.place {
+    background-color: #fff;
+    margin: 5px;
+    padding: 5px;
+}

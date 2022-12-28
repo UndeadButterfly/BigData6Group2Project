@@ -1,3 +1,4 @@
+const planForm = document.forms["plannerRegister"];
 function dragstart(ev) {
     console.log("dragStart");
     // Change the source element's background color to signify drag has started
@@ -17,16 +18,40 @@ function dragover(ev) {
     ev.currentTarget.style.background = "lightblue";
     ev.preventDefault();
 }
-function deleteBtn() {
-    const newIds = document.querySelectorAll("#newId");
-    newIds.forEach(newId => {
-        console.log(newId + ": 삭제버튼 눌림");
-        const deleteBtn = newId.querySelector(".delete");
-        console.log("deleteBtn:" + deleteBtn);
-        deleteBtn.addEventListener("click", e => {
-            newId.remove();
-        })
-    })
+const transportList = document.getElementById("transportList");
+const cards = transportList.querySelectorAll(".card");
+cards.forEach(card=>{
+    let vtype = card.querySelector(".transport-card-title").innerText;
+    let json = {
+        vehicleNo : null,
+        courseNo : null,
+        vday : null,
+        vorder : null,
+        vtype : vtype,
+        memo : null
+    };
+    let jsonP = document.createElement("p");
+    let jsonString = document.createTextNode(JSON.stringify(json));
+    jsonP.append(jsonString);
+    jsonP.classList.add("cardJson");
+    jsonP.style.display="none";
+    card.append(jsonP);
+});
+
+const transports = document.querySelectorAll(".transport");
+transports.forEach(transport =>{
+    if(transport.querySelector(".delete")!=null){
+        deleteBtn(transport);
+    }
+})
+
+function deleteBtn(node) {
+    console.log(node + ": 삭제버튼 눌림");
+    const deleteBtn = node.querySelector(".delete");
+    console.log("deleteBtn:" + deleteBtn);
+    deleteBtn.addEventListener("click", e => {
+        node.remove();
+    });
 }
 
 function drop(ev) {
@@ -41,35 +66,22 @@ function drop(ev) {
     const dragBoxes = document.querySelectorAll(".dragBox");
     for (let j = 1; j < dests.length + 1; j++) {
         for (let i = 1; i < items.length + 1; i++) {
-            if (id == `src_move${i}` && ev.target.id == `day${j}`) {
+            if (id === `src_move${i}` && ev.target.id === `day${j}`) {
                 ev.target.appendChild(document.getElementById(id));
             }
         }
     }
     for (let j = 1; j < dests.length + 1; j++) {
         for (let i = 1; i < dragCopies.length + 1; i++) {
-            if (id == `src_copy${i}` && ev.target.id == `day${j}`) {
+            if (id === `src_copy${i}` && ev.target.id === `day${j}`) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
-                nodeCopy.id = "newId";
                 ev.target.appendChild(nodeCopy);
-                let vtype = ev.target.getElementsByClassName("transport-card-title")[0].innerText;
-                let json = {
-                    vehicleNo : null,
-                    courseNo : null,
-                    vday : null,
-                    vorder : null,
-                    vtype : vtype,
-                    memo : null
-                }
-                console.log(json);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
-                nodeCopy.innerHTML += `<p class="cardJson" style="display: none;">${JSON.stringify(json)}</p>`
-                deleteBtn();
+                nodeCopy.innerHTML += '<textarea name="memo" rows="2" cols="20" class="overflow-scroll vmemo" placeholder="추가 설명"></textarea>'
+                deleteBtn(nodeCopy);
             }
         }
     }
-
-
 }
 function dragend(ev) {
     console.log("dragEnd");
@@ -82,36 +94,36 @@ function dragend(ev) {
 
 let startdateInput = document.getElementById("planStartDate");
 let enddateInput = document.getElementById("planEndDate");
-const planDays =document.getElementById("planDays");
+const duration =document.getElementById("planDays");
 const planDuration = document.forms["plannerRegister"].planDuration;
 const dayBoxContainer = document.getElementById("dayContainer")
 console.log(startdateInput);
 let startdate;
 let enddate;
-let dayDiffer;
+let dayDiffer=planForm.planDuration.value;
 startdateInput.onchange=(e)=>{
-    dayBoxContainer.innerHTML='';
     startdate = new Date(startdateInput.value);
     console.log(startdate);
     if (enddate!=null && startdate.getTime() <= enddate.getTime()) {
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayBoxContainer.innerHTML='';
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
 enddateInput.onchange=(e)=>{
-    dayBoxContainer.innerHTML='';
     enddate = new Date(enddateInput.value);
     console.log(enddate);
     if (startdate!=null && startdate.getTime() <= enddate.getTime()) {
-        dayDiffer = datediff(startdate.getTime(),enddate.getTime());
+        dayBoxContainer.innerHTML='';
+        dayDiffer = Number(datediff(startdate.getTime(),enddate.getTime()))+1;
         console.log(dayDiffer);
-        planDays.value = dayDiffer+1;
-        planDuration.value = dayDiffer+"박"+(dayDiffer+1)+"일";
-        makeDayBoxes(dayDiffer+1);
+        planDuration.value = dayDiffer;
+        duration.value = (dayDiffer-1)+"박"+dayDiffer+"일";
+        makeDayBoxes(dayDiffer);
     }
 }
 
@@ -130,7 +142,6 @@ function makeDayBoxes(days) {
         `;
     }
 }
-const planForm = document.forms["plannerRegister"];
 // json object를 controller에 넘겨주기
 //onsubmit 일때 {
 // course json을 만들어서 courseJson textarea에 입력
@@ -145,11 +156,12 @@ planForm.onsubmit=(e)=>{
 
     let courseJson = {
         courseNo:null,
+        userId:planForm.userId.value,
         startdate:startdateInput.value,
         enddate:enddateInput.value,
-        duration:dayDiffer+1,
+        duration:dayDiffer,
         image:null,
-        budget:null,
+        budget:document.getElementById("planBudget").value,
         uploadNo:null,
         uploadDto:null,
         coursePlaceList:null,
@@ -157,16 +169,16 @@ planForm.onsubmit=(e)=>{
     }
     let uploadJson = {
         uploadNo:null,
-        upType:null,
-        userId:null,
+        upType:2,
+        userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
-        views:null,
-        likes:null,
-        hates:null,
-        reports:null,
-        upstate:null
+        views:0,
+        likes:0,
+        hates:0,
+        reports:0,
+        upstate:0
     }
     let vehicleList=[];
     let coursePlaceList=[];
@@ -181,6 +193,8 @@ planForm.onsubmit=(e)=>{
             if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
                 json.vday=day;
                 json.vorder=order;
+                const memo = card.querySelector(".vmemo");
+                json.memo = memo.value;
                 vehicleList.push(json);
             }
             else if(card.classList.contains("courseplace")){
@@ -203,3 +217,5 @@ planForm.onsubmit=(e)=>{
 // vehicleList는 textarea name="vehicleListJson" 에 stringify 해서 입력
 // placeList는 textarea name="placeListJson" 에 stringify 해서 입력
 // }
+let date =new Date();
+document.getElementById("planDateDis").innerHTML=date.toLocaleDateString();

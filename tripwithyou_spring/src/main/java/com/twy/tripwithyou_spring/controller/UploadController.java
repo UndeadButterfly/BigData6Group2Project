@@ -213,7 +213,7 @@ public class UploadController {
                         ImgFileUploadUtil.remove(imgPath,imgFile.getImgPath());
                     }
                 }
-                remove=uploadService.delete(upload);
+                remove=uploadService.delete(upload.getUploadNo());
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -2,24 +2,23 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>여행 계획 상세페이지</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <title>여행 계획 등록 페이지</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/bootstrap/js/bootstrap.bundle.js"></script>
-    <link rel="stylesheet" href="/css/course/register.css">
-    <link rel="stylesheet" href="/css/course/base.css">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/uikit/css/uikit.css">
-    <link rel="stylesheet" href="/css/index.css">
+    <link href="/css/course/register.css" rel="stylesheet">
+    <link href="/css/course/base.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
     <script src="/uikit/js/uikit.js"></script>
-    <script src="/js/course/register.js" defer></script>
+    <script defer src="/js/course/register.js"></script>
 </head>
 
 <body>
@@ -27,32 +26,29 @@
     <th:block th:inclde="headerNav"></th:block>
     <th:block th:inclde="headerNavMenu"></th:block>
 </header>
-<!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
-<!-- 장소선택 사이드 바 -->
-<!--<th:block th:each="json:${session.jsonList}">-->
-<!--    <input type="text" th:value="${json}" class="placeIdDiv" style="display:none" readonly></input>-->
-<!--</th:block>-->
 <div id="map" style="display:none"></div>
 <div class="position-fixed mx-3 p-3" id="locList">
     <span class="my-2">선택한 장소(drag & paste)</span>
-    <div class="overflow-auto dragBox" uk-sortable="group: sortable-group" id="locListCard" style="height: 50vh;" >
+    <div class="overflow-auto dragBox" id="locListCard" style="height: 50vh;" uk-sortable="group: sortable-group">
         <!-- #1 card -->
         <th:block th:each="i : ${#numbers.sequence(0,session.coursePlaceList.size()-1)}">
-            <div class="card p-0 draggable item m-1 courseplace" th:id="'src_move'+${i+1}" draggable="true" ondragstart="dragstart(event);" ondragend="dragend(event);"
+            <div class="card p-0 draggable item m-1 courseplace" draggable="true" ondragend="dragend(event);"
+                 ondragstart="dragstart(event);" th:data-address="${session.coursePlaceList.get(i).address}"
                  th:data-name="${session.coursePlaceList.get(i).name}"
-                 th:data-address="${session.coursePlaceList.get(i).address}"
-                 th:data-rate="${session.coursePlaceList.get(i).rate}">
+                 th:data-rate="${session.coursePlaceList.get(i).rate}"
+                 th:id="'src_move'+${i+1}">
                 <div class="row g-0">
                     <div class="col-sm-4">
-                        <img src=""
-                             class="img-fluid rounded-start"
+                        <img class="img-fluid rounded-start"
+                             src=""
                              style="height:100%"
                              th:alt="${session.coursePlaceList.get(i).name}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body p-1">
                             <h5 class="card-title" id="name" th:text="${session.coursePlaceList.get(i).name}"></h5>
-                            <p class="card-text p-0 m-0 " id="address" th:text="${session.coursePlaceList.get(i).name}"></p>
+                            <p class="card-text p-0 m-0 " id="address"
+                               th:text="${session.coursePlaceList.get(i).name}"></p>
                             <div class="moreInfo text-end">
                                 <a class="card-text p-0 m-0" href="#">
                                     <small class="text-muted">더보기</small>
@@ -60,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="cardJson" th:text="${session.jsonList.get(i)}" style="display: none;"></p>
+                    <p class="cardJson" style="display: none;" th:text="${session.jsonList.get(i)}"></p>
                 </div>
             </div>
         </th:block>
@@ -71,53 +67,57 @@
     <span class="my-2">이동수단(drag&paste)</span>
     <div class="overflow-auto dragBox" id="transportListCard" style="height: 50vh;">
         <!-- #t1 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy1" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy1"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-bus" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-bus" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
-                        <h5 class="transport-card-title" >버스</h5>
+                        <h5 class="transport-card-title">버스</h5>
                     </div>
                 </div>
             </div>
         </div>
         <!-- #t2 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy2" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy2"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-subway" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-subway" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
-                        <h5 class="transport-card-title" >지하철</h5>
+                        <h5 class="transport-card-title">지하철</h5>
                     </div>
                 </div>
             </div>
         </div>
         <!-- #t3 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy3" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);" >
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy3"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-child" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-child" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
-                        <h5 class="transport-card-title" >도보</h5>
+                        <h5 class="transport-card-title">도보</h5>
                     </div>
                 </div>
             </div>
         </div>
         <!-- #t4 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy4" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);" >
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy4"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-car" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-car" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
@@ -127,11 +127,12 @@
             </div>
         </div>
         <!-- #t5 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy5" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);">
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy5"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-train" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-train" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
@@ -140,11 +141,12 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy6" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);" >
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy6"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-bicycle" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-bicycle" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
@@ -153,11 +155,12 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy7" draggable="true" ondragstart="dragstart(event);"
-             ondragend="dragend(event);" >
+        <div class="card transport draggable p-0 dragCopy m-2" draggable="true" id="src_copy7"
+             ondragend="dragend(event);"
+             ondragstart="dragstart(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
-                    <i class="fa fa-motorcycle" style="font-size: 2em; line-height:1.5em" aria-hidden="true"></i>
+                    <i aria-hidden="true" class="fa fa-motorcycle" style="font-size: 2em; line-height:1.5em"></i>
                 </div>
                 <div class="col-md-8">
                     <div class="card-body p-1">
@@ -166,8 +169,8 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
 </div>
 
 
@@ -177,57 +180,68 @@
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post">
+    <form action="/course/register" enctype="multipart/form-data" id="plannerRegister" method="post"
+          name="plannerRegister">
+        <input name="uptype" type="hidden" value="2">
         <!-- 여행 제목 -->
         <div class="mb-3">
-            <label for="planTitle" class="form-label">여행 제목</label>
-            <input name="title" value="" type="text" class="form-control" id="planTitle" required>
-            <div id="titleHelp" class="form-text">이번 여행의 이름을 정해보세요!</div>
+            <label class="form-label" for="planTitle">여행 제목</label>
+            <input class="form-control" id="planTitle" name="title" placeholder="여행 제목을 정해보자!" required type="text"
+                   value="">
+            <div class="form-text" id="titleHelp">이번 여행의 이름을 정해보세요!</div>
         </div>
         <!-- 작성자, 작성날짜 -->
         <div class="mb-3 d-flex justify-content-between">
             <div class="col-5">
-                <label for="planUser" class="form-label">작성자</label>
-                <input name="userId" value="" type="text" class="form-control" id="planUser" required>
+                <label class="form-label" for="planUser">작성자</label>
+                <input class="form-control" id="planUser" name="userId" readonly
+                       required th:value="${session.loginInfo.userId}" type="text">
             </div>
             <div class="col-6">
-                <label for="planDate" class="form-label" >작성날짜(NOW)</label>
-                <input name="postdate" value="" type="Date" class="form-control" required readonly id="planDate">
+                <label class="form-label" for="planDate">작성날짜</label>
+                <p id="planDateDis"></p>
+                <input class="form-control" id="planDate" name="postdate" readonly required style="display: none"
+                       type="Date"
+                       value="">
             </div>
         </div>
         <!-- 여행 목적 -->
         <div class="mb-3">
-            <label for="planPurpose" class="form-label">여행 목적</label>
-            <input name="contents" value="" type="text" class="form-control" id="planPurpose" required>
+            <label class="form-label" for="planPurpose">여행 목적</label>
+            <input class="form-control" id="planPurpose" name="contents" placeholder="이번 여행 테마는?" required type="text"
+                   value="">
         </div>
         <!-- 썸네일 사진 -->
         <div class="mb-3 input-group w-75">
-            <label for="thumbnailImg" class="input-group-text">코스 대표 사진</label>
-            <input name="image" value="" type="file" class="form-control" id="thumbnailImg">
+            <label class="input-group-text" for="thumbnailImg">코스 대표 사진</label>
+            <input class="form-control" id="thumbnailImg" name="imgFile" type="file" value="">
         </div>
         <!-- 여행 일정 -->
         <div class="mb-3">
             <div class="d-flex justify-content-between">
                 <div class="col-5">
                     여행 일정
-                    <label for="planStartDate" class="form-label">시작날</label>
-                    <input name="startdate" value="" type="date" class="form-control" id="planStartDate" placeholder="시작날" required>
+                    <label class="form-label" for="planStartDate">시작날</label>
+                    <input class="form-control" id="planStartDate" name="startdate" placeholder="시작날" required
+                           type="date" value="">
                 </div>
                 <div class="col-5">
-                    <label for="planEndDate" class="form-label">마지막날</label>
-                    <input name="enddate" value="" type="date" class="form-control" id="planEndDate" placeholder="마지막날" required>
+                    <label class="form-label" for="planEndDate">마지막날</label>
+                    <input class="form-control" id="planEndDate" name="enddate" placeholder="마지막날" required type="date"
+                           value="">
                 </div>
             </div>
             <div class="mt-3">
-                <label for="planDays" class="form-label">몇박몇일?</label>
-                <input name="planDuration" class="form-control" type="text" readonly>
-                <input name="duration" value="" type="hidden" class="form-control" id="planDays" placeholder="몇박 몇일" required>
+                <label class="form-label" for="planDays">몇박몇일?</label>
+                <input class="form-control" name="planDuration" readonly type="text">
+                <input class="form-control" id="planDays" name="duration" placeholder="몇박 몇일" required type="hidden"
+                       value="">
             </div>
         </div>
         <!-- 여행 예산 -->
         <div class="mb-3">
-            <label for="planBudget" class="form-label">여행 예산</label>
-            <input name="budget" type="text" class="form-control" id="planBudget" placeholder="200,000">원
+            <label class="form-label" for="planBudget">여행 예산</label>
+            <input class="form-control w-75" id="planBudget" name="budget" placeholder="20" type="text">만원
         </div>
         <!--선택 장소, 대중교통 옮길 박스 -->
         <div class="mb-3" id="planDayList">
@@ -243,17 +257,13 @@
         <div class="btnBox">
             <button class="btn btn-warning">뒤로가기</button>
             <button class="btn btn-success">초기화</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </div>
-        <textarea name="courseJson"  cols="30" rows="10"></textarea>
-        <textarea name="uploadJson"  cols="30" rows="10"></textarea>
-        <textarea name="placeListJson"  cols="30" rows="10"></textarea>
-        <textarea name="vehicleListJson"  cols="30" rows="10"></textarea>
+        <textarea cols="30" name="courseJson" rows="10" style="display: none;"></textarea>
+        <textarea cols="30" name="uploadJson" rows="10" style="display: none;"></textarea>
+        <textarea cols="30" name="placeListJson" rows="10" style="display: none"></textarea>
+        <textarea cols="30" name="vehicleListJson" rows="10" style="display: none;"></textarea>
     </form>
-
-
 </main>
-
 </body>
-
 </html>

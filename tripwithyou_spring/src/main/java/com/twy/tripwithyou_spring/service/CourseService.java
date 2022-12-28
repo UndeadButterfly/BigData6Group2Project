@@ -12,4 +12,7 @@ public interface CourseService {
     List<CourseDto> list(PagingDto pagingDto);
 
     List<CourseDto> listById(PagingDto pagingDto, String userId);
+    int register(CourseDto course);
+    int modify(CourseDto course);
+    CourseDto showByUploadNo(int uploadNo);
 }
