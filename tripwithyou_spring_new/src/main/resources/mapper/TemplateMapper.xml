@@ -7,6 +7,10 @@
     <resultMap id="templateMap" type="templateDto" autoMapping="true">
         <id column="tp_no" property="tpNo"/>
         <result column="tp_update" property="tpUpdate"/>
+        <collection property="tempImgList"
+                    select="com.twy.tripwithyou_spring.mapper.TempImgMapper.findByTpNo"
+                    column="tp_no"
+                    fetchType="lazy"/>
     </resultMap>
 
     <select id="findAll" resultMap="templateMap">
@@ -45,4 +49,10 @@
         INSERT INTO template (title, content)
         VALUES (#{title}, #{content})
     </insert>
+    <select id="findByList" resultType="TemplateDto">
+        SELECT * FROM template WHERE tp_no=#{id}
+    </select>
+    <select id="findByType" resultMap="templateMap">
+        SELECT * FROM template WHERE type=#{type}
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.twy.tripwithyou_spring.dto;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class TemplateDto {
@@ -12,5 +13,7 @@ public class TemplateDto {
     private Date postdate;//postdate NN default NOW()
     private Date tpUpdate;//tp_update NN default NOW()
     private int uploadNo; //FK UK NN upload_no
-    private UploadDto uploadDto;
+//    private UploadDto uploadDto;
+    private String type;
+    private List<TempImgDto> tempImgList;
 }
