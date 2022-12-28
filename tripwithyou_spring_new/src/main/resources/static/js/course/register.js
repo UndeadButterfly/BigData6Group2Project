@@ -156,6 +156,7 @@ planForm.onsubmit=(e)=>{
 
     let courseJson = {
         courseNo:null,
+        userId:planForm.userId.value,
         startdate:startdateInput.value,
         enddate:enddateInput.value,
         duration:dayDiffer,

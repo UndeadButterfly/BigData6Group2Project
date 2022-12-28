@@ -21,4 +21,5 @@ public class CourseDto {
     private List<CoursePlaceDto> coursePlaceList;
     private List<VehicleDto> vehicleList;
     private ZzimViewDto zzimView; //화면에 출력될 찜개수와 로그인한 사람이 누른 버튼의 상태
+    private String userId;
 }

@@ -57,7 +57,7 @@
     </update>
     <!--    int insert(CourseDto dto) throws Exception;-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="courseNo">
-        INSERT INTO course (startdate, enddate, duration, image, budget, upload_no)
-        VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, ${uploadNo})
+        INSERT INTO course (startdate, enddate, duration, image, budget, upload_no, user_id)
+        VALUES (#{startdate}, #{enddate}, #{duration}, #{image}, #{budget}, #{uploadNo}, #{userId})
     </insert>
 </mapper>
