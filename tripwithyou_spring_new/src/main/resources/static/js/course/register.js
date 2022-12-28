@@ -216,3 +216,5 @@ planForm.onsubmit=(e)=>{
 // vehicleList는 textarea name="vehicleListJson" 에 stringify 해서 입력
 // placeList는 textarea name="placeListJson" 에 stringify 해서 입력
 // }
+let date =new Date();
+document.getElementById("planDateDis").innerHTML=date.toLocaleDateString();
