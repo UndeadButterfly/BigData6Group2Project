@@ -266,6 +266,20 @@ public class CourseController {
         return "/course/register";
     }
 
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name = "courseNo") int courseNo){
+        System.out.println("delete페이지입니다.");
+        CourseDto course = courseService.detail(courseNo);
+        int uploadNo = course.getUploadNo();
+        int delete = 0;
+        delete = uploadService.delete(uploadNo);
+        if(uploadNo>0){
+            return "redirect:/course/courseMain";
+        }else{
+            return "redirect:/course/"+courseNo+"/detail";
+        }
+    }
+
     @PostMapping(value = "/register")
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
