@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/matching/matchingRegister.css" rel="stylesheet">
+</head>
+<body>
+<!-- 헤더 -->
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+
+<!-- 등록 폼 -->
+<div class="container">
+    <div class="top_container">
+        <h1>FIND YOUR TRIP FRIEND</h1>
+    </div>
+    <div class="bottom_container">
+        <form action="/matching/matchingRegister.do" method="post" name="matchingRegister" enctype="multipart/form-data">
+            <div class="box1">
+                <input type="hidden" name="userId" th:value="${session.loginInfo.userId}">
+                <input name="tStart" type="date">
+                <input name="tEnd" type="date">
+                <select name="localNo" >
+                    <option disabled selected>여행지역 선택</option>
+                    <option >서울</option>
+                    <option >부산</option>
+                    <option >대구</option>
+                    <option >인천</option>
+                    <option >광주</option>
+                    <option >대전</option>
+                    <option >울산</option>
+                    <option >경기</option>
+                    <option >강원</option>
+                    <option >충북</option>
+                    <option >충남</option>
+                    <option>경북</option>
+                    <option >경남</option>
+                    <option >전북</option>
+                    <option >전남</option>
+                    <option >제주도</option>
+                </select>
+                <input name="tDestination" placeholder="세부목적지" style="width: 100px;" type="text">
+                <input name="tMember" placeholder="인원수" style="width: 90px;" type="text">
+                <!-- <input type="hidden" name="userId" value="user1">     -->
+            </div>
+            <label for="imgChoice"></label>
+            <input name="title" placeholder="타이틀" style="width: 300px;" type="text">
+            <div class="box2">
+                <input id="imgChoice" name="imgFile" type="file">
+            </div>
+            <textarea cols="30" id="contents" name="contents" placeholder="내용 입력.." rows="10"></textarea>
+            <div style="margin: 10px 0;">
+                <button class="cancel" type="reset">CANCEL</button>
+                <button class="register" type="submit">SUBMIT</button>
+            </div>
+        </form>
+    </div>
+</div>

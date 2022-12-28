@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/matching/matchingDetail.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        #matchingDetailImg {
+            height: 300px;
+            background-color: dodgerblue;
+            text-align: center;
+        }
+        #matchingDetail{
+            text-align: center;
+            height: 700px;
+            background-color: orange;
+        }
+        #matchingDetail #title {
+            text-align: center;
+            height: 30px;
+            background-color: red;
+        }
+        #matchingDetail #user {
+            text-align: center;
+            height: 30px;
+            background-color: blue;
+        }
+        #matchingDetail #date {
+            text-align: center;
+            height: 50px;
+            background-color: green;
+        }
+        #matchingDetail #local {
+            text-align: center;
+            height: 30px;
+            background-color: gray;
+        }
+        #matchingDetail #contents {
+            width: 100%;
+            text-align: center;
+            height: 200px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div id="container">
+    <div id="matchingDetailImg" th:each="matchingImg:${matching.matchingImgList}">
+        <img th:src="@{'/img/match/{file}'(file=${matchingImg.imgPath})}" alt="" style="height: 300px; width: 100%">
+    </div>
+    <br>
+    <div id="matchingDetail">
+        <div id="title">
+            <label class="uk-form-label">번호 :<p th:text="${matching.matchingNo}"></p></label>
+        </div>
+        <div id="user">
+            <p th:text="${matching.userId}"></p>
+            <p th:text="${matching.getTMember()}"></p>
+        </div>
+        <div id="date">
+            <p th:text="${#calendars.format(matching.TStart)}"></p>
+            <p th:text="${#calendars.format(matching.TEnd)}"></p>
+        </div>
+        <div id="local">
+            <p th:text="${matching.getLocalNo()}"></p>
+        </div>
+        <div id="contents">
+            <p th:text="${matching.contents}"></p>
+        </div>
+    </div>
+</div>
+
+        <!--<div layout:fragment="contents">-->
+<!--    <p class="uk-text-right">-->
+<!--        <a class="uk-button uk-button-small uk-button-primary"-->
+<!--           th:href="@{'/matching/matchingModify.do'(matchingNo=${matching.matchingNo})}">수정 폼</a>-->
+<!--    </p>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="userMatchingNo">번호 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="userMatchingNo"-->
+<!--            th:value="${matching.matchingNo}" name="matchingNo">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingTDestination">목적지 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingTDestination"-->
+<!--                   th:value="${matching.getTDestination()}" name="tDestination">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingTitle">제목 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingTitle"-->
+<!--                   th:value="${matching.title}" name="title">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingContents">내용 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <textarea class="uk-textarea uk-form-blank" rows="5" readonly id="matchingContents"-->
+<!--                      th:text="${matching.contents}" name="contents"></textarea>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingUserId">글쓴이(id) : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingUserId"-->
+<!--                   th:value="${matching.userId}" name="userId">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingTStart">시작일 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingTStart"-->
+<!--                   th:value="${#calendars.format(matching.getTStart(),'yyyy년 MM월 dd일 HH:mm:ss')}" name="tStart">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingTEnd">종료일 : </label>-->
+<!--        <div class="uk-inline uk-form-width-large">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingTEnd"-->
+<!--                   th:value="${#calendars.format(matching.getTEnd(),'yyyy년 MM월 dd일 HH:mm:ss')}" name="tEnd">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="uk-margin">-->
+<!--        <label class="uk-form-label" for="matchingTMember">인원 수 : </label>-->
+<!--        <div class="uk-inline uk-form-width-small">-->
+<!--            <input class="uk-input uk-form-blank" type="text" readonly id="matchingTMember"-->
+<!--            th:value="${matching.getTMember()}" name="tMember">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div th:each="matchingImg:${matching.matchingImgList}">-->
+<!--        <img th:src="@{'/img/match/{file}'(file=${matchingImg.imgPath})}" alt="">-->
+<!--    </div>-->
+<!--</div>-->
+</html>

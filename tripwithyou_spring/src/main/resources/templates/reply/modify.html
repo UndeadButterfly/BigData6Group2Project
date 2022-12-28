@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:body>
+    <form action="/reply/modify.do"
+          class="insertComment" enctype="multipart/form-data" method="post" name="replyModifyForm"
+          th:onsubmit="event.preventDefault(); modifyReply(this); console.log(this)">
+        <input name="uploadNo" th:value="${reply.uploadNo}" type="hidden">
+        <input name="fkReplyNo" th:value="${reply.fkReplyNo}" type="hidden">
+        <input name="replyNo" th:value="${reply.replyNo}" type="hidden">
+        <input name="userId" th:value="${reply.userId}" type="hidden">
+        <img alt="" src="https://via.placeholder.com/50/">
+        <span><b th:text="${session.loginInfo.name}"></b></span>
+        (
+        <time style="font-size: 0.8em;" th:datetime="${reply.getRDate()}"
+              th:text="${#calendars.format(reply.getRDate())}"></time>
+        )
+        <textarea name="rContent" placeholder="댓글을 남기세요." rows="2" style="width: 100%;"
+                  th:text="${reply.getRContent()}" type="text"></textarea>
+        <button class="uk-button uk-button-text uk-text-primary" type="submit">수정</button>
+    </form>
+</th:body>
+</html>

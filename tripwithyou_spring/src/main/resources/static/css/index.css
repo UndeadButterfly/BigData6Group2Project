@@ -1,0 +1,65 @@
+
+/* 슬라이드 이미지 */
+#slider {
+    margin: 50px 100px 0 100px;
+    overflow: hidden;
+    position: relative;
+    height: 500px;
+    box-shadow: 0 0 20px gray;
+}
+
+.image-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    animation: bannermove 10s linear infinite;
+}
+
+#slider > .image-box img {
+    height: 300px;
+}
+
+@keyframes bannermove {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-50%, 0);
+    }
+}
+
+
+/* 내브바 포함 헤더 */
+.banner > h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+
+
+/* 푸터 */
+footer {
+    height: 300px;
+    width: 100%;
+    background-color: antiquewhite;
+}
+
+.match {
+    margin-top: 200px;
+    width: 100%;
+    height: 500px;
+    background-color: #ddd;
+}
+
+.course {
+    width: 100%;
+    height: 500px;
+    background-color: rgb(245, 195, 195);
+}
+
+.upload {
+    width: 100%;
+    height: 500px;
+    background-color: rgb(172, 170, 249);
+}
