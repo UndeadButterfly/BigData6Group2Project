@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class CourseController {
     private CoursePlaceService coursePlaceService;
     private VehicleService vehicleService;
     private UploadService uploadService;
+    private UploadHashService uploadHashService;
     private ObjectMapper objectMapper = new ObjectMapper();
     private Logger log= LoggerFactory.getLogger(this.getClass().getSimpleName());
     @Value("C:/Users/oyunm/intellij_study_workspace/BigData6Group2Project/tripwithyou_spring_new/src/main/resources/static/img")
@@ -34,11 +36,13 @@ public class CourseController {
     public CourseController(CourseService courseService,
                             CoursePlaceService coursePlaceService,
                             VehicleService vehicleService,
-                            UploadService uploadService) {
+                            UploadService uploadService,
+                            UploadHashService uploadHashService) {
         this.courseService = courseService;
         this.coursePlaceService = coursePlaceService;
         this.vehicleService = vehicleService;
         this.uploadService = uploadService;
+        this.uploadHashService = uploadHashService;
     }
 
     @GetMapping("/courseMain")
@@ -56,17 +60,50 @@ public class CourseController {
 
 //    ------------------------TEMPORARY----------------------
     @PostMapping("/courseMain")
-    public String tempSearch(){
+    public String tempSearch(
+            @RequestParam String searchRegion,
+            @RequestParam String searchText,
+            HttpSession session
+    ){
+        session.setAttribute("searchRegion", searchRegion);
+        session.setAttribute("searchText", searchText);
         return "redirect:/course/searchResult";
     }
     @PostMapping("/searchResult")
-    public String temp2Search(){
+    public String temp2Search(
+        @RequestParam String searchRegion,
+        @RequestParam String searchText,
+        HttpSession session
+    ){
+        session.setAttribute("searchRegion", searchRegion);
+        session.setAttribute("searchText", searchText);
         return "redirect:/course/searchResult";
     }
 //    ------------------------TEMPORARY----------------------
 
     @GetMapping("/searchResult") //검색 결과
-    public void searchResult() {
+    public String searchResult(
+            HttpSession session,
+            Model model
+    ) {
+        List<UploadHashDto> uploadHashList = uploadHashService.search("%"+session.getAttribute("searchRegion").toString()+"%", 2);
+        String[] searchTextSplit = session.getAttribute("searchText").toString().split(" ");
+        if(session.getAttribute("searchText").toString()!="") {
+            for(String searchText : searchTextSplit) {
+                String text = "%"+searchText+"%";
+                System.out.println(text);
+                uploadHashList.addAll(uploadHashService.search(text, 2));
+            }
+        }
+        HashSet<CourseDto> courseSet = new HashSet<>();
+        for (UploadHashDto uploadHash : uploadHashList) {
+            CourseDto course = courseService.showByUploadNo(uploadHash.getUploadNo());
+            courseSet.add(course);
+        }
+        System.out.println("검색 결과");
+        System.out.println(courseSet);
+        model.addAttribute("courseSet", courseSet);
+        return "/course/searchResult";
     }
 
     @GetMapping("/{courseNo}/detail")
@@ -83,6 +120,9 @@ public class CourseController {
             num+=vehicleList.stream().filter(v->v.getVDay()==(day+1)).count();
             cardsForDay.add(num);
         }
+        System.out.println("coursePlaceList : "+coursePlaceList);
+        System.out.println("vehicleList : "+vehicleList);
+        System.out.println("cardsForDay : "+cardsForDay);
         model.addAttribute("course", course);
         model.addAttribute("coursePlaceList", coursePlaceList);
         model.addAttribute("vehicleList", vehicleList);
@@ -98,8 +138,40 @@ public class CourseController {
     @GetMapping("/{courseNo}/modifyMap")
     public String modifyMap(Model model,
                             @PathVariable int courseNo) {
+        System.out.println(courseNo);
+        List<CoursePlaceDto> coursePlaceList = coursePlaceService.list(courseNo);
+        System.out.println(coursePlaceList);
+        List<String> coursePlaceJsonList = new ArrayList<>();
+        try {
+            for(CoursePlaceDto coursePlace : coursePlaceList) {
+                coursePlaceJsonList.add(objectMapper.writeValueAsString(coursePlace));
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(coursePlaceJsonList);
+        model.addAttribute("coursePlaceList", coursePlaceList);
+        model.addAttribute("coursePlaceJsonList", coursePlaceJsonList);
         model.addAttribute("courseNo", courseNo);
-        return "/course/map";
+        return "/course/modifyMap";
+    }
+
+    @PostMapping("/{courseNo}/modifyMap")
+    public String modifyMap(HttpSession session,
+                            @RequestParam(name = "json") String json,
+                            @PathVariable int courseNo) {
+        try {
+            List<CoursePlaceDto> coursePlaceList = objectMapper.readValue(json, new TypeReference<List<CoursePlaceDto>>(){});
+            List<String> jsonList = new ArrayList<>();
+            for(CoursePlaceDto coursePlace : coursePlaceList) {
+                jsonList.add(objectMapper.writeValueAsString(coursePlace));
+            }
+            session.setAttribute("coursePlaceList", coursePlaceList);
+            session.setAttribute("jsonList", jsonList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/course/"+courseNo+"/modify";
     }
 
     @GetMapping("/{courseNo}/modify")
@@ -108,29 +180,86 @@ public class CourseController {
         CourseDto course = courseService.detail(courseNo);
         List<CoursePlaceDto> coursePlaceList = coursePlaceService.list(courseNo);
         List<VehicleDto> vehicleList = vehicleService.list(courseNo);
+        List<Integer> cardsForDay = new ArrayList<>();
+        for(int i=0; i<course.getDuration(); i++) {
+            final int day=i;
+            int num=0;
+            num+=coursePlaceList.stream().filter(p->p.getPDay()==(day+1)).count();
+            num+=vehicleList.stream().filter(v->v.getVDay()==(day+1)).count();
+            cardsForDay.add(num);
+        }
+        List<String> coursePlaceJsonList = new ArrayList<>();
+        List<String> vehicleJsonList = new ArrayList<>();
+        try {
+            for(CoursePlaceDto coursePlace : coursePlaceList) {
+                coursePlaceJsonList.add(objectMapper.writeValueAsString(coursePlace));
+            }
+            for (VehicleDto vehicle : vehicleList) {
+                vehicleJsonList.add(objectMapper.writeValueAsString(vehicle));
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
         model.addAttribute("course", course);
         model.addAttribute("coursePlaceList", coursePlaceList);
         model.addAttribute("vehicleList", vehicleList);
-        System.out.println("modify 페이지 입니다");
-        System.out.println(course);
-        System.out.println(coursePlaceList);
-        System.out.println(vehicleList);
+        model.addAttribute("cardsForDay", cardsForDay);
+        model.addAttribute("coursePlaceJsonList", coursePlaceJsonList);
+        model.addAttribute("vehicleJsonList", vehicleJsonList);
+
         return "/course/modify";
     }
 
     @PostMapping("/{courseNo}/modify")
-    public void modify(){}
-    @GetMapping("/delete")
-    public String delete(@RequestParam(name = "courseNo")int courseNo){
-        System.out.println("delete페이지입니다.");
-        CourseDto course = courseService.detail(courseNo);
-        int uploadNo = course.getUploadNo();
-        int delete = 0;
-        delete = uploadService.delete(uploadNo);
-        if(uploadNo>0){
-            return "/course/courseMain";
-        }else{
-            return "/course/"+courseNo+"/detail";
+    public String modify(@RequestParam(name="courseJson") String courseJson,
+                       @RequestParam(name="uploadJson") String uploadJson,
+                       @RequestParam(name="placeListJson") String placeListJson,
+                       @RequestParam(name="vehicleListJson") String vehicleListJson,
+                       @PathVariable(name = "courseNo") int courseNo
+    ){
+        try {
+//            courseJson parse
+            CourseDto course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
+//            uploadJson parse
+            UploadDto upload = objectMapper.readValue(uploadJson, new TypeReference<UploadDto>() {});
+//            coursePlaceJsonList parse
+            List<CoursePlaceDto> coursePlaceList = new ArrayList<>();
+            List<CoursePlaceDto> coursePlaceJsonList = objectMapper.readValue(placeListJson, new TypeReference<List<CoursePlaceDto>>() {});
+            for(CoursePlaceDto coursePlace : coursePlaceJsonList) {
+                coursePlace.setCourseNo(courseNo);
+                coursePlaceList.add(coursePlace);
+            }
+//            vehicleJsonList parse
+            List<VehicleDto> vehicleList = new ArrayList<>();
+            List<VehicleDto> vehicleJsonList = objectMapper.readValue(vehicleListJson, new TypeReference<List<VehicleDto>>() {});
+            for(VehicleDto vehicle : vehicleJsonList){
+                vehicle.setCourseNo(courseNo);
+                vehicleList.add(vehicle);
+            }
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
+            course.setUploadDto(upload);
+            // course parsing finished
+
+            int modify = courseService.modify(course);
+            if(modify<2) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            modify = coursePlaceService.modify(courseNo, coursePlaceList);
+            if(modify<coursePlaceList.size()) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            modify = vehicleService.modify(courseNo, vehicleList);
+            if(modify<vehicleList.size()) {
+                return "redirect:/course/"+courseNo+"/modify";
+            }
+            // modification was successful
+            int modifyHash = uploadHashService.modifyCourseHash(course);
+            if(!(modifyHash > 0)) System.out.println("검색어 등록 안됨!");
+            return "redirect:/course/"+courseNo+"/detail";
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -141,6 +270,20 @@ public class CourseController {
         return "/course/register";
     }
 
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name = "courseNo") int courseNo){
+        System.out.println("delete페이지입니다.");
+        CourseDto course = courseService.detail(courseNo);
+        int uploadNo = course.getUploadNo();
+        int delete = 0;
+        delete = uploadService.delete(uploadNo);
+        if(uploadNo>0){
+            return "redirect:/course/courseMain";
+        }else{
+            return "redirect:/course/"+courseNo+"/detail";
+        }
+    }
+
     @PostMapping(value = "/register")
     public String register(@RequestParam(name="courseJson") String courseJson,
                            @RequestParam(name="uploadJson") String uploadJson,
@@ -149,16 +292,11 @@ public class CourseController {
                            @RequestParam(name="imgFile", required = false)MultipartFile imgFile,
                            @SessionAttribute UserDto loginInfo
                            ) {
-//        System.out.println(courseJson);
-//        System.out.println(uploadJson);
-//        System.out.println(placeListJson);
-//        System.out.println(vehicleListJson);
         int register=0;
         CourseDto course = null;
         UploadDto upload = null;
         List<CoursePlaceDto> coursePlaceList = null;
         List<VehicleDto> vehicleList = null;
-
         try {
 //            courseJson parse
             course = objectMapper.readValue(courseJson, new TypeReference<CourseDto>() {});
@@ -180,8 +318,8 @@ public class CourseController {
 //                System.out.println(vehicle);
                 vehicleList.add(vehicle);
             }
-
-
+            course.setCoursePlaceList(coursePlaceList);
+            course.setVehicleList(vehicleList);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -219,6 +357,8 @@ public class CourseController {
                 listRegister += vehicleService.register(vehicle);
             }
             if(listRegister>0){
+                int registerHash = uploadHashService.registerCourseHash(course);
+                if(!(registerHash > 0)) System.out.println("검색어 등록 안됨!");
                 return "redirect:/course/"+courseNo+"/detail";
             }else{
                 return "redirect:/course/map";

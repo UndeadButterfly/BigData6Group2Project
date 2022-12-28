@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
 <mapper namespace="com.twy.tripwithyou_spring.mapper.CourseMapper">
-    <resultMap id="courseMap" type="courseDto" autoMapping="true">
+    <resultMap id="courseMap" type="CourseDto" autoMapping="true">
         <id column="course_no" property="courseNo"/>
         <result column="upload_no" property="uploadNo"/>
         <association property="uploadDto"
@@ -34,13 +34,13 @@
     <select id="findByUploadNo" resultMap="courseMap">
         SELECT * FROM course WHERE upload_no=#{uploadNo}
     </select>
-    <select id="findPagingByUserId" resultType="com.twy.tripwithyou_spring.dto.CourseDto">
-        SELECT * FROM course Where user_id = #{userId} ORDER BY ${pagingDto.orderField} ${pagingDto.direct} LIMIT
-        #{pagingDto.page},#{pagingDto.rows}
-    </select>
-    <select id="countById" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM course WHERE user_id=#{userId}
-    </select>
+<!--    <select id="findPagingByUserId" resultType="com.twy.tripwithyou_spring.dto.CourseDto">-->
+<!--        SELECT * FROM course WHERE user_id = #{userId} ORDER BY ${pagingDto.orderField} ${pagingDto.direct} LIMIT-->
+<!--        #{pagingDto.page},#{pagingDto.rows}-->
+<!--    </select>-->
+<!--    <select id="countById" resultType="java.lang.Integer">-->
+<!--        SELECT COUNT(*) FROM course WHERE user_id=#{userId}-->
+<!--    </select>-->
     <!--    int deleteById(String id) throws Exception;-->
     <delete id="deleteById">
         DELETE FROM course WHERE course_no=#{id}

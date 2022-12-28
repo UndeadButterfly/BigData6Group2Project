@@ -22,12 +22,31 @@
 </head>
 
 <body>
-<th:block th:include="headerNav"></th:block>
+<th:block th:inclde="headerNav"></th:block>
 <!--<h1 th:text="${session.placeIdList}"></h1>세션으로 받아짐!-->
 <!-- 장소선택 사이드 바 -->
 <!--<th:block th:each="json:${session.jsonList}">-->
 <!--    <input type="text" th:value="${json}" class="placeIdDiv" style="display:none" readonly></input>-->
 <!--</th:block>-->
+<form action="">
+<!--
+(RegisterFormDto registerForm)
+RegisterFormDto.coursePlaceList(List<coursePlaceDto>)-->
+<!--    <div>-->
+<!--        <input name="coursePlaceList[0].name" value="롯데월드">-->
+<!--        <input name="coursePlaceList[0].a" value="1">-->
+<!--        <input name="coursePlaceList[0].b" value="롯데월드">-->
+<!--        <input name="coursePlaceList[0].b" value="롯데월드">-->
+
+<!--    </div>-->
+<!--    <div>-->
+<!--        <input name="coursePlaceList[1].name" value="홍대">-->
+<!--        <input name="coursePlaceList[1].a" value="2">-->
+<!--        <input name="coursePlaceList[1].b" value="롯데월드">-->
+<!--        <input name="coursePlaceList[1].b" value="롯데월드">-->
+<!--    </div>-->
+
+</form>
 <div id="map" style="display:none"></div>
 <div class="position-fixed mx-3 p-3" id="locList">
     <span class="my-2">선택한 장소(drag & paste)</span>
@@ -56,8 +75,7 @@
                             </div>
                         </div>
                     </div>
-<!--                    <textarea name="memo" id="pmemo" style="display: none;" cols="20" rows="2"></textarea>-->
-                    <p class="cardJson" style="display: none;" th:text="${session.jsonList.get(i)}"></p>
+                    <p class="cardJson" th:text="${session.jsonList.get(i)}" style="display: none;"></p>
                 </div>
             </div>
         </th:block>
@@ -68,7 +86,7 @@
     <span class="my-2">이동수단(drag&paste)</span>
     <div class="overflow-auto dragBox" id="transportListCard" style="height: 50vh;">
         <!-- #t1 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy1" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy1" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -82,7 +100,7 @@
             </div>
         </div>
         <!-- #t2 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy2" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy2" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -96,7 +114,7 @@
             </div>
         </div>
         <!-- #t3 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy3" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy3" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);" >
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -110,7 +128,7 @@
             </div>
         </div>
         <!-- #t4 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy4" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy4" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);" >
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -124,7 +142,7 @@
             </div>
         </div>
         <!-- #t5 card -->
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy5" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy5" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);">
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -137,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy6" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy6" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);" >
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -150,7 +168,7 @@
                 </div>
             </div>
         </div>
-        <div class="card draggable p-0 dragCopy m-2" id="src_copy7" draggable="true" ondragstart="dragstart(event);"
+        <div class="card transport draggable p-0 dragCopy m-2" id="src_copy7" draggable="true" ondragstart="dragstart(event);"
              ondragend="dragend(event);" >
             <div class="row g-0 m-0">
                 <div class="col-sm-4" style="text-align: center;">
@@ -174,7 +192,8 @@
     </div>
 
     <!--action="/course/{courseNo}/detail"로 바꾸기-->
-    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post" enctype="multipart/form-data">
+    <form action="/course/register" id="plannerRegister" name="plannerRegister" method="post">
+        <input type="hidden" value="2" name="uptype">
         <!-- 여행 제목 -->
         <div class="mb-3">
             <label for="planTitle" class="form-label">여행 제목</label>

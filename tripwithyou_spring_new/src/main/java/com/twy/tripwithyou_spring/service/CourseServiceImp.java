@@ -73,4 +73,21 @@ public class CourseServiceImp implements CourseService{
 
         return register;
     }
+
+    @Override
+    public int modify(CourseDto course) {
+        int modify = uploadMapper.updateById(course.getUploadDto());
+        if(modify<1) {
+            return modify;
+        }
+        modify += courseMapper.updateById(course);
+        return modify;
+    }
+
+    @Override
+    public CourseDto showByUploadNo(int uploadNo) {
+        return courseMapper.findByUploadNo(uploadNo);
+    }
+
+
 }

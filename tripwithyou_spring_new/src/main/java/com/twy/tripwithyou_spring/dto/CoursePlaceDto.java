@@ -13,5 +13,4 @@ public class CoursePlaceDto {
     private int pDay;//pday NN
     private int pOrder;//porder NN
     private String memo;//memo mediumtext
-
 }

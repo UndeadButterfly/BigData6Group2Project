@@ -77,7 +77,6 @@ function drop(ev) {
                 var nodeCopy = document.getElementById(id).cloneNode(true);
                 ev.target.appendChild(nodeCopy);
                 nodeCopy.innerHTML += '<button class="btn btn-warning btn-sm delete m-0" type="button">삭제하기</button>';
-                nodeCopy.innerHTML += '<textarea name="memo" rows="2" cols="20" class="overflow-scroll vmemo" placeholder="추가 설명"></textarea>'
                 deleteBtn(nodeCopy);
             }
         }
@@ -155,28 +154,28 @@ planForm.onsubmit=(e)=>{
     const vehicleListTextarea = planForm.vehicleListJson;
 
     let courseJson = {
-        courseNo:null,
+        courseNo:planForm.courseNo.value,
         startdate:startdateInput.value,
         enddate:enddateInput.value,
         duration:dayDiffer,
         image:null,
         budget:document.getElementById("planBudget").value,
-        uploadNo:null,
+        uploadNo:planForm.uploadNo.value,
         uploadDto:null,
         coursePlaceList:null,
         vehicleList:null
     }
     let uploadJson = {
-        uploadNo:null,
-        upType:2,
+        uploadNo:planForm.uploadNo.value,
+        upType:planForm.upType.value,
         userId:planForm.userId.value,
         title:planForm.title.value,
         contents:planForm.contents.value,
         postdate:null,
-        views:0,
-        likes:0,
-        hates:0,
-        reports:0,
+        views:planForm.views.value,
+        likes:planForm.likes.value,
+        hates:planForm.hates.value,
+        reports:planForm.reports.value,
         upstate:0
     }
     let vehicleList=[];
@@ -192,8 +191,6 @@ planForm.onsubmit=(e)=>{
             if(card.classList.contains("dragCopy")) { //카드가 vehicle 카드더냐
                 json.vday=day;
                 json.vorder=order;
-                const memo = card.querySelector(".vmemo");
-                json.memo = memo.value;
                 vehicleList.push(json);
             }
             else if(card.classList.contains("courseplace")){
