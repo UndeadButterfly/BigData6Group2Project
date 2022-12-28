@@ -185,7 +185,7 @@ public class CourseController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        if(loginInfo.getUserId().equals(course.getCourseNo())){
+        if(loginInfo.getUserId().equals(upload.getUserId())){
             course.setCoursePlaceList(coursePlaceList);
             course.setVehicleList(vehicleList);
             if(imgFile!=null&& !imgFile.isEmpty()){

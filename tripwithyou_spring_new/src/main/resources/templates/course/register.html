@@ -185,7 +185,7 @@
         <div class="mb-3 d-flex justify-content-between">
             <div class="col-5">
                 <label for="planUser" class="form-label">작성자</label>
-                <input name="userId" value ="user1" type="text" class="form-control" id="planUser" required>
+                <input name="userId" th:value ="${session.loginInfo.userId}" type="text" class="form-control" id="planUser" required>
             </div>
             <div class="col-6">
                 <label for="planDate" class="form-label" >작성날짜(NOW)</label>
