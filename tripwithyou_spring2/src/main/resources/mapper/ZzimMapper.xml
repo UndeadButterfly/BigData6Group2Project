@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.ZzimMapper">
+    <resultMap id="ZzimMap" type="ZzimDto">
+        <id property="zzimNo" column="zzim_no"/>
+        <result property="courseNo" column="course_no"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+<!--    int insert(ZzimDto zzim);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="zzimNo">
+        INSERT INTO zzim (course_no, user_id) VALUE (#{courseNo},#{userId})
+    </insert>
+<!--    int delete(int zzimNo);-->
+    <delete id="delete">
+        DELETE FROM zzim WHERE zzim_no=#{zzimNo}
+    </delete>
+<!--     int countByCourseNoAndZzim(int courseNo);-->
+    <select id="countByCourseNoAndZzim" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM zzim WHERE course_no=#{courseNo}
+    </select>
+<!--    ZzimDto findByCousreNoAndUserId(int courseNo, String userId);-->
+    <select id="findByCourseNoAndUserId" resultMap="ZzimMap">
+        SELECT * FROM zzim WHERE course_no=#{courseNo} AND user_id=#{userId}
+    </select>
+</mapper>

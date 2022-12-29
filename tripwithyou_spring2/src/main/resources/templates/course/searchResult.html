@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 계획 검색 페이지</title>
+    <link rel="stylesheet" href="/css/course/base.css">
+    <link rel="stylesheet" href="/css/course/card.css">
+    <link rel="stylesheet" href="/css/course/search-bar.css">
+    <style>
+        .search-results{
+            display: flex;
+            justify-content: center;
+            column-gap: 30px;
+            row-gap: 40px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+    <form action="/course/searchResult" name="search-course" id="search-course" method="post">
+        <select name="searchRegion" id="search-region">
+            <option value="">지역</option>
+            <option value="서울특별시">서울특별시</option>
+            <option value="경기도">경기도</option>
+            <option value="강원도">강원도</option>
+            <option value="충청북도">충청북도</option>
+            <option value="충청남도">충청남도</option>
+            <option value="경상북도">경상북도</option>
+            <option value="경상남도">경상남도</option>
+            <option value="전라북도">전라북도</option>
+            <option value="전라남도">전라남도</option>
+        </select>
+        <!--    <select name="search-vehicle" id="search-transporation">-->
+        <!--        <option value="">정렬 방법</option>-->
+        <!--        <option value="LIKE">인기순</option>-->
+        <!--        <option value="POST_DATE">최신순</option>-->
+        <!--    </select>-->
+        <input type="text" name="searchText" id="searchText" placeholder="검색...">
+        <button type="submit">검색</button>
+    </form>
+    <main class="container">
+        <div class="search-results">
+            <th:block th:each="course : ${courseSet}">
+                <div class="custom-card">
+                    <div class="card-left">
+                        <img src="/img/course/winter.jpg" alt="">
+                        <div class="custom-card-text">
+                            <div class="card-top">
+                                <h4 class="card-title" th:text="${course.uploadDto.title}"></h4>
+                                <label>
+                                    <input type="checkbox" value="1">
+                                    <span></span>
+                                </label>
+                            </div>
+                            <p th:text="${course.uploadDto.contents}"></p>
+                            <!--/course/{courseNo}/detail로 바꾸기-->
+                            <a th:href="@{'/course/{courseNo}/detail'(courseNo=${course.courseNo})}">자세히 보기</a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </main>
+</body>
+</html>

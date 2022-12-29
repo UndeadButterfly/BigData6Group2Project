@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.UploadPreferMapper">
+    <resultMap id="uploadPreferMap" type="com.twy.tripwithyou_spring.dto.UploadPreferDto">
+        <id column="upload_prefer_no" property="uploadPreferNo"/>
+        <result column="upload_no" property="uploadNo"/>
+        <result column="prefer" property="prefer"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO upload_prefer (upload_no,prefer,user_id) VALUES (#{uploadNo},#{prefer},#{userId})
+    </insert>
+    <update id="update">
+        UPDATE upload_prefer SET prefer=#{prefer} WHERE upload_prefer_no=#{uploadPreferNo}
+    </update>
+    <delete id="delete">
+        DELETE FROM upload_prefer WHERE upload_prefer_no=#{uploadPreferNo}
+    </delete>
+    <select id="countByUploadPreferIsTrue" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM upload_prefer WHERE upload_no=#{uploadNo} AND prefer=true;
+    </select>
+    <select id="countByUploadPreferIsFalse" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM upload_prefer WHERE upload_no=#{uploadNo} AND prefer=false;
+    </select>
+    <select id="findByUploadNoAndUserId" resultMap="uploadPreferMap">
+        SELECT * FROM upload_prefer WHERE upload_no=#{uploadNo} AND user_id=#{userId}
+    </select>
+</mapper>

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-@Controller
+@Controgller
 @RequestMapping("/course")
 public class CourseController {
     private CourseService courseService;
