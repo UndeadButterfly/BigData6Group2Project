@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>플래너</title>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/c14261a64d.js"></script>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+    <link href="/css/course/1pg.css" rel="stylesheet">
+    <script defer src="/js/course/tempList.js"></script>
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div class="main_top">
+    <div id="wrap22">
+        <div class="main_top_title">
+            나만의 여행 플래너
+        </div>
+        <div class="main_top_desc">
+            즐겁게 여행을 계획하세요
+        </div>
+        <div class="search_area">
+            <form action="">
+                <select aria-label="Default select example" class="form-select" id="area_select">
+                    <option selected>지역</option>
+                    <option value="1">서울</option>
+                    <option value="2">인천</option>
+                    <option value="3">경기</option>
+                    <option value="4">충천남도</option>
+                    <option value="5">충천북도</option>
+                    <option value="6">전라북도</option>
+                    <option value="7">전라남도</option>
+                    <option value="8">경상북도</option>
+                    <option value="9">경상남도</option>
+                    <option value="10">제주도</option>
+                    <option value="11">울릉도</option>
+                    <option value="12">독도</option>
+                </select>
+                <select aria-label="Default select example" class="form-select" id="transport_select">
+                    <option selected>교통 수단</option>
+                    <option value="1">비행기</option>
+                    <option value="2">기차</option>
+                    <option value="3">자동차</option>
+                    <option value="3">자전거</option>
+                </select>
+                <input class="select_input" id="select" min="" type="Date" value="">
+            </form>
+            <form action="https://www.naver.com" method="post">
+                <input class="search_input" id="search" placeholder="통합검색">
+                <div id="city_autocomplete"></div><!--자동 완성 기능-->
+            </form>
+            <div class="latest_search">
+                추천도시 :
+                <a class="latest_a" href="/ko/city/seoul_307">서울</a>
+                , <a class="latest_a" href="/ko/city/busan_92">부산</a>
+                , <a class="latest_a" href="/ko/city/daegu_243">대구</a>
+            </div>
+            <a class="go_map" href="javascript:void(0)" onclick="et_full_modal('/ko/modal/map')">지도에서 검색 ></a>
+        </div>
+    </div>
+</div>
+<th:block class="templateList" th:each="templateList : ${templateListsList}">
+    <div class="t-list">
+        <div class="card-group">
+            <div class="tpCard">
+                <div class="card-body d-flex">
+                    <div class="front">
+                        <img alt="" src="/img/jeju.png">
+                        <div class="template-card-text d-flex flex-column">
+                            <div class="card-top">
+                                <h4 class="card-title">그냥 만들기</h4>
+                            </div>
+                            <a href="/course/map">새로 만들기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:if="${!templateList.isEmpty()}">
+        <div class="t-list">
+            <h3 class="t-type" th:text="${templateList.get(0).type}"></h3>
+            <div class="card_style1">
+                <th:block th:if="${!templateList.isEmpty()}">
+                    <div class="card" id="card1" th:each="template:${templateList}">
+                        <div class="tpCard">
+                            <div class="card-body d-flex">
+                                <div class="front">
+                                    <th:block th:if="${!template.tempImgList.isEmpty()}">
+                                        <img alt="" th:src="${template.tempImgList.get(0).imgPath}">
+                                    </th:block>
+                                    <div class="template-card-text d-flex flex-column">
+                                        <div class="card-top">
+                                            <h4 class="card-title" th:text="${template.title}"></h4>
+                                        </div>
+                                        <button aria-controls="collapseWidthExample" aria-expanded="true"
+                                                aria-haspopup="true" class="toggleBtn btn btn-primary"
+                                                data-bs-target="#collapseWidthExample" data-bs-toggle="collapse"
+                                                type="button">
+                                            자세히 보기
+                                        </button>
+                                        <a href="./course/map">바로 만들기</a>
+                                    </div>
+                                </div>
+                                <div class="back">
+                                    <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                                        <div class="card card-body">
+                                            <th:block th:if="${!template.tempImgList.isEmpty()}">
+                                                <th:block th:each="tempImg,i:${template.tempImgList}">
+                                                    <th:block th:if="${i.count>0}">
+                                                        <img alt="" src=""
+                                                             th:alt="${template.title}" th:src="${tempImg.imgPath}">
+                                                    </th:block>
+                                                </th:block>
+                                            </th:block>
+                                            <div class="card-content">
+                                                <h6 class="card-content" th:text="${template.content}"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        </div>
+    </th:block>
+</th:block>
+</body>
+</html>

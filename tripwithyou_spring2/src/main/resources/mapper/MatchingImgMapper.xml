@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.MatchingImgMapper">
+    <resultMap id="matchingImgMap" type="MatchingImgDto">
+        <id column="matching_img_no" property="matchingImgNo"/>
+        <result column="matching_no" property="matchingNo"/>
+        <result column="matching_img_path" property="imgPath"/>
+    </resultMap>
+    <insert id="insertOne">
+        INSERT INTO matching_img (matching_no,matching_img_path) VALUE (#{matchingNo},#{imgPath})
+    </insert>
+    <select id="findByMatchingNo" resultMap="matchingImgMap">
+        SELECT * FROM matching_img WHERE matching_no=#{matchingNo}
+    </select>
+    <select id="findOne" resultMap="matchingImgMap">
+        SELECT * FROM matching_img WHERE matching_img_no=#{matchingImgNo}
+    </select>
+
+</mapper>
