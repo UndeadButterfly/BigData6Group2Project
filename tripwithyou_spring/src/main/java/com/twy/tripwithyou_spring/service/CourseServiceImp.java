@@ -34,7 +34,9 @@ public class CourseServiceImp implements CourseService{
             List<CourseDto> courseList = new ArrayList<>();
             for(UploadDto upload : uploadList) {
                 CourseDto course = courseMapper.findByUploadNo(upload.getUploadNo());
-                courseList.add(course);
+                if (course != null) {
+                    courseList.add(course);
+                }
             }
             courseListsList.add(courseList);
         }
