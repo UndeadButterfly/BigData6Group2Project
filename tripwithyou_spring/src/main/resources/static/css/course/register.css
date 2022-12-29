@@ -1,0 +1,101 @@
+body{
+    font-size: 16px;
+    color: #343434;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+
+    
+}
+span{
+    display: inline-block;
+}
+h1{
+    text-align: center;
+    margin: 20px;
+}
+nav a, header span a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+/*사이드 바 설정 */
+
+#locList, #transportList{
+    display: inline-block;
+    width: 20%;
+    top: 30%;
+    background-color: lightgoldenrodyellow;
+}
+#transportList{
+    right: 0;
+}
+
+.card-title, .card-text{
+    font-size: 0.7em;
+    margin: 0;
+}
+.a-card-text{
+    display: block;
+    text-align: right;
+}
+.transport-card-title{
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5em;
+}
+form{
+    width: 70%;
+    margin: 10px auto;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+
+}
+form>div{
+    margin: 20px;
+    padding: 5px;
+}
+/* form 안에 div들 설정 */
+form #planDayList{
+    border: 1px solid #343434;
+
+}
+form #planDayList>div{
+    margin: 20px;
+}
+form #planDayList #allignCard .dayBoxContainer{
+    background-color: lavender;
+    height: 600px;
+    border: 2px solid black;
+
+}
+.dest{
+    padding: 10px;
+    border: 1px solid red;
+    width:300px;
+    box-sizing: border-box;
+}
+.dayBoxes{
+    width:300px;
+    border: 2px solid red;
+    margin: 0 5px;
+    box-sizing: border-box;
+}
+
+form #planDayList #allignCard>div{
+    padding: 5px;
+    background-color: #eeeeee;
+    margin: 20px;
+}
+/* 버튼 설정 */
+.btnBox button{
+    width: 100px;
+    float: right;
+    margin: 0 10px;
+    /* background-color: 	#b6d7a8; */
+    border-style: none;
+    font-weight: bold;
+    cursor: pointer;
+}

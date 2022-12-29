@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.MatchingMapper">
+    <resultMap id="matchingMap" type="MatchingDto" autoMapping="true">
+        <id column="matching_no" property="matchingNo"/>
+        <result column="tdestination" property="tDestination"/>
+        <result column="tstart" property="tStart"/>
+        <result column="tend" property="tEnd"/>
+        <result column="tmember" property="tMember"/>
+        <result column="local_no" property="localNo"/>
+        <result column="user_id" property="userId"/>
+        <association property="user"
+                     column="user_id"
+                     select="com.twy.tripwithyou_spring.mapper.UserMapper.findById"
+                     fetchType="lazy"/>
+        <collection property="matchingImgList"
+                    select="com.twy.tripwithyou_spring.mapper.MatchingImgMapper.findByMatchingNo"
+                    column="matching_no"
+                    fetchType="lazy"/>
+    </resultMap>
+    <insert id="insert" parameterType="MatchingDto" useGeneratedKeys="true" keyProperty="matchingNo">
+        INSERT INTO tripwithyou.matching (tdestination, tstart, tend, tmember, title, contents, local_no, user_id)
+            VALUE (#{tDestination}, #{tStart}, #{tEnd},#{tMember}, #{title}, #{contents}, #{localNo}, #{userId})
+    </insert>
+    <delete id="deleteById">
+        DELETE FROM matching WHERE matching_no= #{matchingNo}
+    </delete>
+    <select id="findByStartAndEnd" resultMap="matchingMap">
+        SELECT * FROM matching WHERE tstart= #{tStart} and tend= #{tEnd}
+    </select>
+    <select id="findAll" resultMap="matchingMap">
+        SELECT * FROM matching
+    </select>
+    <select id="findById" resultMap="matchingMap">
+        SELECT * FROM matching WHERE matching_no= #{matchingNo}
+    </select>
+    <select id="findPaging" resultMap="matchingMap" parameterType="PagingDto">
+        SELECT *
+        FROM matching
+        ORDER BY #{orderField} #{direct}
+        LIMIT #{startRow}, #{rows}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM matching
+    </select>
+    <select id="countById" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM matching where user_id= #{user_id}
+    </select>
+    <select id="findPagingById" resultMap="matchingMap">
+        SELECT *
+        FROM matching
+        WHERE user_id= #{userId}
+        ORDER BY ${paging.orderField} ${paging.direct}
+        LIMIT #{paging.startRow}, #{paging.rows}
+    </select>
+</mapper>

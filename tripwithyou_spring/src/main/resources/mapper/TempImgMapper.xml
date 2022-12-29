@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--sessionFactory 가 작성한 sql Mapper 를 해당 타입으로 객체를 생성한다.-->
+<mapper namespace="com.twy.tripwithyou_spring.mapper.TempImgMapper">
+    <resultMap id="tempImgMap" type="tempImgDto" autoMapping="true">
+        <id column="tp_img_No" property="tpImgNo"/>
+        <result column="img_path" property="imgPath"/>
+        <result column="tp_no" property="tpNo"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO template_img (tp_img_no,img_path, tp_no)
+        VALUES (#{tp_img_no}, #{img_path}, #{tp_no})
+    </insert>
+    <delete id="deleteByTpNo">
+        DELETE FROM template_img WHERE tp_no=#{tpNo}
+    </delete>
+    <select id="findAll" resultMap="tempImgMap">
+        SELECT * FROM template_img
+    </select>
+    <select id="findByTpNo" resultMap="tempImgMap">
+        SELECT * FROM template_img WHERE tp_no=#{tpNo}
+    </select>
+</mapper>

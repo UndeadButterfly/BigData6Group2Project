@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 상세 페이지</title>
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src="/uikit/js/uikit.js"></script>
+    <script src="/uikit/js/uikit-icons.js"></script>
+    <style>
+        body {
+            width: 100vw;
+            background-color: rgba(159, 173, 153, 0.99);
+            height: 100vh;
+        }
+
+        #detailBox {
+            border-radius: 100px;
+            width: max-content;
+            margin: 0px auto;
+        }
+
+        #myCourseList{
+            background-color: #fff;
+            padding: 100px;
+            width: max-content;
+            height: max-content;
+        }
+        #courseTable{
+            border-collapse: collapse;
+        }
+        #courseTable th, #courseTable td{
+            border: 1px solid gray;
+        }
+
+    </style>
+    <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div id="detailBox">
+    <div class="listContainer" id="myCourseList">
+        <figure>
+            <table id="courseTable">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>제목</th>
+                    <th>시작일</th>
+                    <th>종료일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="cursor: pointer" th:each="course : ${courseList}"
+                    th:onclick="location.href = [[@{'/course/{courseNo}/detail' (courseNo=${course.courseNo})}]]">
+                    <td th:text="${course.courseNo}"></td>
+                    <td th:text="${course.uploadDto.title}"></td>
+                    <td th:text="${course.startdate}"></td>
+                    <td th:text="${course.enddate}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <th:block th:insert="/pagination"></th:block>
+        </figure>
+    </div>
+</div>
+</body>
+</html>

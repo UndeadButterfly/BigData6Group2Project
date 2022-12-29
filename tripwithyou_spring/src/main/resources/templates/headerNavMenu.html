@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<style>
+    /* 내브바 */
+    .nav {
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    .nav > div {
+        padding: 16px 20px;
+        transition: background-color .5s;
+    }
+
+    .nav > div > a {
+        font-weight: lighter;
+        display: block;
+    }
+
+    .nav > div:hover {
+        background-color: #ddd;
+    }
+</style>
+<div class="header">
+    <nav>
+        <!-- 헤더 안의 내브바 -->
+        <div class="nav">
+            <div><a href="/course/courseMain">여행 코스</a></div>
+            <div><a href="/matching/matchingMain">여행 매칭</a></div>
+<!--            <div><a href="/wiki">여행위키</a></div>-->
+            <div><a href="/upload/uploadMain">여행 게시판</a></div>
+        </div>
+    </nav>
+</div>
+</html>
