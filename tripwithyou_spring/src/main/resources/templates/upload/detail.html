@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>게시글 상세</title>
+    <!--    <link rel="stylesheet" href="list.css">-->
+    <link href="/css/index.css" rel="stylesheet">
+    <link href="/uikit/css/uikit.css" rel="stylesheet">
+    <script src=""></script>
+    <link href="/css/board/detail.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        .header a,
+        .inline a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<div class="search">
+    <form action="">
+        <span></span>
+        <input type="text">
+    </form>
+</div>
+<div class="container border my-2 p-3 uk-text-right"
+     th:if="${session.loginInfo!=null && detail.userId==session.loginInfo.userId}">
+    <a class="btn btn-outline-primary" th:href="@{'modify.do'(uploadNo=${detail.uploadNo})}">수정하기</a>
+    <a class="btn btn-outline-primary" th:href="@{'remove.do'(uploadNo=${detail.uploadNo})}">삭제</a>
+</div>
+<main class="container">
+    <!-- Title -->
+    <h2 class="title" th:text="${detail.title}"></h2>
+    <div class="articleInfo">
+        <i aria-hidden="true" class="fa fa-user-circle-o"></i>
+        <div>
+            <!-- getName(getUserId),getPostTime -->
+            <span th:text="${detail.userId}"></span>
+            <span th:text="${detail.postdate}"></span>
+        </div>
+        <small class="" th:text="${'게시글 번호: '+detail.uploadNo}"></small>
+    </div>
+    <hr>
+    <!-- 여기서부터 글 내용(contents -->
+    <div>
+        <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
+
+            <th:block th:if="${detail.uploadImgList!=null&&detail.uploadImgList.size>0}">
+                <ul class="uk-slider-items ">
+                    <li th:each="uploadImg,i:${detail.uploadImgList}">
+                        <div class="uk-panel">
+                            <img alt=""
+                                 class="uk-object-cover" style="width: 300px;height: 300px;object-fit: cover" th:src="@{'/img/upload/{file}'(file=${uploadImg.imgPath})}">
+                            <div class="uk-position-center uk-panel"><h1 th:text="${i.count}"></h1></div>
+                        </div>
+                    </li>
+                </ul>
+            </th:block>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+               uk-slider-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+               uk-slider-item="next"></a>
+        </div>
+        <div class="uk-margin">
+            <div class="uk-inline uk-form-width-large" th:text="${detail.contents}">
+            </div>
+        </div>
+    </div>
+
+    <!-- 좋아요,댓글 수,조회수 등등  -->
+    <div class="prefer d-flex justify-content-end">
+        <span> 댓글(<b th:text="${replyCount}"></b>)</span>
+        <span id="uploadPreferContainer"
+              th:include="/upload/uploadPrefer" th:with="prefer=${detail.uploadPreferView}">
+        </span>
+    </div>
+    <a class="" href="#">등록순</a>
+    <a class="" href="#">인기순</a>
+
+    <hr>
+    <!-- 댓글 리스트 시작 -->
+    <div class="comment" id="replyListContainer">
+        <th:block th:insert="/reply/list"></th:block>
+    </div>
+    <div class="insertComment" th:unless="${session.loginInfo==null}">
+        <th:block th:include="/reply/register"></th:block>
+    </div>
+    <script th:inline="javascript">
+        const replyListContainer = document.getElementById("replyListContainer");
+        const uploadNo = window.uploadNo;
+        init();
+
+        function loadRegisterForm(replyNo) {
+            const replyRegisterForm = document.forms["replyRegisterForm"];
+            const cloneForm = replyRegisterForm.cloneNode(true);
+            cloneForm.onsubmit = function (e) {
+                registerReply(e, cloneForm);
+            }
+            cloneForm.fkReplyNo.value = replyNo;
+            let selector = "reReplyRegisterContainer" + replyNo;
+            const reReplyRegisterContainer = document.getElementById(selector);
+            reReplyRegisterContainer.append(cloneForm);
+        }
+
+        async function removeReply(replyNo) {
+            let url = "/reply/delete.do?replyNo=" + replyNo;
+            const resp = await fetch(url, {method: "DELETE"});
+            if (resp.status === 200) {
+                const json = await resp.json();
+                if (json.state == 1) {
+                    await loadReplyList();
+                    alert("삭제 성공!");
+                } else {
+                    alert("삭제할 레코드가 없습니다.");
+                }
+            } else {
+                alert(`삭제 실패! ${resp.status}`);
+            }
+        }
+
+        async function modifyReply(e, replyModifyForm) {
+            const formData = new FormData(replyModifyForm);
+            let url = "/reply/modify.do";
+            const resp = await fetch(url, {method: "PUT", body: formData}); //api, 비동기식
+            if (resp.status === 200) {
+                console.log(resp)
+                const json = await resp.json();
+                console.log(json)
+                console.log(json.state)
+                if (json.state == 1) {
+                    await loadReplyList();
+                    alert("수정 성공!");
+                } else {
+                    alert("이미 삭제된 레코드 입니다.");
+                }
+            } else {
+                alert(`서버 오류! (${resp.status})`);
+            }
+        }
+
+        function init() {
+            const replyRegisterForm = document.forms["replyRegisterForm"];
+            replyRegisterForm.onsubmit = function (e) {
+                registerReply(e, replyRegisterForm);
+            };
+        }
+
+        async function registerReply(e, replyRegisterForm) {
+            e.preventDefault();
+            let url = "/reply/register.do";
+            const formData = new FormData(replyRegisterForm);
+            console.log(formData);
+            // let queryString="?userId="+replyRegisterForm.userId.value+"&title="+replyRegisterForm.title.value;
+            //post 통신으로 하더라도 fetch 로 통신시 파라미터를 queryString 으로 생성해서 통신해야 한다!!
+            //multipart/form-data 로 전달할 때는 new FormData(formNode)를 넣으면 자동으로 파라미터 생성
+            //Spring Controller 는 blob 을 자동으로 Text 파라미터 처리를 한다.
+            const resp = await fetch(url, {method: "POST", body: formData});
+            const json = await resp.json();
+            console.log(json)
+            if (json.state == 1) {
+                await loadReplyList();
+            }
+        }
+
+        async function loadReplyList() {
+            const resp = await fetch("/reply/[[${uploadNo}]]/list.do");
+            const html = await resp.text();
+            replyListContainer.innerHTML = html;
+            init();
+        }
+
+        async function loadReplyModifyForm(replyNo) {
+            let url = "/reply/modify.do?replyNo=" + replyNo;
+            let selector = "replyContainer" + replyNo;
+            const replyContainer = document.getElementById(selector);
+            const resp = await fetch(url);
+            if (resp.status == 200) {
+                let html = await resp.text();
+                replyContainer.innerHTML = html;
+            }
+        }
+        async function uploadPreferHandler(uploadNo,preferBtn){
+            let url=`/upload/prefer/handler.do?uploadNo=${uploadNo}&preferBtn=${preferBtn}`;
+            let viewUrl=`/upload/prefer/view.do?uploadNo=`+uploadNo;
+            const uploadPreferContainer=document.getElementById("uploadPreferContainer");
+            const resp=await fetch(url,{method:"PUT"});
+            if(resp.status===200){
+                const json=await resp.json();
+                if(json.state===1){
+                    const resp=await fetch(viewUrl);
+                    if(resp.status===200){
+                        let html=await resp.text();
+                        uploadPreferContainer.innerHTML=html;
+                    }else{
+                        alert("좋아요 싫어요 불러오기 실패(새로고침하세요.)");
+                    }
+                }else{
+                    alert("좋아요 싫어요 실패");
+                }
+            }else if(resp.status===400){
+                alert("로그인 하셔야 이용할 수 있습니다.");
+            }else if(resp.status===405){
+                alert("잘못된 경로를 이용하고 있습니다.")
+            }else if(resp.status===500){
+                alert("데이터베이스 서버 오류")
+            }
+
+        }
+    </script>
+</main>
+</html>
