@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.twy.tripwithyou_spring.mapper.ReplyMapper">
+    <resultMap id="replyListMap" type="com.twy.tripwithyou_spring.dto.ReplyDto" autoMapping="true">
+        <id property="replyNo" column="reply_no"/>
+        <result property="uploadNo" column="upload_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="rContent" column="rcontent"/>
+        <result property="rDate" column="rdate"/>
+        <result property="fkReplyNo" column="fk_reply_no"/>
+        <collection property="replyList"
+        autoMapping="true"
+        javaType="java.util.ArrayList"
+        ofType="ReplyDto"
+        select="findByFkReplyNo"
+        fetchType="lazy"
+        column="reply_no"/>
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO tripwithyou.reply (upload_no, user_id, rcontent, fk_reply_no)
+            VALUE (#{uploadNo}, #{userId}, #{rContent}, #{fkReplyNo})
+    </insert>
+    <update id="updateById">
+        UPDATE tripwithyou.reply SET rcontent=#{rContent} WHERE reply_no=#{replyNo}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM tripwithyou.reply WHERE reply_no= #{reply_no}
+    </delete>
+    <select id="countByUploadNo" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tripwithyou.reply WHERE upload_no= #{uploadNo} AND fk_reply_no is null
+    </select>
+    <select id="findByUploadNo" resultMap="replyListMap">
+        SELECT * FROM tripwithyou.reply WHERE upload_no= #{uploadNo} AND fk_reply_no is null
+    </select>
+    <select id="findByFkReplyNo" resultMap="replyListMap">
+        SELECT *
+        FROM tripwithyou.reply
+        WHERE fk_reply_no = #{replyNo}
+    </select>
+    <select id="countAll" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tripwithyou.reply
+    </select>
+    <select id="findById" resultType="com.twy.tripwithyou_spring.dto.ReplyDto">
+        SELECT * FROM tripwithyou.reply WHERE reply_no= #{replyNo}
+    </select>
+</mapper>

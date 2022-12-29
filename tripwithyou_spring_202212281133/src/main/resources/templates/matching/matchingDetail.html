@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/matching/matchingDetail.css">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+<header >
+    <th:block th:include="headerNav"></th:block>
+    <th:block th:include="headerNavMenu"></th:block>
+</header>
+<p th:text="${matching.getMatchingNo()}"></p>
+<p th:text="${matching.getTDestination()}"></p>
+<p th:text="${matching.getTitle()}"></p>
+<p th:text="${matching.getContents()}"></p>
+<p th:text="${matching.getUserId()}"></p>
+<p th:text="${matching.getTStart()}"></p>
+<p th:text="${matching.getTEnd()}"></p>
+<p th:text="${matching.getTMember()}"></p>
+<div th:each="matchingImg:${matching.matchingImgList}">
+    <img th:src="@{'/img/match/{file}'(file=${matchingImg.imgPath})}" alt="">
+</div>
+
+
+<!--<h1>-->
+<!--  <span th:text="${matchingNo}"></span>. 게시글 상세 페이지-->
+<!--</h1>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="matchingNo">번호 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="matchingNo"-->
+<!--           th:value="${matching.matchingNo}" name="matchNo">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="title">제목 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="title"-->
+<!--           th:value="${matching.title}" name="title">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="tStart">출발일 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="tStart"-->
+<!--           th:value="${board.boardNo}" name="tStart">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="tEnd">여행종료일 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="tEnd"-->
+<!--           th:value="${board.boardNo}" name="tEnd">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="tMember">인원수 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="tMember"-->
+<!--           th:value="${board.boardNo}" name="tMember">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div class="uk-margin">-->
+<!--  <label class="uk-form-label" for="tDestination">목적지 : </label>-->
+<!--  <div class="uk-inline uk-form-width-large">-->
+<!--    <input class="uk-input uk-form-blank" type="text" readonly id="tDestination"-->
+<!--           th:value="${board.boardNo}" name="tDestination">-->
+<!--  </div>-->
+<!--</div>-->
+<!--<div id="container">-->
+<!--  <div id="header">-->
+<!--    <a href="">-->
+<!--      <img src="/img/main1.jpeg" alt="">-->
+<!--    </a>-->
+<!--  </div>-->
+
+<!--  <div id="contents">-->
+<!--    <h1>제목</h1>-->
+<!--    <h4>지역:제주도 / 모집 인원:3명 / 기간:2023.01.01 ~ 2023.01.08</h4>-->
+<!--    <p>-->
+<!--      Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto iure libero provident asperiores doloremque animi? Nisi similique voluptatem dolor minima corporis, debitis nesciunt vero? Nobis, sapiente officiis! Aliquid, quam placeat provident ipsum eligendi reprehenderit ab cumque veniam porro accusamus amet, delectus beatae asperiores. Adipisci dolor temporibus ratione obcaecati ex illum labore porro tenetur veniam error nulla nihil cumque, quidem, qui possimus soluta itaque maxime magnam atque reiciendis quae doloribus perspiciatis iure aut. Ab fugiat earum officia atque iure deleniti nobis ad, eos, tempora minus quae. Soluta explicabo est repudiandae autem tempore? Consectetur magnam voluptate eos quasi quidem quae commodi tempore?-->
+<!--    </p>-->
+<!--    <p><b>#제주도 #여행 #모임</b></p>-->
+<!--    <p>2022.12.10 10:00 / 조회수:157 / <button>신고하기</button></p>-->
+<!--    <h4>댓글(0)</h4>-->
+<!--    <p>-->
+<!--      <input type="text" size="110">-->
+<!--      <button>게시</button>-->
+<!--    </p>-->
+<!--  </div>-->
+
+<!--  <div id="sidebar">-->
+<!--    <h2><a href="">고객정보</a></h2>-->
+<!--      <h3>정효빈</h3>-->
+<!--      <h4>생년월일:1997-01-01(25세)</h4>-->
+<!--      <h4>성별:남성</h4>-->
+<!--      <h4>거주지:의정부</h4>-->
+<!--  </div>-->
+<!--</div>-->
+</body>
+</html>

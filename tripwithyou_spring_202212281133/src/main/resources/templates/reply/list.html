@@ -1,0 +1,42 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block class="commentsList" th:each="reply:${replyList}">
+    <!-- 댓글 for문 시작 -->
+    <div class="comment" th:id="'replyContainer'+${reply.replyNo}">
+        <div>
+            <!-- 유저 프로필 이미지 -->
+            <img alt="" src="https://via.placeholder.com/50/">
+            <span class="userInfo">
+                        <!-- 유저 정보 -->
+                <!-- getName,getUserId,getRDate -->
+                <span th:text="${reply.userId}"></span>
+                (<time th:datetime="${reply.getRDate()}" style="font-size: 0.8em;"
+                       th:text="${#calendars.format(reply.getRDate())}"></time>)
+            </span>
+        </div>
+        <!-- 댓글 내용 getRcontent -->
+        <div style="text-indent:50px" th:text="${reply.getRContent()}"></div>
+        <div>
+            <ul class="uk-breadcrumb" th:if="${session.loginInfo!=null}">
+                <th:block th:if="${#strings.equals(session.loginInfo.userId,reply.userId)}">
+                    <li><a class="uk-button uk-button-text uk-text-warning" href="javascript:void(0)"
+                           th:onclick="loadReplyModifyForm([[${reply.replyNo}]])">수정</a></li>
+                    <li><a class="uk-button uk-button-text uk-text-danger" href="javascript:void(0)"
+                           th:onclick="removeReply([[${reply.replyNo}]])">삭제</a></li>
+                </th:block>
+                <li><a class="uk-button uk-button-text uk-text-primary" href="javascript:void(0)"
+                       th:onclick="loadRegisterForm([[${reply.replyNo}]])">댓글 쓰기</a></li>
+            </ul>
+        </div>
+        <hr>
+        <!-- 대댓글 입력 폼 -->
+        <div th:id="${'reReplyRegisterContainer'+reply.replyNo}"></div>
+        <!-- 대댓글 목록 if(대댓글 !=null){ -->
+        <div style="margin-left: 50px;" class="incommentList" th:if="${reply.replyList!=null&& reply.replyList.size()>0}"
+             th:with="replyList=${reply.replyList}">
+            <th:block th:include="/reply/list"></th:block>
+        </div>
+    </div>
+    <!-- 댓글 for문 종료 -->
+</th:block>
+</html>

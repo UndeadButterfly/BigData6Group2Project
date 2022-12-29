@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:body>
+    <form action="/reply/modify.do" class="insertComment" method="post" name="replyModifyForm"
+          th:onsubmit="event.preventDefault(); modifyReply(this);">
+        <p><b th:text="${session.loginInfo.name}"></b></p>
+        <input name="uploadNo" th:value="${param.uploadNo}" type="hidden">
+        <input name="fkReplyNo" th:value="${reply.fkReplyNo}" type="hidden">
+        <input name="replyNo" th:value="${reply.replyNo}" type="hidden">
+        <input name="userId" th:value="${reply.userId}" type="hidden">
+        <textarea placeholder="댓글을 남기세요." rows="2" style="width: 100%;" th:text="${reply.getRContent()}"
+                  type="text" name="rContent"></textarea>
+        <button type="submit">등록</button>
+    </form>
+</th:body>
+</html>
